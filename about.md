@@ -1,18 +1,10 @@
 ---
 layout: page
-title: About
+title: About Me
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](https://jekyllrb.com/)
-
-You can find the source code for Minima at GitHub:
-[jekyll][jekyll-organization] /
-[minima](https://github.com/jekyll/minima)
-
-You can find the source code for Jekyll at GitHub:
-[jekyll][jekyll-organization] /
-[jekyll](https://github.com/jekyll/jekyll)
-
-
-[jekyll-organization]: https://github.com/jekyll
+I'm a french college student studying IT and networks.
+I started taking a real interest in computer security quite recently so I still have a lot to learn.
+I don't really have a main discipline so I'm interested in every field related with security.
+This blog is for me a place to publish CTF write-ups and articles that will allow me to widen my skills while sharing useful (I hope ;-)) resources for beginners.
