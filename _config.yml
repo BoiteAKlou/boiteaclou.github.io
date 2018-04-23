@@ -14,10 +14,26 @@
 # You can create any custom variable you would like, and they will be accessible
 # in the templates via {{ site.myvariable }}.
 title: Computer Security for Beginners
+
+collections:
+  category:
+    output: true
+defaults:
+  -
+    scope:
+      path: ""
+      type: category
+    values:
+      layout: "category"
+
+show_excerpts: true
+excerpt_separator: "<!--excerpt-->"
+
+author: by BoiteAKlou
 subtitle: by BoiteAKlou
 email: boiteaklou@protonmail.com
 description: >- # this means to ignore newlines until "baseurl:"
-        Computer security oriented blog held by a french student in IT and Networks. 
+        Computer security oriented blog held by a french student in IT and Networks.
         This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
