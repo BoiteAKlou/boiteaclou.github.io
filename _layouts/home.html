@@ -15,7 +15,11 @@ layout: default
       {%- for post in site.posts -%}
       <li>
         {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}</span>
+        <span class="post-meta">{{ post.date | date: date_format }}
+        {%- if post.author -%}
+          <span class="p-author h-card" itemprop="name"> • {{ post.author }}</span>
+        {%- endif -%}
+        </span>
           {%- for tag in post.categories -%}
           <a class="post-tags" href="/category/{{ tag | downcase  }}">#{{tag}}</a>
           {%- endfor -%}
