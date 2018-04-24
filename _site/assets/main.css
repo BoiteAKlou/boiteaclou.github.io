@@ -114,9 +114,11 @@ table td { border: 1px solid #e8e8e8; }
 .post-list { margin-left: 0; list-style: none; }
 .post-list > li { margin-bottom: 30px; }
 
-.post-meta { font-size: 14px; color: #828282; }
+.post-meta { font-size: 14px; color: #828282; margin-right: 2%; }
 
 .post-link { display: block; font-size: 24px; }
+
+.post-tags { font-size: 16px; color: #2a7ae2; margin-right: 1%; }
 
 /** Posts */
 .post-header { margin-bottom: 30px; }

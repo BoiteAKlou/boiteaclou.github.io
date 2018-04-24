@@ -200,6 +200,7 @@
 .post-meta {
   font-size: $small-font-size;
   color: $grey-color;
+  margin-right: 2%;
 }
 
 .post-link {
@@ -207,6 +208,11 @@
   @include relative-font-size(1.5);
 }
 
+.post-tags {
+  font-size: $base-font-size;
+  color: $brand-color;
+  margin-right: 1%;
+}
 
 
 /**
