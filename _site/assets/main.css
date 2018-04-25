@@ -105,7 +105,7 @@ table td { border: 1px solid #e8e8e8; }
   .footer-col-3 { width: -webkit-calc(100% - (30px / 2)); width: calc(100% - (30px / 2)); } }
 @media screen and (max-width: 600px) { .footer-col { float: none; width: -webkit-calc(100% - (30px / 2)); width: calc(100% - (30px / 2)); } }
 /** Page content */
-.page-content { padding: 30px 0; }
+.page-content { padding: 30px 0; text-align: justify; }
 
 .page-heading { font-size: 32px; }
 
