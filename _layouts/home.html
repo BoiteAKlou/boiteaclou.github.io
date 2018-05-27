@@ -4,7 +4,9 @@ layout: default
 
 <div class="home">
   {%- if page.title -%}
-    <h1 class="page-heading">{{ page.title }}</h1>
+    {%- if page.show != false -%}
+      <h1 class="page-heading">{{ page.title }}</h1>
+    {%- endif -%}
   {%- endif -%}
 
   {{ content }}
@@ -14,20 +16,22 @@ layout: default
     <ul class="post-list">
       {%- for post in site.posts -%}
       <li>
-        {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
-        <span class="post-meta">{{ post.date | date: date_format }}
-        {%- if post.author -%}
-          <span class="p-author h-card" itemprop="name"> • {{ post.author }}</span>
-        {%- endif -%}
-        </span>
-          {%- for tag in post.categories -%}
-          <a class="post-tags" href="/category/{{ tag | downcase  }}">#{{tag}}</a>
-          {%- endfor -%}
         <h3>
           <a class="post-link" href="{{ post.url | relative_url }}">
             {{ post.title | escape }}
           </a>
         </h3>
+        <div class="post-metatags">
+          {%- assign date_format = site.minima.date_format | default: "%b %-d, %Y" -%}
+          <span class="post-meta">{{ post.date | date: date_format }}
+          {%- if post.author -%}
+            <span class="p-author h-card" itemprop="name"> • {{ post.author }}</span>
+          {%- endif -%}
+          </span>
+            {%- for tag in post.categories -%}
+            <a class="post-tags" href="/category/{{ tag | downcase  }}">#{{tag}}</a>
+            {%- endfor -%}
+        </div>
         <span class="post-excerpts">
         {%- if site.show_excerpts -%}
           {{ post.excerpt }}
