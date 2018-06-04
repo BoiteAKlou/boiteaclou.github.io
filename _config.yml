@@ -37,8 +37,11 @@ description: >- # this means to ignore newlines until "baseurl:"
         This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
+
 disqus:
   shortname: boiteaklou-github-io
+
+google_analytics: UA-120371981-1
 
 twitter_username: BoiteAKlou
 github_username:  BoiteAKlou
