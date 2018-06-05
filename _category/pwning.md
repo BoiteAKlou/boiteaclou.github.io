@@ -1,6 +1,6 @@
 ---
-tag: Pwn
+tag: Pwning
 fullname: Pwning
 description: Cracking executables and files.
-permalink: "/category/pwn"
+permalink: "/category/pwning"
 ---

@@ -1,15 +1,177 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-06-05T00:13:11+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Lorem Ipsum</title><link href="http://localhost:4000/forensic/crypto/2018/04/23/Lorem-Ipsum.html" rel="alternate" type="text/html" title="Lorem Ipsum" /><published>2018-04-23T22:21:00+02:00</published><updated>2018-04-23T22:21:00+02:00</updated><id>http://localhost:4000/forensic/crypto/2018/04/23/Lorem-Ipsum</id><content type="html" xml:base="http://localhost:4000/forensic/crypto/2018/04/23/Lorem-Ipsum.html">&lt;p&gt;Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.&lt;!--excerpt--&gt; Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</summary></entry><entry><title type="html">Welcome to Jekyll!</title><link href="http://localhost:4000/crypto/2018/04/22/welcome-to-jekyll.html" rel="alternate" type="text/html" title="Welcome to Jekyll!" /><published>2018-04-22T12:17:37+02:00</published><updated>2018-04-22T12:17:37+02:00</updated><id>http://localhost:4000/crypto/2018/04/22/welcome-to-jekyll</id><content type="html" xml:base="http://localhost:4000/crypto/2018/04/22/welcome-to-jekyll.html">&lt;p&gt;You’ll find this post in your &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run &lt;code class=&quot;highlighter-rouge&quot;&gt;jekyll serve&lt;/code&gt;, which launches a web server and auto-regenerates your site when a file is updated.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-06-05T09:07:21+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Introduction to Buffer Overflows: CookieJar - AngstromCTF</title><link href="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html" rel="alternate" type="text/html" title="Introduction to Buffer Overflows: CookieJar - AngstromCTF" /><published>2018-06-05T08:35:00+02:00</published><updated>2018-06-05T08:35:00+02:00</updated><id>http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">&lt;p&gt;For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce &lt;strong&gt;Buffer Overflows&lt;/strong&gt;…
+ &lt;!--excerpt--&gt;&lt;/p&gt;
 
-&lt;!--excerpt--&gt;
+&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
+&lt;ul&gt;
+  &lt;li&gt;A very basic understanding of &lt;strong&gt;x86 or x64 architectures&lt;/strong&gt; will help you to grasp the concept of buffer overflow.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;To add new posts, simply add a file in the &lt;code class=&quot;highlighter-rouge&quot;&gt;_posts&lt;/code&gt; directory that follows the convention &lt;code class=&quot;highlighter-rouge&quot;&gt;YYYY-MM-DD-name-of-post.ext&lt;/code&gt; and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.&lt;/p&gt;
+&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-06-05/challenge.png&quot; alt=&quot;challenge statement&quot; title=&quot;Statement&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Jekyll also offers powerful support for code snippets:&lt;/p&gt;
+&lt;p&gt;We have &lt;a href=&quot;/assets/2018-06-05/cookiePublic.c&quot;&gt;a binary&lt;/a&gt; and the corresponding &lt;a href=&quot;/assets/2018-06-05/cookiePublic64&quot;&gt;source code&lt;/a&gt; given for this challenge. The objective is to find a way to exploit this binary locally and to re-use the same exploit on the remote server in order to get the flag.&lt;/p&gt;
 
-&lt;figure class=&quot;highlight&quot;&gt;&lt;pre&gt;&lt;code class=&quot;language-ruby&quot; data-lang=&quot;ruby&quot;&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-  &lt;span class=&quot;nb&quot;&gt;puts&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Hi, &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;#{&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;name&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;
-&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;print_hi&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Tom'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;c1&quot;&gt;#=&amp;gt; prints 'Hi, Tom' to STDOUT.&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/figure&gt;
+&lt;p&gt;The first thing we should do in this case is to analyze the program and its source code.&lt;/p&gt;
 
-&lt;p&gt;Check out the &lt;a href=&quot;https://jekyllrb.com/docs/home&quot;&gt;Jekyll docs&lt;/a&gt; for more info on how to get the most out of Jekyll. File all bugs/feature requests at &lt;a href=&quot;https://github.com/jekyll/jekyll&quot;&gt;Jekyll’s GitHub repo&lt;/a&gt;. If you have questions, you can ask them on &lt;a href=&quot;https://talk.jekyllrb.com/&quot;&gt;Jekyll Talk&lt;/a&gt;.&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">You’ll find this post in your _posts directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run jekyll serve, which launches a web server and auto-regenerates your site when a file is updated.</summary></entry></feed>
+&lt;h2 id=&quot;program-analysis&quot;&gt;Program analysis&lt;/h2&gt;
+&lt;h3 id=&quot;lets-run-it-&quot;&gt;Let’s run it !&lt;/h3&gt;
+
+&lt;p&gt;Here is a standard execution:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@csb:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./cookiePublic64
+Welcome to the Cookie Jar program!
+
+In order to get the flag, you will need to have 100 cookies!
+
+So, how many cookies are there &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the cookie jar:
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 100
+Sorry, you only had 0 cookies, try again!
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The program asks for an number of cookies in the jar but no matter what we submit, it seems that we are stuck with 0 cookies.&lt;/p&gt;
+
+&lt;p&gt;Alright, now let’s dive into the code !&lt;/p&gt;
+
+&lt;h3 id=&quot;source-code-dissection&quot;&gt;Source code dissection&lt;/h3&gt;
+
+&lt;p&gt;The code is pretty simple so the vulnerability should jump out.&lt;/p&gt;
+
+&lt;p&gt;Don’t pay attention to the first part of the main function, it only sets the execution rights of the program.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getegid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;setresgid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Here are the noticeable parts:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A variable named &lt;strong&gt;numCookies&lt;/strong&gt; is declared and initialized with 0.
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A buffer is declared with a size of 64 characters for storing the user input.
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;A simple check is done on &lt;strong&gt;numCookies&lt;/strong&gt; and displays the &lt;strong&gt;flag&lt;/strong&gt; if numCookies&amp;gt;=100.
+    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Congrats, you have %d cookies!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Here's your flag: %s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FLAG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Sorry, you only had %d cookies, try again!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;All of this seems pretty legit but there’s no way to increment this variable… We’re probably missing something.&lt;/p&gt;
+
+&lt;h2 id=&quot;vulnerabilty-explanation&quot;&gt;Vulnerabilty explanation&lt;/h2&gt;
+
+&lt;p&gt;I’ll give you a hint:&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gets(buffer);
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;At this moment, you must be like “Yeah… OK… tell me more” and it’s normal if you’ve never encountered this kind of vulnerability.&lt;/p&gt;
+
+&lt;p&gt;However, this is probably one of the most common exploit and it’s called &lt;strong&gt;buffer overflow&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-is-a-buffer-overflow&quot;&gt;What is a buffer overflow?&lt;/h3&gt;
+
+&lt;p&gt;When a variable is declared, space is allocated on the stack according to the size of our variable.&lt;/p&gt;
+
+&lt;p&gt;Let’s take the example of the buffer from the challenge:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After this instruction, &lt;strong&gt;64 bytes are allocated on the stack&lt;/strong&gt; in order to store the value contained in the buffer (A char is coded on a single byte in C).&lt;/p&gt;
+
+&lt;p&gt;In compiled languages such as C, the memory is allocated at the compilation time and this process is sequential. It means that the next variable found in the code will be located above the previous one on the stack.&lt;/p&gt;
+
+&lt;p&gt;Also keep in mind that &lt;strong&gt;the highest addresses are located at the bottom of the stack&lt;/strong&gt; in our architecture.&lt;/p&gt;
+
+&lt;p&gt;In the source code of the challenge, the very interesting variable &lt;strong&gt;numCookies&lt;/strong&gt; is declared just before the buffer. In other words, &lt;strong&gt;the buffer will be stored right above numCookies on the stack.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s represent the hypotetical state of the stack:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/assets/2018-06-05/stack-draw.png&quot; alt=&quot;State of the stack&quot; title=&quot;State of the stack&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At this point, you should be able to start guessing the impact of such vulnerability.&lt;/p&gt;
+
+&lt;p&gt;Indeed, we have 64 bytes of memory allocated to our buffer, but what happens if we try to write more than 64 bytes ?&lt;/p&gt;
+
+&lt;p&gt;Any idea? … It simply &lt;strong&gt;overwrites the values&lt;/strong&gt; stored in variables that are located below the buffer on the stack.&lt;/p&gt;
+
+&lt;h3 id=&quot;what-does-it-involve&quot;&gt;What does it involve?&lt;/h3&gt;
+
+&lt;p&gt;Overwriting variables in the stack can result in random effects if the attacker doesn’t control the impacted variables.&lt;/p&gt;
+
+&lt;p&gt;However, if the stack is perfectly controlled, the attack can occur a &lt;strong&gt;program crash&lt;/strong&gt; or &lt;strong&gt;provide full-rights on the machine&lt;/strong&gt; to the attacker by executing a shellcode.&lt;/p&gt;
+
+&lt;p&gt;Buffer overflows only act as &lt;strong&gt;vectors of attack&lt;/strong&gt;, they represent a way of gaining access or executing code on the machine but they often don’t symbolize the attack in its entirety. Once the access is granted on the machine, the funny things can start…&lt;/p&gt;
+
+&lt;p&gt;We will see more advanced exploits based on buffer overflows in future articles, don’t worry about that ;).&lt;/p&gt;
+
+&lt;h2 id=&quot;detection-of-the-vulnerable-code&quot;&gt;Detection of the vulnerable code&lt;/h2&gt;
+
+&lt;p&gt;Alright, this vulnerability seems really powerful but is there a way to prevent it? How do we identify the vulnerable piece of code?&lt;/p&gt;
+
+&lt;p&gt;In our case, the vulnerability is simple to exploit because of the lack of user input control. The following part of the code is vulnerable because the developper didn’t verify the length of the user input.&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A simple &lt;code class=&quot;highlighter-rouge&quot;&gt;man gets&lt;/code&gt; warns us about the usage of this function and its level of risk.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Never use gets().  Because it is impossible to tell without knowing the data in advance how many characters gets() will read,  and  because gets()  will continue to store characters past the end of the buffer, it is extremely dangerous to use.  It has been used to break computer security. Use fgets() instead.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here is what a careful developer should have written:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;OR&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;If you were to retain one thing from this article, as a developer, it would be this: &lt;strong&gt;NEVER TRUST USER INPUT&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;exploit&quot;&gt;Exploit&lt;/h2&gt;
+
+&lt;p&gt;Now that we have identified the &lt;strong&gt;vector of attack&lt;/strong&gt; and the piece of &lt;strong&gt;vulnerable code&lt;/strong&gt;, we can write the exploit!&lt;/p&gt;
+
+&lt;p&gt;Our objective is to bypass this “if statement”: &lt;code class=&quot;highlighter-rouge&quot;&gt;if (numCookies &amp;gt;= 100){&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;In order to do that, we have to set &lt;strong&gt;numCookies&lt;/strong&gt; to &lt;strong&gt;100 or greater&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Let’s get our hands dirty!&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;You get it, we have to submit more than 64 characters to the program.&lt;/p&gt;
+
+&lt;p&gt;There are 2 methods:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can enter the 64 characters manually when the program asks for a number of cookies.&lt;/li&gt;
+  &lt;li&gt;Or you can &lt;strong&gt;use a scripting language&lt;/strong&gt; such as python or perl to do it for you (Highly recommended).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;To make sure the value of &lt;strong&gt;numCookies&lt;/strong&gt; is overwritten, we can write 80 characters thanks to the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@csb:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;perl &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'print &quot;A&quot;x80'&lt;/span&gt; | ./cookiePublic64
+Welcome to the Cookie Jar program!
+
+In order to get the flag, you will need to have 100 cookies!
+
+So, how many cookies are there &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the cookie jar:
+Congrats, you have 1094795585 cookies!
+Here&lt;span class=&quot;s1&quot;&gt;'s your flag: ----------REDACTED----------
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It’s working! Now, we just have to execute our exploit on the remote server in order to get the flag :).&lt;/p&gt;
+
+&lt;p&gt;I hope you now have a clearer idea of what is a buffer overflow. Do not hesitate to leave a comment or to contact me if you have any question or suggestion.&lt;/p&gt;
+
+&lt;p&gt;BoiteAKlou&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce Buffer Overflows…</summary></entry></feed>
