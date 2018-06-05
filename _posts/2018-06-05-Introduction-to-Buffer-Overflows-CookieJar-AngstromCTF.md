@@ -39,7 +39,7 @@ Sorry, you only had 0 cookies, try again!
 
 The program asks for an number of cookies in the jar but no matter what we submit, it seems that we are stuck with 0 cookies.
 
-Alright, now let's dive into the code !
+Alright, now let's dive into the code!
 
 ### Source code dissection
 
@@ -115,7 +115,7 @@ Let's represent the hypotetical state of the stack:
 
 At this point, you should be able to start guessing the impact of such vulnerability.
 
-Indeed, we have 64 bytes of memory allocated to our buffer, but what happens if we try to write more than 64 bytes ?
+Indeed, we have 64 bytes of memory allocated to our buffer, but what happens if we try to write more than 64 bytes?
 
 Any idea? ... It simply **overwrites the values** stored in variables that are located below the buffer on the stack.
 
