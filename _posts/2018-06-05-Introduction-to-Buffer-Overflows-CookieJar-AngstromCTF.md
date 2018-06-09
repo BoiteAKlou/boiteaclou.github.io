@@ -2,6 +2,7 @@
 layout: post
 title:  "Introduction to Buffer Overflows: CookieJar - AngstromCTF"
 date:   2018-06-05 08:35:00 +0200
+comments: true
 author: BoiteAKlou
 categories:
 - "Pwning"
