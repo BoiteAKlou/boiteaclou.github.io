@@ -129,7 +129,7 @@ However, if the stack is perfectly controlled, the attack can occur a **program 
 
 Buffer overflows only act as **vectors of attack**, they represent a way of gaining access or executing code on the machine but they often don't symbolize the attack in its entirety. Once the access is granted on the machine, the funny things can start...
 
-We will see more advanced exploits based on buffer overflows in future articles, don't worry about that ;).
+We will see more advanced exploits based on buffer overflows in future articles, don't worry about that :wink:.
 
 
 ## Detection of the vulnerable code
@@ -187,11 +187,11 @@ Congrats, you have 1094795585 cookies!
 Here's your flag: ----------REDACTED----------
 ```
 
-It's working! Now, we just have to execute our exploit on the remote server in order to get the flag :).
+It's working! Now, we just have to execute our exploit on the remote server in order to get the flag :blush:.
 
 
 I hope you now have a clearer idea of what is a buffer overflow. Do not hesitate to leave a comment or to contact me if you have any question or suggestion.
 
 
 
-BoiteAKlou
+BoiteAKlou :hammer:

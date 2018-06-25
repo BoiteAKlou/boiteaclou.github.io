@@ -15,4 +15,4 @@ They provide a rich playground as long as lots of useful documentations.
 
 What I'd like to do with this blog is to explain some basics of Computer Security in the context of Capture The Flag contests. I'll post here detailed write-ups of challenges I found interesting in the CTFs I've done.
 
-Articles will be intended for beginners so I'll try to be very explicit and, of course, do not hesitate to contact me for any inquiry.
+Articles will be intended for beginners so I'll try to be very explicit and, of course, do not hesitate to contact me for any inquiry :blush:.

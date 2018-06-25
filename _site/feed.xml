@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-06-25T00:55:17+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-06-25T22:22:40+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
@@ -14,6 +14,8 @@
 &lt;/blockquote&gt;
 
 &lt;p&gt;The sentence in bold has to be decoded in order to get the flag and to validate the challenge.&lt;/p&gt;
+
+&lt;p&gt;If you’re already familiar with affine cipher or just want to read the challenge’s write-up, you can jump straight to the &lt;em&gt;Breaking the code&lt;/em&gt; section.&lt;/p&gt;
 
 &lt;h2 id=&quot;information-gathering&quot;&gt;Information gathering&lt;/h2&gt;
 
@@ -36,14 +38,10 @@ In the context of AngstromCTF, each flag respects the following convention: &lt;
 
 &lt;p&gt;&lt;strong&gt;Monoalphabetic&lt;/strong&gt; means that the same alphabet is used for encrypting the whole message. On the contrary, &lt;strong&gt;Polyalphabetic&lt;/strong&gt; substitution ciphers will use multiple alphabets for encrypting the same message. They are generally much &lt;strong&gt;stronger&lt;/strong&gt; than &lt;strong&gt;Monoalphabetic ciphers&lt;/strong&gt; because each letter of the plaintext is usually mapped to multiple different letters in the ciphered text.&lt;/p&gt;
 
-&lt;p&gt;Let me show you a quick example:&lt;/p&gt;
-
-&lt;p&gt;[[insert schema here]]&lt;/p&gt;
-
 &lt;h3 id=&quot;encryption&quot;&gt;Encryption&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;The first step in the encryption process is to assign an integer in the range 0 to m-1 to each letter, where &lt;strong&gt;m is the size of the alphabet&lt;/strong&gt; (usually 26).&lt;/li&gt;
+  &lt;li&gt;The first step of the encryption process consists in assigning an integer in the range 0 to \(m-1\) to each letter, where &lt;strong&gt;m is the size of the alphabet&lt;/strong&gt; (usually 26).&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;table&gt;
@@ -57,20 +55,7 @@ In the context of AngstromCTF, each flag respects the following convention: &lt;
       &lt;td&gt;f&lt;/td&gt;
       &lt;td&gt;g&lt;/td&gt;
       &lt;td&gt;h&lt;/td&gt;
-      &lt;td&gt;i&lt;/td&gt;
-      &lt;td&gt;j&lt;/td&gt;
-      &lt;td&gt;k&lt;/td&gt;
-      &lt;td&gt;l&lt;/td&gt;
-      &lt;td&gt;m&lt;/td&gt;
-      &lt;td&gt;n&lt;/td&gt;
-      &lt;td&gt;o&lt;/td&gt;
-      &lt;td&gt;p&lt;/td&gt;
-      &lt;td&gt;q&lt;/td&gt;
-      &lt;td&gt;r&lt;/td&gt;
-      &lt;td&gt;s&lt;/td&gt;
-      &lt;td&gt;t&lt;/td&gt;
-      &lt;td&gt;u&lt;/td&gt;
-      &lt;td&gt;v&lt;/td&gt;
+      &lt;td&gt;…&lt;/td&gt;
       &lt;td&gt;w&lt;/td&gt;
       &lt;td&gt;x&lt;/td&gt;
       &lt;td&gt;y&lt;/td&gt;
@@ -85,20 +70,7 @@ In the context of AngstromCTF, each flag respects the following convention: &lt;
       &lt;td&gt;5&lt;/td&gt;
       &lt;td&gt;6&lt;/td&gt;
       &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;10&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;12&lt;/td&gt;
-      &lt;td&gt;13&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;16&lt;/td&gt;
-      &lt;td&gt;17&lt;/td&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
-      &lt;td&gt;20&lt;/td&gt;
-      &lt;td&gt;21&lt;/td&gt;
+      &lt;td&gt;…&lt;/td&gt;
       &lt;td&gt;22&lt;/td&gt;
       &lt;td&gt;23&lt;/td&gt;
       &lt;td&gt;24&lt;/td&gt;
@@ -108,19 +80,19 @@ In the context of AngstromCTF, each flag respects the following convention: &lt;
 &lt;/table&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Then we have to define a pair of integers &lt;strong&gt;(a,b)&lt;/strong&gt; which will represent &lt;strong&gt;the key&lt;/strong&gt;. In order to be able to decipher the message, &lt;strong&gt;a must be coprime with m&lt;/strong&gt;. If it’s not the case, the same integer will be associated with more than one letter in our table.
-This gives the following list of possibilities for a: 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.&lt;/li&gt;
+  &lt;li&gt;Then we have to define a pair of integers \((a,b)\) which will represent &lt;strong&gt;the key&lt;/strong&gt;. In order to be able to decipher the message, &lt;strong&gt;a must be coprime with m&lt;/strong&gt;. If it’s not the case, the same integer will be associated with more than one letter in our table.
+This gives the following list of possibilities for \(a\): 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;For the example, we will choose the couple (a = 5, b = 8) as the key.&lt;/p&gt;
+&lt;p&gt;For the example, we will choose the couple \((a = 5, b = 8)\) as the key.&lt;/p&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Now that each letter is associated with an integer and that we have defined the key, we are ready to encrypt the message. In order to do this, we simply have to apply the mathematical formula that defines the affine cipher, with &lt;strong&gt;x&lt;/strong&gt; being the &lt;strong&gt;integer associated with the letter&lt;/strong&gt; we want to encrypt:&lt;/li&gt;
+  &lt;li&gt;Now that each letter is associated with an integer and that we have defined the key, we are ready to encrypt the message. In order to do this, we simply have to apply the mathematical formula that defines the affine cipher, with \(x\) being the &lt;strong&gt;integer associated with the letter&lt;/strong&gt; we want to encrypt:&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;E(x) = (ax + b)\mod{m}&lt;/script&gt;
 
-&lt;p&gt;To give you an example, let’s say we want to encrypt the following sentence using the key defined earlier:&lt;/p&gt;
+&lt;p&gt;To give you an example, let’s say we want to encrypt the following sentence using the key defined above:&lt;/p&gt;
 
 &lt;p&gt;CRYPTOISLOVE&lt;/p&gt;
 
@@ -194,6 +166,15 @@ This gives the following list of possibilities for a: 1, 3, 5, 7, 9, 11, 15, 17,
   &lt;/tbody&gt;
 &lt;/table&gt;
 
+&lt;blockquote&gt;
+  &lt;p&gt;Detail of the first column:
+&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
+\begin{eqnarray}
+E(2) &amp;=&amp; 2\times 5 + 8\mod{26}\\
+E(2) &amp;=&amp; 18
+\end{eqnarray} %]]&gt;&lt;/script&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
 &lt;p&gt;And convert back the obtained integers into letters to get the ciphered message:&lt;/p&gt;
 
 &lt;table&gt;
@@ -236,13 +217,9 @@ This gives the following list of possibilities for a: 1, 3, 5, 7, 9, 11, 15, 17,
 &lt;/blockquote&gt;
 
 &lt;h3 id=&quot;decryption&quot;&gt;Decryption&lt;/h3&gt;
+
 &lt;ul&gt;
-  &lt;li&gt;
-    &lt;p&gt;Explain why a coprime with m&lt;/p&gt;
-  &lt;/li&gt;
-  &lt;li&gt;
-    &lt;p&gt;The first step of the decryption process consists in replacing each letter of the ciphered text with the corresponding integer.&lt;/p&gt;
-  &lt;/li&gt;
+  &lt;li&gt;The first step of the decryption process consists in replacing each letter of the ciphered text with the corresponding integer.&lt;/li&gt;
 &lt;/ul&gt;
 
 &lt;table&gt;
@@ -279,10 +256,10 @@ This gives the following list of possibilities for a: 1, 3, 5, 7, 9, 11, 15, 17,
 &lt;/table&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;Then we have to find the &lt;strong&gt;modular multiplicative inverse of a&lt;/strong&gt;. There are different ways to do it which won’t be detailed here. If you’re interested in knowing how to compute it, you should have a look at &lt;a href=&quot;https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm&quot;&gt;Extended Euclidean algorithm&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/Euler%27s_theorem&quot;&gt;Euler’s theorem&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;Then we have to find the &lt;strong&gt;modular multiplicative inverse&lt;/strong&gt; of \(a\). There are different ways to do it which won’t be detailed here. If you’re interested in knowing how to compute it, you should have a look at &lt;a href=&quot;https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm&quot;&gt;Extended Euclidean algorithm&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/Euler%27s_theorem&quot;&gt;Euler’s theorem&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;In our previous example, the &lt;strong&gt;modular multiplicative inverse of a is 21&lt;/strong&gt;. We will call it &lt;strong&gt;a’&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;In our previous example, the &lt;strong&gt;modular multiplicative inverse&lt;/strong&gt; of \(a\) is 21. We will call it \(a’\).&lt;/p&gt;
 
 &lt;ul&gt;
   &lt;li&gt;Now can apply the following decryption function to each integer of the table and convert the result back into letter to get the deciphered message.&lt;/li&gt;
@@ -338,16 +315,16 @@ This gives the following list of possibilities for a: 1, 3, 5, 7, 9, 11, 15, 17,
   &lt;p&gt;A cryptographic system should be secure even if everything about the system, except the key, is public knowledge.&lt;/p&gt;
 &lt;/blockquote&gt;
 
-&lt;p&gt;The affine cipher often uses an alphabet of 26 letters including 12 numbers which are coprime with 26. This gives us a total of 12 x 26 = &lt;strong&gt;312 possible keys&lt;/strong&gt;.&lt;/p&gt;
+&lt;p&gt;The affine cipher often uses an alphabet of 26 letters including 12 numbers which are coprime with 26. This gives us a total of \(12 \times 26 = 312\) possible keys.&lt;/p&gt;
 
-&lt;p&gt;This is something we can easily bruteforce so it is considered as highly insecure in the light of Kerckhoffs’ Principle.&lt;/p&gt;
+&lt;p&gt;This is something we can easily bruteforce so this cipher is considered as highly insecure in the light of Kerckhoffs’ Principle.&lt;/p&gt;
 
 &lt;h3 id=&quot;frequency-analysis&quot;&gt;Frequency Analysis&lt;/h3&gt;
 
 &lt;p&gt;Frequency Analysis is a very popular method of cryptanalysis. It consists in studying the frequency of letters in a ciphertext.
-For example, if the most occurent letter in a ciphered text is “Z”, you can suppose “Z” replaces the most common letter of the source language of the plain text (“E” in the English language).&lt;/p&gt;
+For example, if the most occurent letter in a ciphered text is “Z”, you can suppose that “Z” replaces the most common letter of the source language (which is “E” in the English language).&lt;/p&gt;
 
-&lt;p&gt;Every monoalphabetic substitution cipher is vulnerable to this method of cryptanalysis. However, it requires a long ciphered text for the frequency analysis to be relevant. In the context of this challenge, we only have a single sentence, which is clearly not sufficient. Let’s save this method for another challenge ;-)&lt;/p&gt;
+&lt;p&gt;Every monoalphabetic substitution cipher is vulnerable to this method of cryptanalysis. However, it requires a long ciphered text for the frequency analysis to be relevant. In the context of this challenge, we only have a single sentence, which is clearly not sufficient. Let’s save this method for another challenge… :wink:&lt;/p&gt;
 
 &lt;h3 id=&quot;not-even-funny&quot;&gt;Not even funny&lt;/h3&gt;
 
@@ -365,6 +342,8 @@ Feel free to write a small &lt;strong&gt;script&lt;/strong&gt; which will &lt;st
 &lt;p&gt;This is called a &lt;strong&gt;known plain attack&lt;/strong&gt;. We know a part of the plain text and it’s corresponding ciphered text. From that, we can try guess the key and be able discover the whole message. This type of attack is not always possible but it works perfectly in our case.&lt;/p&gt;
 
 &lt;h4 id=&quot;demonstration&quot;&gt;Demonstration&lt;/h4&gt;
+
+&lt;p&gt;Once again, we assign an integer to each letter of the plain and the ciphered text:&lt;/p&gt;
 
 &lt;table&gt;
   &lt;tbody&gt;
@@ -400,22 +379,25 @@ Feel free to write a small &lt;strong&gt;script&lt;/strong&gt; which will &lt;st
   &lt;/tbody&gt;
 &lt;/table&gt;
 
-&lt;p&gt;According to our hypothesis:&lt;/p&gt;
+&lt;p&gt;According to our hypothesis that the beginning of the ciphered text corresponds to &lt;strong&gt;actf{&lt;/strong&gt;, we have:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 \begin{eqnarray}
-	E(0) &amp;=&amp; \boxed{12}\\
+	E(0) &amp;=&amp; 12\\
 	E(2) &amp;=&amp; 24\\
 	E(19) &amp;=&amp; 9\\
 	E(5) &amp;=&amp; 3\\
 \end{eqnarray} %]]&gt;&lt;/script&gt;
 
-&lt;p&gt;The first two equations will be enough for us to find the key. It gives us the following system:&lt;/p&gt;
+&lt;p&gt;The first equation means that when we encrypt the letter number 0, it gives the letter number 12.
+We won’t need more than the first two equations in order to find the key.&lt;/p&gt;
+
+&lt;p&gt;This gives the following system:&lt;/p&gt;
 
 &lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
 \left\{
 \begin{array}{r c l}
-0a + b &amp;\equiv&amp; 12\mod{26}\\
+0a + b &amp;\equiv&amp; \boxed{12}\mod{26}\\
 2a + b &amp;\equiv&amp; 24\mod{26}\\
 \end{array}
 \right. %]]&gt;&lt;/script&gt;
@@ -437,9 +419,9 @@ Feel free to write a small &lt;strong&gt;script&lt;/strong&gt; which will &lt;st
 
 &lt;p&gt;&lt;strong&gt;actf{it_begins}&lt;/strong&gt;&lt;/p&gt;
 
-&lt;p&gt;That’s it for this challenge but don’t worry, it was only the warm-up! ;-) Do not hesitate to leave a comment or to contact me for any question or inquiry.&lt;/p&gt;
+&lt;p&gt;That’s it for this challenge but don’t worry, it was only the warm-up! :blush: Do not hesitate to leave a comment or to contact me for any question or inquiry.&lt;/p&gt;
 
-&lt;p&gt;BoiteAKlou&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</summary></entry><entry><title type="html">Introduction to Buffer Overflows: CookieJar - AngstromCTF</title><link href="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html" rel="alternate" type="text/html" title="Introduction to Buffer Overflows: CookieJar - AngstromCTF" /><published>2018-06-05T08:35:00+02:00</published><updated>2018-06-05T08:35:00+02:00</updated><id>http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">&lt;p&gt;For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce &lt;strong&gt;Buffer Overflows&lt;/strong&gt;…
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</summary></entry><entry><title type="html">Introduction to Buffer Overflows: CookieJar - AngstromCTF</title><link href="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html" rel="alternate" type="text/html" title="Introduction to Buffer Overflows: CookieJar - AngstromCTF" /><published>2018-06-05T08:35:00+02:00</published><updated>2018-06-05T08:35:00+02:00</updated><id>http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">&lt;p&gt;For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce &lt;strong&gt;Buffer Overflows&lt;/strong&gt;…
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
@@ -555,7 +537,7 @@ Sorry, you only had 0 cookies, try again!
 
 &lt;p&gt;Buffer overflows only act as &lt;strong&gt;vectors of attack&lt;/strong&gt;, they represent a way of gaining access or executing code on the machine but they often don’t symbolize the attack in its entirety. Once the access is granted on the machine, the funny things can start…&lt;/p&gt;
 
-&lt;p&gt;We will see more advanced exploits based on buffer overflows in future articles, don’t worry about that ;).&lt;/p&gt;
+&lt;p&gt;We will see more advanced exploits based on buffer overflows in future articles, don’t worry about that :wink:.&lt;/p&gt;
 
 &lt;h2 id=&quot;detection-of-the-vulnerable-code&quot;&gt;Detection of the vulnerable code&lt;/h2&gt;
 
@@ -611,8 +593,8 @@ Congrats, you have 1094795585 cookies!
 Here&lt;span class=&quot;s1&quot;&gt;'s your flag: ----------REDACTED----------
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;It’s working! Now, we just have to execute our exploit on the remote server in order to get the flag :).&lt;/p&gt;
+&lt;p&gt;It’s working! Now, we just have to execute our exploit on the remote server in order to get the flag :blush:.&lt;/p&gt;
 
 &lt;p&gt;I hope you now have a clearer idea of what is a buffer overflow. Do not hesitate to leave a comment or to contact me if you have any question or suggestion.&lt;/p&gt;
 
-&lt;p&gt;BoiteAKlou&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce Buffer Overflows…</summary></entry></feed>
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce Buffer Overflows…</summary></entry></feed>
