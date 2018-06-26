@@ -147,7 +147,7 @@ This is where the *information gathering* part becomes interesting. We've notice
 
 It is quite likely that **actf{...}** becomes **myjd{...}** when encrypted. If we find the key that gives such ciphered text, we will be able to decrypt the rest of the flag.
 
-This is called a **known plain attack**. We know a part of the plain text and it's corresponding ciphered text. From that, we can try guess the key and be able discover the whole message. This type of attack is not always possible but it works perfectly in our case.
+This is called a **known plain attack**. We know a part of the plain text and it's corresponding ciphered text. From that, we can guess the key and decode the whole message. This type of attack is not always possible but it works perfectly in our case.
 
 #### Demonstration
 
