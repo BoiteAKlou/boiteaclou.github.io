@@ -1,4 +1,33 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-06-25T22:22:40+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-01T18:53:55+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">PCAPNG Forensics: Decode - NDH16</title><link href="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html" rel="alternate" type="text/html" title="PCAPNG Forensics: Decode - NDH16" /><published>2018-07-01T18:00:00+02:00</published><updated>2018-07-01T18:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html">&lt;p&gt;A warm-up forensic challenge proposed by NDH16…
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
+&lt;p&gt;We are given a packet capture (decode.pcapng) and a zip archive (Decode_.zip) which have to be investigated.&lt;/p&gt;
+
+&lt;p&gt;The Zip file isn’t necessary for this challenge since I found the flag in the packet capture, without any intervention of the zip’s content.&lt;/p&gt;
+
+&lt;h2 id=&quot;wiresharks-power&quot;&gt;Wireshark’s power&lt;/h2&gt;
+&lt;p&gt;Let’s open this packet capture with Wireshark, it’s simply one of the best and easiest-to-use tool for analyzing network captures.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-01/wireshark.png&quot; alt=&quot;Wireshark screen capture&quot; title=&quot;Wireshark&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Each request is sent to localhost (127.0.0.1) so this capture probably shows interactions between the client and the local  in-development server.&lt;/p&gt;
+
+&lt;p&gt;We can see that &lt;strong&gt;HTTP&lt;/strong&gt; is user over &lt;strong&gt;TCP&lt;/strong&gt; so the best thing to do is to use the &lt;em&gt;“Follow HTTP stream”&lt;/em&gt; option in order to undesrtand the nature of the resquets shown here.&lt;/p&gt;
+
+&lt;p&gt;The GET request at destination of &lt;strong&gt;/wp-login.php&lt;/strong&gt; indicates us that we are dealing with a &lt;strong&gt;wordpress&lt;/strong&gt; site. The next HTTP POST request seems very interesting because it should contain the authentication parameters of the website’s administrator.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-01/httpstream.png&quot; alt=&quot;HTTP stream screen capture&quot; title=&quot;HTTP stream&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Indeed, we see the following admin credentials in the request parameters.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;log=decode&amp;amp;pwd=95%2F%40Jywf5R%40666
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;However, the challenge is not over since the password is URL-encoded.
+After decoding, we have: &lt;code class=&quot;highlighter-rouge&quot;&gt;95/@Jywf5R@666&lt;/code&gt; which is the flag! :triangular_flag_on_post:&lt;/p&gt;
+
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A warm-up forensic challenge proposed by NDH16…</summary></entry><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
@@ -339,7 +368,7 @@ Feel free to write a small &lt;strong&gt;script&lt;/strong&gt; which will &lt;st
 
 &lt;p&gt;It is quite likely that &lt;strong&gt;actf{…}&lt;/strong&gt; becomes &lt;strong&gt;myjd{…}&lt;/strong&gt; when encrypted. If we find the key that gives such ciphered text, we will be able to decrypt the rest of the flag.&lt;/p&gt;
 
-&lt;p&gt;This is called a &lt;strong&gt;known plain attack&lt;/strong&gt;. We know a part of the plain text and it’s corresponding ciphered text. From that, we can try guess the key and be able discover the whole message. This type of attack is not always possible but it works perfectly in our case.&lt;/p&gt;
+&lt;p&gt;This is called a &lt;strong&gt;known plain attack&lt;/strong&gt;. We know a part of the plain text and it’s corresponding ciphered text. From that, we can guess the key and decode the whole message. This type of attack is not always possible but it works perfectly in our case.&lt;/p&gt;
 
 &lt;h4 id=&quot;demonstration&quot;&gt;Demonstration&lt;/h4&gt;
 
