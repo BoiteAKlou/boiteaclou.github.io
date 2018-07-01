@@ -23,7 +23,7 @@ Let's open this packet capture with Wireshark, it's simply one of the best and e
 
 Each request is sent to localhost (127.0.0.1) so this capture probably shows interactions between the client and the local  in-development server.
 
-We can see that **HTTP** is user over **TCP** so the best thing to do is to use the *"Follow HTTP stream"* option in order to undesrtand the nature of the resquets shown here.
+We can see that **HTTP** is used over **TCP** so the best thing to do is to use the *"Follow HTTP stream"* option in order to undesrtand the nature of the resquets shown here.
 
 The GET request at destination of **/wp-login.php** indicates us that we are dealing with a **wordpress** site. The next HTTP POST request seems very interesting because it should contain the authentication parameters of the website's administrator.
 
