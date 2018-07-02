@@ -1,8 +1,67 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-01T18:53:55+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">PCAPNG Forensics: Decode - NDH16</title><link href="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html" rel="alternate" type="text/html" title="PCAPNG Forensics: Decode - NDH16" /><published>2018-07-01T18:00:00+02:00</published><updated>2018-07-01T18:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html">&lt;p&gt;A warm-up forensic challenge proposed by NDH16…
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-02T22:23:41+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/ICMP-data-exfiltration-NDH-ICMP.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/ICMP-data-exfiltration-NDH-ICMP</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/ICMP-data-exfiltration-NDH-ICMP.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration…
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-&lt;p&gt;We are given a packet capture (decode.pcapng) and a zip archive (Decode_.zip) which have to be investigated.&lt;/p&gt;
+
+&lt;p&gt;We are given &lt;a href=&quot;http://localhost:4000/assets/2018-07-02/analysis.pcap&quot;&gt;a packet capture&lt;/a&gt; showing lots of &lt;strong&gt;Echo Requests / Replies&lt;/strong&gt; between the same two computers and we’re supposed to investigate.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-02/wireshark.png&quot; alt=&quot;Wireshark screen capture&quot; title=&quot;Wireshark&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;pretty-heavy-for-a-ping&quot;&gt;Pretty heavy for a ping…&lt;/h2&gt;
+
+&lt;p&gt;The ICMP protocol is pretty simple and does not contain a lot of information. However, it includes a &lt;strong&gt;data field&lt;/strong&gt; used notably in error messages. This data field can also be used for creating an &lt;strong&gt;ICMP tunnel&lt;/strong&gt; between two remote computers where hosts inject data into icmp echo packets. This method is often used to &lt;strong&gt;bypass firewall rules&lt;/strong&gt; in the aim of &lt;strong&gt;exfiltrating data&lt;/strong&gt;.
+Such process can be detected by analyzing ICMP echo packets’ size. These packets usually don’t exceed 100 bytes. Here, each of them is 542 bytes long.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-02/icmp_packet_size.png&quot; alt=&quot;ICMP packet size&quot; title=&quot;ICMP Packet size&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We definitively should have a look at what takes so much space.&lt;/p&gt;
+
+&lt;h2 id=&quot;gimme-your-data&quot;&gt;Gimme your data!&lt;/h2&gt;
+
+&lt;p&gt;I wrote a simple python script &lt;strong&gt;extracting the data section&lt;/strong&gt; of ICMP echo request packets. For this, I used the &lt;strong&gt;Scapy&lt;/strong&gt; module, which is for me the best tool when it comes to handling packet captures, due to its effectiveness and simplicity of use. My script also &lt;strong&gt;converts extracted data to ASCII&lt;/strong&gt; because it occured to be base64 encoded, which is not surprising since it avoids encoding errors during the transmission.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scapy.all&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;base64&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rdpcap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'analysis.pcap'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ping_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packet&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ICMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Echo request&lt;/span&gt;
+       &lt;span class=&quot;n&quot;&gt;ping_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b64decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ping_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE: I only kept request packets since replies send back same data and can cause errors when recovering exfiltrated data.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The hidden text reveals to be a part of the very famous &lt;em&gt;“Hacker Manifesto”&lt;/em&gt; followed by the man page of the “ping” tool.
+Right between the two texts lies our reward… :triangular_flag_on_post:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;I am a hacker, and this is my manifesto.  You may stop this individual,
+but you can't stop us all... after all, we're all alike.
+
+                              +++The Mentor+++
+
+
+Congratulations, ICMP exfiltatration is awesome! The flag is : ndh2k18_017395f4c6312759
+
+
+
+Now let's read the manual of one of the best tools you never had!
+
+PING(8)                                  System Manager's Manual: iputils                                  PING(8)
+
+NAME
+      ping - send ICMP ECHO_REQUEST to network hosts
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">An interesting forensic challenge covering a famous method of data exfiltration…</summary></entry><entry><title type="html">PCAPNG Forensics: Decode - NDH16</title><link href="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html" rel="alternate" type="text/html" title="PCAPNG Forensics: Decode - NDH16" /><published>2018-07-01T18:00:00+02:00</published><updated>2018-07-01T18:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html">&lt;p&gt;A warm-up forensic challenge proposed by NDH16…
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
+&lt;p&gt;We are given &lt;a href=&quot;/assets/2018-07-01/decode.pcapng&quot;&gt;a packet capture&lt;/a&gt; and &lt;a href=&quot;.assets/2018-07-01/Decode_.zip&quot;&gt;a zip archive&lt;/a&gt; which have to be investigated.&lt;/p&gt;
 
 &lt;p&gt;The Zip file isn’t necessary for this challenge since I found the flag in the packet capture, without any intervention of the zip’s content.&lt;/p&gt;
 
@@ -13,7 +72,7 @@
 
 &lt;p&gt;Each request is sent to localhost (127.0.0.1) so this capture probably shows interactions between the client and the local  in-development server.&lt;/p&gt;
 
-&lt;p&gt;We can see that &lt;strong&gt;HTTP&lt;/strong&gt; is user over &lt;strong&gt;TCP&lt;/strong&gt; so the best thing to do is to use the &lt;em&gt;“Follow HTTP stream”&lt;/em&gt; option in order to undesrtand the nature of the resquets shown here.&lt;/p&gt;
+&lt;p&gt;We can see that &lt;strong&gt;HTTP&lt;/strong&gt; is used over &lt;strong&gt;TCP&lt;/strong&gt; so the best thing to do is to use the &lt;em&gt;“Follow HTTP stream”&lt;/em&gt; option in order to undesrtand the nature of the resquets shown here.&lt;/p&gt;
 
 &lt;p&gt;The GET request at destination of &lt;strong&gt;/wp-login.php&lt;/strong&gt; indicates us that we are dealing with a &lt;strong&gt;wordpress&lt;/strong&gt; site. The next HTTP POST request seems very interesting because it should contain the authentication parameters of the website’s administrator.&lt;/p&gt;
 
