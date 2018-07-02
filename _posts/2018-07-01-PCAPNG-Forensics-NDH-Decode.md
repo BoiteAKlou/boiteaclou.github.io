@@ -12,7 +12,7 @@ A warm-up forensic challenge proposed by NDH16...
  <!--excerpt-->
 
 ## Challenge description
-We are given a packet capture (decode.pcapng) and a zip archive (Decode_.zip) which have to be investigated.
+We are given [a packet capture]({{"/assets/2018-07-01/decode.pcapng"}}) and [a zip archive]({{".assets/2018-07-01/Decode_.zip"}}) which have to be investigated.
 
 The Zip file isn't necessary for this challenge since I found the flag in the packet capture, without any intervention of the zip's content.
 
