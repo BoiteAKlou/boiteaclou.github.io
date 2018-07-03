@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-03T22:37:01+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">XML External Entities: Wonkachall-step1 - NDH16</title><link href="http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16.html" rel="alternate" type="text/html" title="XML External Entities: Wonkachall-step1 - NDH16" /><published>2018-07-03T22:00:00+02:00</published><updated>2018-07-03T22:00:00+02:00</updated><id>http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16</id><content type="html" xml:base="http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16.html">&lt;p&gt;This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-03T23:21:01+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">XML External Entities: Wonkachall-step1 - NDH16</title><link href="http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16.html" rel="alternate" type="text/html" title="XML External Entities: Wonkachall-step1 - NDH16" /><published>2018-07-03T22:00:00+02:00</published><updated>2018-07-03T22:00:00+02:00</updated><id>http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16</id><content type="html" xml:base="http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16.html">&lt;p&gt;This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
@@ -136,8 +136,6 @@ NAME
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 &lt;p&gt;We are given &lt;a href=&quot;/assets/2018-07-01/decode.pcapng&quot;&gt;a packet capture&lt;/a&gt; and &lt;a href=&quot;.assets/2018-07-01/Decode_.zip&quot;&gt;a zip archive&lt;/a&gt; which have to be investigated.&lt;/p&gt;
 
-&lt;p&gt;The Zip file isn’t necessary for this challenge since I found the flag in the packet capture, without any intervention of the zip’s content.&lt;/p&gt;
-
 &lt;h2 id=&quot;wiresharks-power&quot;&gt;Wireshark’s power&lt;/h2&gt;
 &lt;p&gt;Let’s open this packet capture with Wireshark, it’s simply one of the best and easiest-to-use tool for analyzing network captures.&lt;/p&gt;
 
@@ -156,8 +154,63 @@ NAME
 &lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;log=decode&amp;amp;pwd=95%2F%40Jywf5R%40666
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p&gt;However, the challenge is not over since the password is URL-encoded.
-After decoding, we have: &lt;code class=&quot;highlighter-rouge&quot;&gt;95/@Jywf5R@666&lt;/code&gt; which is the flag! :triangular_flag_on_post:&lt;/p&gt;
+&lt;p&gt;This password gives &lt;strong&gt;95/@Jywf5R@666&lt;/strong&gt; once URL-decoded.
+However, the challenge is not over since we don’t have the flag yet…&lt;/p&gt;
+
+&lt;h2 id=&quot;what-about-the-zip&quot;&gt;What about the zip?&lt;/h2&gt;
+
+&lt;p&gt;When trying to unzip the given archive, we face the following error:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unzip Decode_.zip
+Archive:  Decode_.zip
+   skipping: Decode_/Decode0         need PK compat. v5.1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;can &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;v4.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+   creating: Decode_/
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It looks like we need another tool to extract the content of this zip. &lt;strong&gt;7z&lt;/strong&gt; should be fine.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;7z e Decode_.zip
+
+7-Zip &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;64] 16.02 : Copyright &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 1999-2016 Igor Pavlov : 2016-05-21
+p7zip Version 16.02 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;C.UTF-8,Utf16&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;on,HugeFiles&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;on,64 bits,4 CPUs Intel&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;R&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; Core&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;TM&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; i5-6200U CPU @ 2.30GHz &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;406E3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,ASM,AES-NI&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Scanning the drive &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;archives:
+1 file, 366 bytes &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 KiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Extracting archive: Decode_.zip
+&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;
+Path &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; Decode_.zip
+Type &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; zip
+Physical Size &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 366
+
+
+Enter password &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;will not be echoed&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We’re so lucky to have found a password in the pcapng capture! Let’s try it!&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Enter password &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;will not be echoed&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+Everything is Ok        
+
+Folders: 1
+Files: 1
+Size:       442
+Compressed: 366
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The file “Decode0” is extracted. What does it contain?&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;Decode0
+01101110 01100100 01101000 00110001 00110110 01011111 01100011 01100010 01100110 01100011 01100101 00110101 01100101 00110011 00110110 01100100 01100100 00110011 00110011 01100011 00110110 01100001 01100100 01100011 01100101 00110011 00110010 01100001 00110110 01100010 00110101 00110111 00110111 01100010 01100101 00110001 00110110 00110001 01100010 00111001 00111000 00110001 00110101 00111000 00111001 00110011 00100000 00100000 00101101
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This little one-liner removes spaces in the binary flow and convert it to ASCII:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~$ sed -e &quot;s/ //g&quot; &amp;lt; Decode0 |perl -lpe '$_=pack&quot;B*&quot;,$_'
+ndh16_cbfce5e36dd33c6adce32a6b577be161b9815893  -
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The job is done! :triangular_flag_on_post:&lt;/p&gt;
 
 &lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A warm-up forensic challenge proposed by NDH16…</summary></entry><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
  &lt;!--excerpt--&gt;&lt;/p&gt;
