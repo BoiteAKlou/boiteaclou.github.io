@@ -11,6 +11,12 @@ categories:
 Here comes the first Cryptographic challenge! We'll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA...
  <!--excerpt-->
 
+# Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
 ## Challenge description
 
 The challenge statement is very explicit:

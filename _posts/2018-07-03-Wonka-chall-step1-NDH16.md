@@ -12,6 +12,12 @@ This challenge covers one of the most efficient and popular attack against web s
 
  <!--excerpt-->
 
+# Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
 ## Challenge description
 
 We have [a website](http://willywonka.shop:4242/) which is actually The Golden Ticket Blackmarket platform. It proposes a list of purchasable golden tickets where each ticket has a bitcoin cost, a name and an address.

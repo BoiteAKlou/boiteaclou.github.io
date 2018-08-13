@@ -8,8 +8,14 @@ categories:
 - "Forensic"
 ---
 
-An interesting forensic challenge covering a famous method of data exfiltration... 
+An interesting forensic challenge covering a famous method of data exfiltration...
  <!--excerpt-->
+
+# Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
 
 ## Challenge description
 

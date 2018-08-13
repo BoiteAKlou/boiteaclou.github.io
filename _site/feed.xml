@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-13T19:19:54+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-13T19:27:45+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
@@ -269,6 +269,14 @@ Simple! We have to extract the LSBs from each pixel and then assemble the result
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#never-gonna-give-you-up&quot; id=&quot;markdown-toc-never-gonna-give-you-up&quot;&gt;Never gonna give you up&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#never-gonna-let-you-down&quot; id=&quot;markdown-toc-never-gonna-let-you-down&quot;&gt;Never gonna let you down&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 
 &lt;p&gt;The PNG file &lt;a href=&quot;http://localhost:4000/assets/2018-07-05/OREILLES_SALES.png&quot;&gt;OREILLES_SALES.png&lt;/a&gt; (named after the famous french rapper “Orelsan”) is provided without more instructions.&lt;/p&gt;
@@ -441,6 +449,14 @@ ndh16_&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;d7817ba3f2cf61f97e73023bf815
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#take-my-golden-ticket&quot; id=&quot;markdown-toc-take-my-golden-ticket&quot;&gt;Take my Golden Ticket!&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#thats-not-a-ticket&quot; id=&quot;markdown-toc-thats-not-a-ticket&quot;&gt;That’s not a Ticket&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 
 &lt;p&gt;We have &lt;a href=&quot;http://willywonka.shop:4242/&quot;&gt;a website&lt;/a&gt; which is actually The Golden Ticket Blackmarket platform. It proposes a list of purchasable golden tickets where each ticket has a bitcoin cost, a name and an address.&lt;/p&gt;
@@ -510,8 +526,16 @@ The vast majority of this website is static at the exception of the “/upload.p
 
 &lt;p&gt;You can now read the writeup of Wonkachall-step2 :wink:&lt;/p&gt;
 
-&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</summary></entry><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration… 
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</summary></entry><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration…
  &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#pretty-heavy-for-a-ping&quot; id=&quot;markdown-toc-pretty-heavy-for-a-ping&quot;&gt;Pretty heavy for a ping…&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#gimme-your-data&quot; id=&quot;markdown-toc-gimme-your-data&quot;&gt;Gimme your data!&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 
@@ -571,6 +595,14 @@ NAME
 
 &lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">An interesting forensic challenge covering a famous method of data exfiltration…</summary></entry><entry><title type="html">PCAPNG Forensics: Decode - NDH16</title><link href="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html" rel="alternate" type="text/html" title="PCAPNG Forensics: Decode - NDH16" /><published>2018-07-01T18:00:00+02:00</published><updated>2018-07-01T18:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/01/PCAPNG-Forensics-NDH-Decode.html">&lt;p&gt;A warm-up forensic challenge proposed by NDH16…
  &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#wiresharks-power&quot; id=&quot;markdown-toc-wiresharks-power&quot;&gt;Wireshark’s power&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#what-about-the-zip&quot; id=&quot;markdown-toc-what-about-the-zip&quot;&gt;What about the zip?&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 &lt;p&gt;We are given &lt;a href=&quot;/assets/2018-07-01/decode.pcapng&quot;&gt;a packet capture&lt;/a&gt; and &lt;a href=&quot;.assets/2018-07-01/Decode_.zip&quot;&gt;a zip archive&lt;/a&gt; which have to be investigated.&lt;/p&gt;
@@ -653,6 +685,30 @@ ndh16_cbfce5e36dd33c6adce32a6b577be161b9815893  -
 
 &lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A warm-up forensic challenge proposed by NDH16…</summary></entry><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/crypto/2018/06/24/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
  &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#information-gathering&quot; id=&quot;markdown-toc-information-gathering&quot;&gt;Information gathering&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#affine-cipher&quot; id=&quot;markdown-toc-affine-cipher&quot;&gt;Affine cipher&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#monoalphabetic-substitution-cipher&quot; id=&quot;markdown-toc-monoalphabetic-substitution-cipher&quot;&gt;Monoalphabetic substitution cipher&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#encryption&quot; id=&quot;markdown-toc-encryption&quot;&gt;Encryption&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#decryption&quot; id=&quot;markdown-toc-decryption&quot;&gt;Decryption&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#breaking-the-code&quot; id=&quot;markdown-toc-breaking-the-code&quot;&gt;Breaking the code&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#kerckhoffs-principle&quot; id=&quot;markdown-toc-kerckhoffs-principle&quot;&gt;Kerckhoffs’ Principle&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#frequency-analysis&quot; id=&quot;markdown-toc-frequency-analysis&quot;&gt;Frequency Analysis&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#not-even-funny&quot; id=&quot;markdown-toc-not-even-funny&quot;&gt;Not even funny&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#smart-way---known-plain-attack&quot; id=&quot;markdown-toc-smart-way---known-plain-attack&quot;&gt;Smart way - Known plain attack&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#demonstration&quot; id=&quot;markdown-toc-demonstration&quot;&gt;Demonstration&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#decryption-1&quot; id=&quot;markdown-toc-decryption-1&quot;&gt;Decryption&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 
@@ -1076,6 +1132,25 @@ We won’t need more than the first two equations in order to find the key.&lt;/
 
 &lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</summary></entry><entry><title type="html">Introduction to Buffer Overflows: CookieJar - AngstromCTF</title><link href="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html" rel="alternate" type="text/html" title="Introduction to Buffer Overflows: CookieJar - AngstromCTF" /><published>2018-06-05T08:35:00+02:00</published><updated>2018-06-05T08:35:00+02:00</updated><id>http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/pwning/2018/06/05/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">&lt;p&gt;For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce &lt;strong&gt;Buffer Overflows&lt;/strong&gt;…
  &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#pre-requisites&quot; id=&quot;markdown-toc-pre-requisites&quot;&gt;Pre-requisites&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#program-analysis&quot; id=&quot;markdown-toc-program-analysis&quot;&gt;Program analysis&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#lets-run-it-&quot; id=&quot;markdown-toc-lets-run-it-&quot;&gt;Let’s run it !&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#source-code-dissection&quot; id=&quot;markdown-toc-source-code-dissection&quot;&gt;Source code dissection&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#vulnerabilty-explanation&quot; id=&quot;markdown-toc-vulnerabilty-explanation&quot;&gt;Vulnerabilty explanation&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#what-is-a-buffer-overflow&quot; id=&quot;markdown-toc-what-is-a-buffer-overflow&quot;&gt;What is a buffer overflow?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#what-does-it-involve&quot; id=&quot;markdown-toc-what-does-it-involve&quot;&gt;What does it involve?&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#detection-of-the-vulnerable-code&quot; id=&quot;markdown-toc-detection-of-the-vulnerable-code&quot;&gt;Detection of the vulnerable code&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#exploit&quot; id=&quot;markdown-toc-exploit&quot;&gt;Exploit&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
 
 &lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
 &lt;ul&gt;

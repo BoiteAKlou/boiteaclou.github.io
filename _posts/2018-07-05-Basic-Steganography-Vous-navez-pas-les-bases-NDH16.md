@@ -12,6 +12,12 @@ A steganographic challenge showing the essential tools for PNG analysis and mani
 
  <!--excerpt-->
 
+# Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
 ## Challenge description
 
 The PNG file [OREILLES_SALES.png]({{ "/assets/2018-07-05/OREILLES_SALES.png" | absolute_url }}) (named after the famous french rapper "Orelsan") is provided without more instructions.

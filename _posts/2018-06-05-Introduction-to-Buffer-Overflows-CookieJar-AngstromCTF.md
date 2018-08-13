@@ -10,6 +10,12 @@ categories:
 For my first article on this blog, I'll present you my write-up of "CookieJar" from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce **Buffer Overflows**...
  <!--excerpt-->
 
+# Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
 ## Pre-requisites
 * A very basic understanding of **x86 or x64 architectures** will help you to grasp the concept of buffer overflow.
 

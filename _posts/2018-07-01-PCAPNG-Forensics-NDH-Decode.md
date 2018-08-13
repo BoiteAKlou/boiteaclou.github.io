@@ -11,6 +11,12 @@ categories:
 A warm-up forensic challenge proposed by NDH16...
  <!--excerpt-->
 
+# Table of Contents
+{:.no_toc}
+
+* TOC
+{:toc}
+
 ## Challenge description
 We are given [a packet capture]({{"/assets/2018-07-01/decode.pcapng"}}) and [a zip archive]({{".assets/2018-07-01/Decode_.zip"}}) which have to be investigated.
 
