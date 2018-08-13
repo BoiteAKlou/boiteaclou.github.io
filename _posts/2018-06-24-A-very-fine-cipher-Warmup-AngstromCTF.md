@@ -212,4 +212,4 @@ Using the key and the previously explained process of decryption, we are able to
 
 That's it for this challenge but don't worry, it was only the warm-up! :blush: Do not hesitate to leave a comment or to contact me for any question or inquiry.
 
-BoiteAKlou :hammer:
+<p id="signature">BoiteAKlou :hammer:</p>

@@ -248,4 +248,4 @@ Feel free to send me your result or to post it in the comment section! Good luck
 * [unhide_message.py]({{"/assets/2018-08-12/unhide_message.py" | absolute_url }})
 
 
-BoiteAKlou :hammer:
+<p id="signature">BoiteAKlou :hammer:</p>
