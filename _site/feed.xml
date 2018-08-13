@@ -1,4 +1,271 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-07-07T14:21:15+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Basic Steganography: Vous n’avez pas les bases - NDH16</title><link href="http://localhost:4000/stegano/2018/07/05/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html" rel="alternate" type="text/html" title="Basic Steganography: Vous n'avez pas les bases - NDH16" /><published>2018-07-05T23:30:00+02:00</published><updated>2018-07-05T23:30:00+02:00</updated><id>http://localhost:4000/stegano/2018/07/05/Basic-Steganography-Vous-navez-pas-les-bases-NDH16</id><content type="html" xml:base="http://localhost:4000/stegano/2018/07/05/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html">&lt;p&gt;A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-13T19:19:54+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
+
+&lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#do-it-yourself&quot; id=&quot;markdown-toc-do-it-yourself&quot;&gt;Do It Yourself!&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#technical-description&quot; id=&quot;markdown-toc-technical-description&quot;&gt;Technical description&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#digital-image-structure&quot; id=&quot;markdown-toc-digital-image-structure&quot;&gt;Digital image structure&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lsb-principle&quot; id=&quot;markdown-toc-lsb-principle&quot;&gt;LSB Principle&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#am-i-not-significant-to-you&quot; id=&quot;markdown-toc-am-i-not-significant-to-you&quot;&gt;Am I not significant to you?&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#why-do-we-modify-this-very-specific-bit&quot; id=&quot;markdown-toc-why-do-we-modify-this-very-specific-bit&quot;&gt;Why do we modify this very specific bit?&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#how-to-hide-a-message&quot; id=&quot;markdown-toc-how-to-hide-a-message&quot;&gt;How to hide a message?&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#encoding-and-transforming-a-string-into-a-sequence-of-bits&quot; id=&quot;markdown-toc-encoding-and-transforming-a-string-into-a-sequence-of-bits&quot;&gt;Encoding and transforming a string into a sequence of bits&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#messing-with-pixels&quot; id=&quot;markdown-toc-messing-with-pixels&quot;&gt;Messing with pixels&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#detection&quot; id=&quot;markdown-toc-detection&quot;&gt;Detection&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#all-about-contrast&quot; id=&quot;markdown-toc-all-about-contrast&quot;&gt;All about contrast&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#extraction&quot; id=&quot;markdown-toc-extraction&quot;&gt;Extraction&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#python-my-love&quot; id=&quot;markdown-toc-python-my-love&quot;&gt;Python my love&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#your-turn&quot; id=&quot;markdown-toc-your-turn&quot;&gt;Your Turn!&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#resources&quot; id=&quot;markdown-toc-resources&quot;&gt;Resources&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;do-it-yourself&quot;&gt;Do It Yourself!&lt;/h2&gt;
+
+&lt;p&gt;If you’re already familiar with the concept of LSB and simply want to practice, download &lt;a href=&quot;http://localhost:4000/assets/2018-08-12/lsb_spongebob.png&quot;&gt;this picture&lt;/a&gt; and feel free to send me your result or to post it in the comment section.&lt;/p&gt;
+
+&lt;h2 id=&quot;technical-description&quot;&gt;Technical description&lt;/h2&gt;
+
+&lt;h3 id=&quot;digital-image-structure&quot;&gt;Digital image structure&lt;/h3&gt;
+
+&lt;p&gt;To understand this technique, a few reminders of some digital imaging basics might be useful.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A digital image is composed of \(X\) rows by \(Y\) columns.&lt;/li&gt;
+  &lt;li&gt;The point of coordinates \([a,b]\) with \(0\leqslant a&amp;lt;X\) and \(0\leqslant b&amp;lt;Y\), is called a &lt;strong&gt;pixel&lt;/strong&gt;. The &lt;strong&gt;pixel&lt;/strong&gt; represents the smallest addressable element of a picture.&lt;/li&gt;
+  &lt;li&gt;Each pixel is associated with a color, usually decomposed in three primary colors: &lt;strong&gt;Red, Green, Blue&lt;/strong&gt;. A pixel can then be specified as &lt;strong&gt;pixel(Red, Green, Blue)&lt;/strong&gt;, that’s what we call the &lt;em&gt;RGB model&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Red, Green and Blue intensities can vary from 0 to 255.&lt;/li&gt;
+  &lt;li&gt;WHITE = (255,255,255) and BLACK = (0,0,0).&lt;/li&gt;
+  &lt;li&gt;A pixel take 3 bytes of memory, 1 for each primary component (hence the maximum value of 255).&lt;/li&gt;
+  &lt;li&gt;A byte consists of 8 bits, representing a binary number (example: 1010 0101).&lt;/li&gt;
+  &lt;li&gt;The highest value a byte can take is 1111 1111, which is equal to 255 in decimal.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;lsb-principle&quot;&gt;LSB Principle&lt;/h3&gt;
+
+&lt;p&gt;Now that you have the structure of a digital image in mind, we can start talking about the serious stuff :wink:.&lt;/p&gt;
+
+&lt;p&gt;As its name suggests, the Least Significant Bit technique is based on hiding information in the least significant bit of each byte of the picture. There are multiple variants of LSB but, in this article, we will set the focus on the most common one.&lt;/p&gt;
+
+&lt;h4 id=&quot;am-i-not-significant-to-you&quot;&gt;Am I not significant to you?&lt;/h4&gt;
+
+&lt;p&gt;The notion of “Least Significant Bit” probably doesn’t speak to everyone so I’ll explain it.
+Let’s take the following representation of a byte, where the weight is annotated below each bit:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-08-12/byte_diagram.jpg&quot; alt=&quot;Bit weights&quot; title=&quot;Bit weights diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The first bit on the left is the “heaviest” one since it’s the one that has the biggest influence on the value of the byte. Its weight is 128.&lt;/p&gt;
+
+&lt;p&gt;Now look at the bit on the very right. Its weight is 1 and it has a very minor impact on the value of the byte.
+In a way, this bit is the &lt;strong&gt;least significant bit&lt;/strong&gt; of this byte.&lt;/p&gt;
+
+&lt;h4 id=&quot;why-do-we-modify-this-very-specific-bit&quot;&gt;Why do we modify this very specific bit?&lt;/h4&gt;
+
+&lt;p&gt;Well, simply because it’s the least significant one. Let me explain:&lt;/p&gt;
+
+&lt;p&gt;The following diagram illustrates the color difference when the least significant bit of the red channel is modified.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-08-12/significant_bit_diff.jpg&quot; alt=&quot;Significant bit modification&quot; title=&quot;Significant bit modification&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Can you spot the difference? No? Me neither and that’s exactly the goal! That way, we can modify &lt;strong&gt;3 bits per pixel&lt;/strong&gt; without it is noticeable.&lt;/p&gt;
+
+&lt;h3 id=&quot;how-to-hide-a-message&quot;&gt;How to hide a message?&lt;/h3&gt;
+
+&lt;p&gt;Ok the theory should be clear now, but we’ve seen that we can only hide 3 bits per pixel and we want to dissimulate a full message! How are we supposed to do?&lt;/p&gt;
+
+&lt;p&gt;Easy! A message is actually a sequence of bits so it’s not an issue. The only limitation is that the size of the message in bits must be inferior to the number of pixels in the picture multiplied by 3.&lt;/p&gt;
+
+&lt;p&gt;There are plenty of tools already available for hiding a message inside a picture with the LSB technique but &lt;strong&gt;I encourage you to write your own tool&lt;/strong&gt;. This will help you getting familiar with a scripting language and will require from you a prefect understanding of the concept.&lt;/p&gt;
+
+&lt;p&gt;For the needs, of this tutorial I used Python 2.7. Sources of the scripts used in this article will be downloadable at the bottom of the page.&lt;/p&gt;
+
+&lt;p&gt;Alright, let’s dive into the code! :+1:&lt;/p&gt;
+
+&lt;h4 id=&quot;encoding-and-transforming-a-string-into-a-sequence-of-bits&quot;&gt;Encoding and transforming a string into a sequence of bits&lt;/h4&gt;
+
+&lt;p&gt;In order to avoid data losses caused by encoding problems, &lt;strong&gt;the initial message must be base64-encoded&lt;/strong&gt;.
+There are many ways to turn a string into its binary representation in python, but I decided to use the &lt;a href=&quot;https://pypi.org/project/bitarray/&quot;&gt;bitarray module&lt;/a&gt;. If you don’t have it installed, just type &lt;code class=&quot;highlighter-rouge&quot;&gt;sudo pip install bitarray&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;bitarray&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;base64&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'YourVerySecretText'&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;encoded_message&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b64encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;message&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;#Converts the message into an array of bits&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bitarray&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bitarray&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;frombytes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encoded_message&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;encode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'utf-8'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ba&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;strong&gt;bit_array&lt;/strong&gt; now contains the binary representation of our message.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE: Make sure to hide your message inside a PNG file and not a JPEG or its lossy compression algorithm will overwrite your modifications!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;messing-with-pixels&quot;&gt;Messing with pixels&lt;/h4&gt;
+
+&lt;p&gt;Let’s say we want to hide our message inside this picture (download with &lt;strong&gt;Right click &amp;gt; Save Image as…&lt;/strong&gt;):&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-08-12/spongebob.png&quot; alt=&quot;Confused Spongebob&quot; title=&quot;Confused Spongebob&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;There’s a wonderful python library for manipulating images called &lt;a href=&quot;https://pillow.readthedocs.io/en/5.2.x/&quot;&gt;PIL&lt;/a&gt; (pillow since python3).&lt;/p&gt;
+
+&lt;p&gt;First, let’s duplicate the original picture. We will only modify the one called “lsb_spongebob.png”.
+Then, we store the image size for later.
+The &lt;strong&gt;load()&lt;/strong&gt; function retrieves an array containing every pixel in RGB format.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;PIL&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;spongebob.png&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lsb_spongebob.png&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lsb_spongebob.png&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;height&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;im&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;im&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s say we want to hide our message at the beginning of the &lt;strong&gt;first row of the picture&lt;/strong&gt;, I’ve written the following piece of code which is kinda ulgy, I agree, but that makes the job, you know :wink:.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;[+] Pixel : [&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d]&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;[+] &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Before : (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#Default values in case no bit has to be modified&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;new_bit_red_pixel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;new_bit_green_pixel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;new_bit_blue_pixel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;255&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;#Red pixel&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;r_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;r_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;r_new_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;r_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_bit_red_pixel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r_new_last_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;#Green pixel&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;g_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;g_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;g_new_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;g_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_bit_green_pixel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g_new_last_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;c&quot;&gt;#Blue pixel&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;b_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;b_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;b_new_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;b_last_bit&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bit_array&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;new_bit_blue_pixel&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b_new_last_bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_bit_red_pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_bit_green_pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_bit_blue_pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;[+] &lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;After: (&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d,&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;d)&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_bit_red_pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_bit_green_pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;new_bit_blue_pixel&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;im&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;save&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'lsb_spongebob.png'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;What this script does is actually pretty simple. For each color channel of each pixel of the first row, the script extracts the least significant bit and replaces it by the result of the logical operation &lt;strong&gt;&amp;amp;&lt;/strong&gt; between &lt;em&gt;the current least significant bit&lt;/em&gt; and &lt;em&gt;the bit stored at index [i] in bit_array&lt;/em&gt;. Once the message is fully written, remaining pixels on the row are replaced by white pixels(255,255,255).&lt;/p&gt;
+
+&lt;p&gt;I’ve also added some debugging outputs which are useful in order to illustrate the changes that are being made.&lt;/p&gt;
+
+&lt;p&gt;This script only works for hiding short messages in the first row of the picture. It’s not optimized at all so you’ll probably write a better one but you get the idea.&lt;/p&gt;
+
+&lt;h2 id=&quot;detection&quot;&gt;Detection&lt;/h2&gt;
+
+&lt;p&gt;If everything went well, our message is now hidden inside “lsb_spongebob.png”. We will now study one specific method allowing us to detect such steganography techniques. There are many others which have a more mathematical approach but, since it’s not my speciality, I won’t mention them here.&lt;/p&gt;
+
+&lt;h3 id=&quot;all-about-contrast&quot;&gt;All about contrast&lt;/h3&gt;
+
+&lt;p&gt;The technique I’ll present you is very manual. It consists in playing with &lt;strong&gt;brightness&lt;/strong&gt; and &lt;strong&gt;contrast&lt;/strong&gt; parameters in your favorite (GNU) Image Manipulation Program, in order to spot certain irregularities. Nothing better than a concrete example. I personally use GIMP for this purpose.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Let’s open “lsb_spongebob.png” with GIMP and open the &lt;strong&gt;Brightness-Contrast&lt;/strong&gt; box under &lt;strong&gt;Colors&lt;/strong&gt; menu.&lt;/li&gt;
+  &lt;li&gt;Set brightness to its minimum value and contrast to its maximum value.&lt;/li&gt;
+  &lt;li&gt;Zoom in and scan for irregularities.&lt;/li&gt;
+  &lt;li&gt;On the top left, you should see something like that:&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-08-12/lsb_detection.png&quot; alt=&quot;LSB Detection&quot; title=&quot;LSB Detection&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;That’s really suspicious because every pixel should be white in this area.&lt;/p&gt;
+
+&lt;p&gt;This technique is not 100% reliable but pretty straight-forward and simple.&lt;/p&gt;
+
+&lt;p&gt;Once we’ve located the suspected hidden message, we can proceed to the extraction.&lt;/p&gt;
+
+&lt;h2 id=&quot;extraction&quot;&gt;Extraction&lt;/h2&gt;
+
+&lt;p&gt;We’ve detected LSB steganography inside a picture! But how can we recover the message?
+Simple! We have to extract the LSBs from each pixel and then assemble the result as a string.&lt;/p&gt;
+
+&lt;p&gt;Once again, I recommand you to write your own script because it’s the only way to make sure everything is clear in your mind. In case you encounter difficulties, you can always take inspiration from mine.&lt;/p&gt;
+
+&lt;h3 id=&quot;python-my-love&quot;&gt;Python my love&lt;/h3&gt;
+
+&lt;p&gt;We know that the secret is hidden in the first row, so it’s useless to iterate over the whole picture with our script.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#coding: utf-8&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;base64&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;PIL&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;lsb_spongebob.png&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Iterate over pixels of the first row&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;x&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;image&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;width&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;pixels&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;x&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;# Store LSB of each color channel of each pixel&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;g&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;bin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)[&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;chars&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;extracted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;chars&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;chr&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bit&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;bit&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;byte&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]),&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+
+&lt;span class=&quot;c&quot;&gt;# Don't forget that the message was base64-encoded&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b64decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;join&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;chars&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;flag&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;your-turn&quot;&gt;Your Turn!&lt;/h2&gt;
+
+&lt;p&gt;To make this tutorial a bit funnier, I’ve slightly modified &lt;a href=&quot;http://localhost:4000/assets/2018-08-12/lsb_spongebob.png&quot;&gt;lsb_spongebob.png&lt;/a&gt; and I’ve hidden a different message inside. Will you be able to recover it? :wink:&lt;/p&gt;
+
+&lt;p&gt;Maybe this one isn’t exactly in the same place… :smiling_imp:&lt;/p&gt;
+
+&lt;p&gt;Feel free to send me your result or to post it in the comment section! Good luck!&lt;/p&gt;
+
+&lt;h3 id=&quot;resources&quot;&gt;Resources&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;http://localhost:4000/assets/2018-08-12/spongebob.png&quot;&gt;original picture (spongebob.png)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://localhost:4000/assets/2018-08-12/lsb_spongebob.png&quot;&gt;modified picture (lsb_spongebob.png)&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://localhost:4000/assets/2018-08-12/hide_message.py&quot;&gt;hide_message.py&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;http://localhost:4000/assets/2018-08-12/unhide_message.py&quot;&gt;unhide_message.py&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its simplicity and its ability to be undetectable to the naked eye. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.</summary></entry><entry><title type="html">Basic Steganography: Vous n’avez pas les bases - NDH16</title><link href="http://localhost:4000/stegano/2018/07/05/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html" rel="alternate" type="text/html" title="Basic Steganography: Vous n'avez pas les bases - NDH16" /><published>2018-07-05T23:30:00+02:00</published><updated>2018-07-05T23:30:00+02:00</updated><id>http://localhost:4000/stegano/2018/07/05/Basic-Steganography-Vous-navez-pas-les-bases-NDH16</id><content type="html" xml:base="http://localhost:4000/stegano/2018/07/05/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html">&lt;p&gt;A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
@@ -243,7 +510,7 @@ The vast majority of this website is static at the exception of the “/upload.p
 
 &lt;p&gt;You can now read the writeup of Wonkachall-step2 :wink:&lt;/p&gt;
 
-&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</summary></entry><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration…
+&lt;p&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</summary></entry><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16</id><content type="html" xml:base="http://localhost:4000/forensic/2018/07/02/Data-exfiltration-with-PING-ICMP-NDH16.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration… 
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
