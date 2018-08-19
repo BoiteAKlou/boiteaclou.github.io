@@ -5,6 +5,7 @@ date:   2018-07-01 18:00:00 +0200
 comments: true
 author: BoiteAKlou
 categories:
+- "Writeup"
 - "Forensic"
 ---
 

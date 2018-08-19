@@ -5,6 +5,7 @@ date:   2018-07-03 22:00:00 +0200
 comments: true
 author: BoiteAKlou
 categories:
+- "Writeup"
 - "Web"
 ---
 

@@ -5,6 +5,7 @@ date:   2018-06-05 08:35:00 +0200
 comments: true
 author: BoiteAKlou
 categories:
+- "Writeup"
 - "Pwning"
 ---
 For my first article on this blog, I'll present you my write-up of "CookieJar" from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce **Buffer Overflows**...

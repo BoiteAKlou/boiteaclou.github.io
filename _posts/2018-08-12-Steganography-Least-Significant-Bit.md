@@ -6,6 +6,7 @@ comments: true
 mathjax: true
 author: BoiteAKlou
 categories:
+- "Tutorial"
 - "Stegano"
 ---
 

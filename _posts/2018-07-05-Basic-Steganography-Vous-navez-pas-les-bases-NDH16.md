@@ -5,6 +5,7 @@ date:   2018-07-05 23:30:00 +0200
 comments: true
 author: BoiteAKlou
 categories:
+- "Writeup"
 - "Stegano"
 ---
 

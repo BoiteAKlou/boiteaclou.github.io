@@ -6,6 +6,7 @@ comments: true
 mathjax: true
 author: BoiteAKlou
 categories:
+- "Writeup"
 - "Crypto"
 ---
 Here comes the first Cryptographic challenge! We'll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA...
