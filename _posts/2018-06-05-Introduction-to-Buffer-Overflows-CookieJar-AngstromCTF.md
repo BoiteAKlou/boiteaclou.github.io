@@ -23,7 +23,7 @@ For my first article on this blog, I'll present you my write-up of "CookieJar" f
 ## Challenge description
 ![challenge statement]({{ "/assets/2018-06-05/challenge.png" | absolute_url }} "Statement"){:width="80%"}
 
- We have [a binary]({{"/assets/2018-06-05/cookiePublic.c"}}) and the corresponding [source code]({{"/assets/2018-06-05/cookiePublic64"}}) given for this challenge. The objective is to find a way to exploit this binary locally and to re-use the same exploit on the remote server in order to get the flag.
+ We have [a binary]({{"/assets/2018-06-05/cookiePublic64"}}) and the corresponding [source code]({{"/assets/2018-06-05/cookiePublic.c"}}) given for this challenge. The objective is to find a way to exploit this binary locally and to re-use the same exploit on the remote server in order to get the flag.
 
 
 
