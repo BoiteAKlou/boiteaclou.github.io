@@ -5,7 +5,8 @@ date:   2018-10-10 10:00:00 +0200
 comments: true
 author: BoiteAKlou
 categories:
-
+- "Writeup"
+- "Web"
 ---
 
 
@@ -13,7 +14,7 @@ Hack The Box is an online platform that allows you to test your pentesting skill
 
 ![DevOops box]({{ "/assets/2018-10-10/devoops-box.png" | absolute_url }} "DevOops Box")
 
-In this article, I'll detail every step I've gone through in order to root the DevOops box, from the reconnaissance phate to the privilege escalation.
+In this article, I'll detail every step I've gone through in order to root the DevOops box, from the reconnaissance phase to the privilege escalation.
  <!--excerpt-->
 
 # Table of Contents
