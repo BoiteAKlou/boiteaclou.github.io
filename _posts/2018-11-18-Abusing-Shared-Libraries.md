@@ -5,7 +5,7 @@ date:   2018-11-21 13:00:00 +0100
 comments: true
 author: BoiteAKlou
 categories:
-- "Articles"
+- "Article"
 - "Pwning"
 - "Pentest"
 ---
