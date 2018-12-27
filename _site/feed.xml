@@ -1,4 +1,89 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-01T22:24:07+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">HackTheBox: Hawk writeup</title><link href="http://localhost:4000/HackTheBox-Hawk.html" rel="alternate" type="text/html" title="HackTheBox: Hawk writeup" /><published>2018-12-01T22:00:00+01:00</published><updated>2018-12-01T22:00:00+01:00</updated><id>http://localhost:4000/HackTheBox-Hawk</id><content type="html" xml:base="http://localhost:4000/HackTheBox-Hawk.html">&lt;p&gt;Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine.&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-27T12:20:51+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Upgrading to a fully interactive reverse shell</title><link href="http://localhost:4000/Fully-interactive-reverse-shell.html" rel="alternate" type="text/html" title="Upgrading to a fully interactive reverse shell" /><published>2018-12-27T10:00:00+01:00</published><updated>2018-12-27T10:00:00+01:00</updated><id>http://localhost:4000/Fully-interactive-reverse-shell</id><content type="html" xml:base="http://localhost:4000/Fully-interactive-reverse-shell.html">&lt;p&gt;Let’s say you’re in the middle of a hacking challenge or pentesting assessment and you finally manage to get a &lt;strong&gt;reverse shell&lt;/strong&gt; on your target. This short article will explain you how to obtain &lt;span style=&quot;color:Green&quot;&gt;a fully interactive version of your reverse shell&lt;/span&gt;, that will allow commands like &lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;vi&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;nano&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt;, etc… but also &lt;strong&gt;CTRL+C&lt;/strong&gt; and &lt;strong&gt;tab completion&lt;/strong&gt;.
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#spawning-a-pty&quot; id=&quot;markdown-toc-spawning-a-pty&quot;&gt;Spawning a PTY&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#resizing-and-tab-completion&quot; id=&quot;markdown-toc-resizing-and-tab-completion&quot;&gt;Resizing and tab completion&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#adding-some-color&quot; id=&quot;markdown-toc-adding-some-color&quot;&gt;Adding some color&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;spawning-a-pty&quot;&gt;Spawning a PTY&lt;/h2&gt;
+
+&lt;p&gt;It doesn’t matter which way you got your initial reverse shell, it should approximately look like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@LAB-Blog:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 9999
+listening on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;any] 9999 ...
+connect to &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;127.0.0.1] from &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;UNKNOWN&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;127.0.0.1] 40610
+id
+&lt;span class=&quot;nv&quot;&gt;uid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1001&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;www-data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;gid&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1001&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;www-data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;groups&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1001&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;www-data&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A lot of Unix commands require to be executed from a terminal. But, the classical netcat reverse shell you obtain at first has no TTY associated. If you wish to know a bit more about the internal working of TTYs, I recommend you this great article &lt;a href=&quot;http://www.linusakesson.net/programming/tty/&quot;&gt;The TTY demystified&lt;/a&gt; from Linus Akesson.&lt;/p&gt;
+
+&lt;p&gt;In order to overcome this difficulty, we will use &lt;strong&gt;python PTY module&lt;/strong&gt; and especially the &lt;strong&gt;spawn&lt;/strong&gt; function:&lt;/p&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;pty.spawn&lt;/strong&gt;(argv[, master_read[, stdin_read]])&lt;/p&gt;
+
+  &lt;p&gt;Spawn a process, and connect its controlling terminal with the current process’s standard io. This is often used to &amp;gt;baffle programs which insist on reading from the controlling terminal.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Python is one of the best option because it is almost always installed on the target machine. If by any chance it’s not the case, you can still try python3.&lt;/p&gt;
+
+&lt;p&gt;The command to execute is the following:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'import pty; pty.spawn(&quot;/bin/bash&quot;);'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;It should give the following output:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;python &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'import pty; pty.spawn(&quot;/bin/bash&quot;);'&lt;/span&gt;
+www-data@TARGET:~&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now you can use commands that require to be executed from a terminal.&lt;/p&gt;
+
+&lt;h2 id=&quot;resizing-and-tab-completion&quot;&gt;Resizing and tab completion&lt;/h2&gt;
+
+&lt;p&gt;If by mistake, you run an endless command and hit &lt;strong&gt;CTRL+C&lt;/strong&gt;, your reverse shell will disappear as well as your &lt;em&gt;joie de vivre&lt;/em&gt;.
+Also, you could see the output of the &lt;code class=&quot;highlighter-rouge&quot;&gt;ps&lt;/code&gt; command truncated because the size of the reverse shell on the remote machine doesn’t suit the size of your host terminal.&lt;/p&gt;
+
+&lt;p&gt;These two issues can be solved following this procedure:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Background your reverse shell with &lt;strong&gt;CTRL+Z&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Print the size of your host terminal: &lt;code class=&quot;highlighter-rouge&quot;&gt;stty -a |cut -d';' -f2-3 | head -n1&lt;/code&gt;.&lt;/li&gt;
+  &lt;li&gt;Transfer local hotkeys to the remote shell: &lt;code class=&quot;highlighter-rouge&quot;&gt;stty raw -echo&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;If you’re using zsh or another custom shell different from bash, this command may not work properly.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Bring the reverse shell back to foreground: &lt;code class=&quot;highlighter-rouge&quot;&gt;fg&lt;/code&gt;. You may need to hit &lt;strong&gt;ENTER&lt;/strong&gt; after this command.&lt;/li&gt;
+  &lt;li&gt;Inside the remote shell, adjust the size: &lt;code class=&quot;highlighter-rouge&quot;&gt;stty rows &amp;lt;ROWS&amp;gt; cols &amp;lt;COLS&amp;gt;&lt;/code&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;You should now have an interactive reverse shell with &lt;strong&gt;tab completion&lt;/strong&gt;, &lt;strong&gt;signals handling&lt;/strong&gt;, &lt;strong&gt;no truncated outputs&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;adding-some-color&quot;&gt;Adding some color&lt;/h2&gt;
+
+&lt;p&gt;Now the icing on the cake, let’s add some color!&lt;/p&gt;
+
+&lt;p&gt;Simply echo the value of $TERM environment variable in your local terminal and set it to the same value in the remote shell:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@LAB-Blog:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$TERM&lt;/span&gt;
+xterm-256color
+
+www-data@TARGET:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;export &lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;TERM&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;xterm-256color
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;You need to &lt;code class=&quot;highlighter-rouge&quot;&gt;reset&lt;/code&gt; the shell in order for the changes to take place.&lt;/p&gt;
+
+&lt;p&gt;You should now feel at home inside your reverse shell! :smile:&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Let’s say you’re in the middle of a hacking challenge or pentesting assessment and you finally manage to get a reverse shell on your target. This short article will explain you how to obtain a fully interactive version of your reverse shell, that will allow commands like su, vi, nano, ssh, etc… but also CTRL+C and tab completion.</summary></entry><entry><title type="html">HackTheBox: Hawk writeup</title><link href="http://localhost:4000/HackTheBox-Hawk.html" rel="alternate" type="text/html" title="HackTheBox: Hawk writeup" /><published>2018-12-01T22:00:00+01:00</published><updated>2018-12-01T22:00:00+01:00</updated><id>http://localhost:4000/HackTheBox-Hawk</id><content type="html" xml:base="http://localhost:4000/HackTheBox-Hawk.html">&lt;p&gt;Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-01/hawk-box.png&quot; alt=&quot;Hawk box&quot; title=&quot;Hawk Box&quot; /&gt;&lt;/p&gt;
 
@@ -2054,451 +2139,4 @@ ndh16_cbfce5e36dd33c6adce32a6b577be161b9815893  -
 
 &lt;p&gt;The job is done! :triangular_flag_on_post:&lt;/p&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A warm-up forensic challenge proposed by NDH16…</summary></entry><entry><title type="html">A very fine cipher: Warmup - AngstromCTF</title><link href="http://localhost:4000/A-very-fine-cipher-Warmup-AngstromCTF.html" rel="alternate" type="text/html" title="A very fine cipher: Warmup - AngstromCTF" /><published>2018-06-24T23:00:00+02:00</published><updated>2018-06-24T23:00:00+02:00</updated><id>http://localhost:4000/A-very-fine-cipher-Warmup-AngstromCTF</id><content type="html" xml:base="http://localhost:4000/A-very-fine-cipher-Warmup-AngstromCTF.html">&lt;p&gt;Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…
- &lt;!--excerpt--&gt;&lt;/p&gt;
-
-&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#information-gathering&quot; id=&quot;markdown-toc-information-gathering&quot;&gt;Information gathering&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#affine-cipher&quot; id=&quot;markdown-toc-affine-cipher&quot;&gt;Affine cipher&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#monoalphabetic-substitution-cipher&quot; id=&quot;markdown-toc-monoalphabetic-substitution-cipher&quot;&gt;Monoalphabetic substitution cipher&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#encryption&quot; id=&quot;markdown-toc-encryption&quot;&gt;Encryption&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#decryption&quot; id=&quot;markdown-toc-decryption&quot;&gt;Decryption&lt;/a&gt;&lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#breaking-the-code&quot; id=&quot;markdown-toc-breaking-the-code&quot;&gt;Breaking the code&lt;/a&gt;    &lt;ul&gt;
-      &lt;li&gt;&lt;a href=&quot;#kerckhoffs-principle&quot; id=&quot;markdown-toc-kerckhoffs-principle&quot;&gt;Kerckhoffs’ Principle&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#frequency-analysis&quot; id=&quot;markdown-toc-frequency-analysis&quot;&gt;Frequency Analysis&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#not-even-funny&quot; id=&quot;markdown-toc-not-even-funny&quot;&gt;Not even funny&lt;/a&gt;&lt;/li&gt;
-      &lt;li&gt;&lt;a href=&quot;#smart-way---known-plain-attack&quot; id=&quot;markdown-toc-smart-way---known-plain-attack&quot;&gt;Smart way - Known plain attack&lt;/a&gt;        &lt;ul&gt;
-          &lt;li&gt;&lt;a href=&quot;#demonstration&quot; id=&quot;markdown-toc-demonstration&quot;&gt;Demonstration&lt;/a&gt;&lt;/li&gt;
-          &lt;li&gt;&lt;a href=&quot;#decryption-1&quot; id=&quot;markdown-toc-decryption-1&quot;&gt;Decryption&lt;/a&gt;&lt;/li&gt;
-        &lt;/ul&gt;
-      &lt;/li&gt;
-    &lt;/ul&gt;
-  &lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-
-&lt;p&gt;The challenge statement is very explicit:&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Just a quick warm-up cipher for everyone. Honestly, I think it’s &lt;strong&gt;a fine&lt;/strong&gt; cipher.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;strong&gt;myjd{ij_fkwizq}&lt;/strong&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The sentence in bold has to be decoded in order to get the flag and to validate the challenge.&lt;/p&gt;
-
-&lt;p&gt;If you’re already familiar with affine cipher or just want to read the challenge’s write-up, you can jump straight to the &lt;em&gt;Breaking the code&lt;/em&gt; section.&lt;/p&gt;
-
-&lt;h2 id=&quot;information-gathering&quot;&gt;Information gathering&lt;/h2&gt;
-
-&lt;p&gt;The information gathering part of the analysis is probably the most important as it can be really time-saving. That’s why we’ll try to gather as much information as possible.&lt;/p&gt;
-
-&lt;p&gt;The first thing that jumps out is the format of the ciphered text. Each CTF contest has its own flag format so participants know when they have solved the challenge.
-In the context of AngstromCTF, each flag respects the following convention: &lt;strong&gt;actf{…}&lt;/strong&gt;, which is suspiciously close to our ciphered text.&lt;/p&gt;
-
-&lt;p&gt;Cryptanalysis can be greatly simplified when the plain text language is known. Since AngstromCTF is an international event, the language used is probably english.&lt;/p&gt;
-
-&lt;p&gt;The most useful information turns out to be the discrete hint given in the challenge description. Indeed, “a fine” is in bold for a reason. It’s actually a wordplay with &lt;strong&gt;affine cipher&lt;/strong&gt;… These funny organizers decided to save us a lot of time!&lt;/p&gt;
-
-&lt;h2 id=&quot;affine-cipher&quot;&gt;Affine cipher&lt;/h2&gt;
-
-&lt;p&gt;The affine cipher is a type of &lt;strong&gt;monoalphabetic substitution cipher&lt;/strong&gt; based on a simple mathematical function. It has only been used for its educational purposes due to its weaknesses. We’ll study the functionning of this cipher and how to break it in order to decode our mistery sentence.&lt;/p&gt;
-
-&lt;h3 id=&quot;monoalphabetic-substitution-cipher&quot;&gt;Monoalphabetic substitution cipher&lt;/h3&gt;
-
-&lt;p&gt;A &lt;strong&gt;substitution cipher&lt;/strong&gt; is a method of encrypting which replaces each letter of the plain text by a letter of the ciphered text. In most of the case, the replacement unit is a single letter but it could also be a group of three letters. The &lt;strong&gt;plain text&lt;/strong&gt; and the &lt;strong&gt;ciphered&lt;/strong&gt; one will have &lt;strong&gt;the exact same length&lt;/strong&gt; when using a substitution cipher.&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;Monoalphabetic&lt;/strong&gt; means that the same alphabet is used for encrypting the whole message. On the contrary, &lt;strong&gt;Polyalphabetic&lt;/strong&gt; substitution ciphers will use multiple alphabets for encrypting the same message. They are generally much &lt;strong&gt;stronger&lt;/strong&gt; than &lt;strong&gt;Monoalphabetic ciphers&lt;/strong&gt; because each letter of the plaintext is usually mapped to multiple different letters in the ciphered text.&lt;/p&gt;
-
-&lt;h3 id=&quot;encryption&quot;&gt;Encryption&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The first step of the encryption process consists in assigning an integer in the range 0 to \(m-1\) to each letter, where &lt;strong&gt;m is the size of the alphabet&lt;/strong&gt; (usually 26).&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;b&lt;/td&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;d&lt;/td&gt;
-      &lt;td&gt;e&lt;/td&gt;
-      &lt;td&gt;f&lt;/td&gt;
-      &lt;td&gt;g&lt;/td&gt;
-      &lt;td&gt;h&lt;/td&gt;
-      &lt;td&gt;…&lt;/td&gt;
-      &lt;td&gt;w&lt;/td&gt;
-      &lt;td&gt;x&lt;/td&gt;
-      &lt;td&gt;y&lt;/td&gt;
-      &lt;td&gt;z&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;1&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;6&lt;/td&gt;
-      &lt;td&gt;7&lt;/td&gt;
-      &lt;td&gt;…&lt;/td&gt;
-      &lt;td&gt;22&lt;/td&gt;
-      &lt;td&gt;23&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;25&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Then we have to define a pair of integers \((a,b)\) which will represent &lt;strong&gt;the key&lt;/strong&gt;. In order to be able to decipher the message, &lt;strong&gt;a must be coprime with m&lt;/strong&gt;. If it’s not the case, the same integer will be associated with more than one letter in our table.
-This gives the following list of possibilities for \(a\): 1, 3, 5, 7, 9, 11, 15, 17, 19, 21, 23, 25.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;For the example, we will choose the couple \((a = 5, b = 8)\) as the key.&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Now that each letter is associated with an integer and that we have defined the key, we are ready to encrypt the message. In order to do this, we simply have to apply the mathematical formula that defines the affine cipher, with \(x\) being the &lt;strong&gt;integer associated with the letter&lt;/strong&gt; we want to encrypt:&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;E(x) = (ax + b)\mod{m}&lt;/script&gt;
-
-&lt;p&gt;To give you an example, let’s say we want to encrypt the following sentence using the key defined above:&lt;/p&gt;
-
-&lt;p&gt;CRYPTOISLOVE&lt;/p&gt;
-
-&lt;p&gt;We will get the integers associated with each letter as the following:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;C&lt;/td&gt;
-      &lt;td&gt;R&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;P&lt;/td&gt;
-      &lt;td&gt;T&lt;/td&gt;
-      &lt;td&gt;O&lt;/td&gt;
-      &lt;td&gt;I&lt;/td&gt;
-      &lt;td&gt;S&lt;/td&gt;
-      &lt;td&gt;L&lt;/td&gt;
-      &lt;td&gt;O&lt;/td&gt;
-      &lt;td&gt;V&lt;/td&gt;
-      &lt;td&gt;E&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;17&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;21&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;Then, we will apply the encryption function for each letter resulting in the following:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;17&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;21&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;25&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;22&lt;/td&gt;
-      &lt;td&gt;20&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;Detail of the first column:
-&lt;script type=&quot;math/tex&quot;&gt;% &lt;![CDATA[
-\begin{eqnarray}
-E(2) &amp;=&amp; 2\times 5 + 8\mod{26}\\
-E(2) &amp;=&amp; 18
-\end{eqnarray} %]]&gt;&lt;/script&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;And convert back the obtained integers into letters to get the ciphered message:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;25&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;22&lt;/td&gt;
-      &lt;td&gt;20&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;S&lt;/td&gt;
-      &lt;td&gt;P&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;F&lt;/td&gt;
-      &lt;td&gt;Z&lt;/td&gt;
-      &lt;td&gt;A&lt;/td&gt;
-      &lt;td&gt;W&lt;/td&gt;
-      &lt;td&gt;U&lt;/td&gt;
-      &lt;td&gt;L&lt;/td&gt;
-      &lt;td&gt;A&lt;/td&gt;
-      &lt;td&gt;J&lt;/td&gt;
-      &lt;td&gt;C&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;The encryption is done!&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;&lt;em&gt;NOTE: We can notice that some popular shift ciphers such as &lt;strong&gt;Caesar cipher&lt;/strong&gt; or &lt;strong&gt;ROT13&lt;/strong&gt; are basically affine ciphers with the &lt;strong&gt;a coefficient set to 1&lt;/strong&gt; and the &lt;strong&gt;b coefficient representing the shift&lt;/strong&gt;. We can describe these ciphers as affine ciphers using the following keys: &lt;strong&gt;Caesar(1,3)&lt;/strong&gt; &amp;amp; &lt;strong&gt;ROT13(1,13)&lt;/strong&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;h3 id=&quot;decryption&quot;&gt;Decryption&lt;/h3&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;The first step of the decryption process consists in replacing each letter of the ciphered text with the corresponding integer.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;S&lt;/td&gt;
-      &lt;td&gt;P&lt;/td&gt;
-      &lt;td&gt;Y&lt;/td&gt;
-      &lt;td&gt;F&lt;/td&gt;
-      &lt;td&gt;Z&lt;/td&gt;
-      &lt;td&gt;A&lt;/td&gt;
-      &lt;td&gt;W&lt;/td&gt;
-      &lt;td&gt;U&lt;/td&gt;
-      &lt;td&gt;L&lt;/td&gt;
-      &lt;td&gt;A&lt;/td&gt;
-      &lt;td&gt;J&lt;/td&gt;
-      &lt;td&gt;C&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;25&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;22&lt;/td&gt;
-      &lt;td&gt;20&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Then we have to find the &lt;strong&gt;modular multiplicative inverse&lt;/strong&gt; of \(a\). There are different ways to do it which won’t be detailed here. If you’re interested in knowing how to compute it, you should have a look at &lt;a href=&quot;https://en.wikipedia.org/wiki/Extended_Euclidean_algorithm&quot;&gt;Extended Euclidean algorithm&lt;/a&gt; and &lt;a href=&quot;https://en.wikipedia.org/wiki/Euler%27s_theorem&quot;&gt;Euler’s theorem&lt;/a&gt;.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;p&gt;In our previous example, the &lt;strong&gt;modular multiplicative inverse&lt;/strong&gt; of \(a\) is 21. We will call it \(a’\).&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;Now can apply the following decryption function to each integer of the table and convert the result back into letter to get the deciphered message.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;D(x) = a'(x-b)\mod{m}&lt;/script&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-      &lt;td&gt;25&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;22&lt;/td&gt;
-      &lt;td&gt;20&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;17&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;15&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;8&lt;/td&gt;
-      &lt;td&gt;18&lt;/td&gt;
-      &lt;td&gt;11&lt;/td&gt;
-      &lt;td&gt;14&lt;/td&gt;
-      &lt;td&gt;21&lt;/td&gt;
-      &lt;td&gt;4&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;After converting the integers back into letters we will recover the original plain text.&lt;/p&gt;
-
-&lt;h2 id=&quot;breaking-the-code&quot;&gt;Breaking the code&lt;/h2&gt;
-
-&lt;p&gt;Now that we have a clearer idea of the mechanisms involved by affine cipher, we can eventually spot the weaknesses. In order to decode the ciphered sentence, we have to either find the key or find another way to recover the plain text.&lt;/p&gt;
-
-&lt;h3 id=&quot;kerckhoffs-principle&quot;&gt;Kerckhoffs’ Principle&lt;/h3&gt;
-
-&lt;p&gt;Kerckhoffs’ Principle is a basic design principle of modern cryptography formulated by Auguste Kerckhoffs in 1883.&lt;/p&gt;
-
-&lt;p&gt;It goes as follows:&lt;/p&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;A cryptographic system should be secure even if everything about the system, except the key, is public knowledge.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The affine cipher often uses an alphabet of 26 letters including 12 numbers which are coprime with 26. This gives us a total of \(12 \times 26 = 312\) possible keys.&lt;/p&gt;
-
-&lt;p&gt;This is something we can easily bruteforce so this cipher is considered as highly insecure in the light of Kerckhoffs’ Principle.&lt;/p&gt;
-
-&lt;h3 id=&quot;frequency-analysis&quot;&gt;Frequency Analysis&lt;/h3&gt;
-
-&lt;p&gt;Frequency Analysis is a very popular method of cryptanalysis. It consists in studying the frequency of letters in a ciphertext.
-For example, if the most occurent letter in a ciphered text is “Z”, you can suppose that “Z” replaces the most common letter of the source language (which is “E” in the English language).&lt;/p&gt;
-
-&lt;p&gt;Every monoalphabetic substitution cipher is vulnerable to this method of cryptanalysis. However, it requires a long ciphered text for the frequency analysis to be relevant. In the context of this challenge, we only have a single sentence, which is clearly not sufficient. Let’s save this method for another challenge… :wink:&lt;/p&gt;
-
-&lt;h3 id=&quot;not-even-funny&quot;&gt;Not even funny&lt;/h3&gt;
-
-&lt;p&gt;We said earlier that the key was easily crackable thanks to a fine &lt;strong&gt;bruteforce algorithm&lt;/strong&gt;. This is the dumb but efficient way to achieve the challenge.
-Feel free to write a small &lt;strong&gt;script&lt;/strong&gt; which will &lt;strong&gt;test the 312 possible keys&lt;/strong&gt; and decode the message. It’s always good to practice our scripting skills.&lt;/p&gt;
-
-&lt;p&gt;However, this may not be necessary to write a script for solving this challenge, as we will see in the next part.&lt;/p&gt;
-
-&lt;h3 id=&quot;smart-way---known-plain-attack&quot;&gt;Smart way - Known plain attack&lt;/h3&gt;
-
-&lt;p&gt;This is where the &lt;em&gt;information gathering&lt;/em&gt; part becomes interesting. We’ve noticed the suspiceous beginning of the ciphered text which is very close to the flag format of this CTF.&lt;/p&gt;
-
-&lt;p&gt;It is quite likely that &lt;strong&gt;actf{…}&lt;/strong&gt; becomes &lt;strong&gt;myjd{…}&lt;/strong&gt; when encrypted. If we find the key that gives such ciphered text, we will be able to decrypt the rest of the flag.&lt;/p&gt;
-
-&lt;p&gt;This is called a &lt;strong&gt;known plain attack&lt;/strong&gt;. We know a part of the plain text and it’s corresponding ciphered text. From that, we can guess the key and decode the whole message. This type of attack is not always possible but it works perfectly in our case.&lt;/p&gt;
-
-&lt;h4 id=&quot;demonstration&quot;&gt;Demonstration&lt;/h4&gt;
-
-&lt;p&gt;Once again, we assign an integer to each letter of the plain and the ciphered text:&lt;/p&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;a&lt;/td&gt;
-      &lt;td&gt;c&lt;/td&gt;
-      &lt;td&gt;t&lt;/td&gt;
-      &lt;td&gt;f&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;0&lt;/td&gt;
-      &lt;td&gt;2&lt;/td&gt;
-      &lt;td&gt;19&lt;/td&gt;
-      &lt;td&gt;5&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;table&gt;
-  &lt;tbody&gt;
-    &lt;tr&gt;
-      &lt;td&gt;m&lt;/td&gt;
-      &lt;td&gt;y&lt;/td&gt;
-      &lt;td&gt;j&lt;/td&gt;
-      &lt;td&gt;d&lt;/td&gt;
-    &lt;/tr&gt;
-    &lt;tr&gt;
-      &lt;td&gt;12&lt;/td&gt;
-      &lt;td&gt;24&lt;/td&gt;
-      &lt;td&gt;9&lt;/td&gt;
-      &lt;td&gt;3&lt;/td&gt;
-    &lt;/tr&gt;
-  &lt;/tbody&gt;
-&lt;/table&gt;
-
-&lt;p&gt;According to our hypothesis that the beginning of the ciphered text corresponds to &lt;strong&gt;actf{&lt;/strong&gt;, we have:&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{eqnarray}
-	E(0) &amp;=&amp; 12\\
-	E(2) &amp;=&amp; 24\\
-	E(19) &amp;=&amp; 9\\
-	E(5) &amp;=&amp; 3\\
-\end{eqnarray} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;The first equation means that when we encrypt the letter number 0, it gives the letter number 12.
-We won’t need more than the first two equations in order to find the key.&lt;/p&gt;
-
-&lt;p&gt;This gives the following system:&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\left\{
-\begin{array}{r c l}
-0a + b &amp;\equiv&amp; \boxed{12}\mod{26}\\
-2a + b &amp;\equiv&amp; 24\mod{26}\\
-\end{array}
-\right. %]]&gt;&lt;/script&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;% &lt;![CDATA[
-\begin{array}{r c l}
-\Leftrightarrow 2a &amp;\equiv&amp; 12\mod{26}\\
-\Leftrightarrow 2a &amp;\equiv&amp; 38\mod{26}\\
-\Leftrightarrow a &amp;\equiv&amp; \boxed{19}\mod{26}\\
-\end{array} %]]&gt;&lt;/script&gt;
-
-&lt;p&gt;Here is the key!&lt;/p&gt;
-
-&lt;script type=&quot;math/tex; mode=display&quot;&gt;key (19,12)&lt;/script&gt;
-
-&lt;h4 id=&quot;decryption-1&quot;&gt;Decryption&lt;/h4&gt;
-
-&lt;p&gt;Using the key and the previously explained process of decryption, we are able to recover the plain text, which was indeed a magnificent flag!&lt;/p&gt;
-
-&lt;p&gt;&lt;strong&gt;actf{it_begins}&lt;/strong&gt;&lt;/p&gt;
-
-&lt;p&gt;That’s it for this challenge but don’t worry, it was only the warm-up! :blush: Do not hesitate to leave a comment or to contact me for any question or inquiry.&lt;/p&gt;
-
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</summary></entry></feed>
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A warm-up forensic challenge proposed by NDH16…</summary></entry></feed>
