@@ -404,7 +404,7 @@ From there, we have everything needed to build our payload and to retrieve the f
 >
 >Difficulty estimate: Easy
 
-All credit goes to **suchro** who solved all of the forensic challenges alone and is the original author of the following writeups. :thumbsup:
+All credit goes to **$in** who solved all of the forensic challenges alone and is the original author of the following writeups. :thumbsup:
 
 An [unknown file]({{ "/assets/2018-12-30/rare_mount" | absolute_url }} "rare_mount") was all that was given for this challenge.
 
@@ -556,7 +556,7 @@ Then, we ran `jefferson` which gave us a file containing the flag!
 
 Flag `35C3_mama_what_happend_to_my_honda_CR-C`
 
-Congratulations again to **suchro** for theses forensic challenges!
+Congratulations again to **$in** for theses forensic challenges!
 
 
 <p id="signature">BoiteAKlou :hammer:</p>
