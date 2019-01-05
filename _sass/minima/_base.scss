@@ -57,10 +57,12 @@ img {
 }
 
 #logo{
-  width: 8%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1%;
+  width: 10%;
   min-width: 60px;
-  margin: 1%;
-  margin-right: 2%;
 }
 
 
@@ -191,6 +193,9 @@ pre {
     max-width:         calc(#{$content-width} - (#{$spacing-unit}));
     padding-right: $spacing-unit / 2;
     padding-left: $spacing-unit / 2;
+  }
+  @include media-query($on-palm){
+    text-align: center;
   }
 }
 
