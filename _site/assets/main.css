@@ -143,7 +143,7 @@ h3 { margin-bottom: 0px; }
 /** Posts */
 .post-header { margin-bottom: 30px; text-align: left; }
 
-.post-title { font-size: 42px; line-height: 1; }
+.post-title { color: #424242; font-size: 42px; line-height: 1; }
 @media screen and (max-width: 800px) { .post-title { font-size: 36px; } }
 
 .post-content { margin-bottom: 30px; }
