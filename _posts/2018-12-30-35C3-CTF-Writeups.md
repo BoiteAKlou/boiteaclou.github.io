@@ -424,7 +424,7 @@ DECIMAL       HEXADECIMAL     DESCRIPTION
 0             0x0             JFFS2 filesystem, big endian
 ```
 
-After some research, we found [jefferson]("https://github.com/sviehb/jefferson") which is a **JFFS2 filesystem extraction tool**.
+After some research, we found [jefferson](https://github.com/sviehb/jefferson) which is a **JFFS2 filesystem extraction tool**.
 
 ```bash
 boiteaklou@kali:~/CTF/2018/35C3-Junior/For/files$ jefferson rare-fs.bin -d rare_mount.out
