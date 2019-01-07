@@ -26,7 +26,7 @@ I won't describe here the full details of how libraries work in Linux, my goal i
 
 ## Shared Libraries in short
 
-A library is **a file containing data or compiled code** that is used by developpers to avoid re-writing the same pieces of code you use in mutiple programs (modular programming). It can contain classes, methods or data structures and will be linked to the program that will use it at the compilation time.
+A library is **a file containing data or compiled code** that is used by developers to avoid re-writing the same pieces of code you use in multiple programs (modular programming). It can contain classes, methods or data structures and will be linked to the program that will use it at the compilation time.
 
 There are different types of libraries in Linux:
 * Static libraries (**.a** extension)
