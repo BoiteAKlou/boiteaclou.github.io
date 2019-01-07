@@ -10,7 +10,7 @@ categories:
 - "Pentest"
 ---
 
-Linux applications often use dynamically linked shared object libraries. These libraries allow code flexbility but they have their drawbacks... <span style="color:Maroon">In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.</span> Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I'll give recommandations on how to protect your system against it in the final part of the article.
+Linux applications often use dynamically linked shared object libraries. These libraries allow code flexibility but they have their drawbacks... <span style="color:Maroon">In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.</span> Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I'll give recommendations on how to protect your system against it in the final part of the article.
  <!--excerpt-->
 
 # Table of Contents
@@ -38,7 +38,7 @@ Dynamic libraries can be used in two ways:
 * Dynamic linking (dynamically linked at run time).
 * Dynamic loading (dynamiclly loaded and user under program control).
 
-They seem much more attractive because of their dynamic nature. If we manage to **alterate the content of a dynamic library**, we should be able to control the execution of the calling program and that's what we want!
+They seem much more attractive because of their dynamic nature. If we manage to **alter the content of a dynamic library**, we should be able to control the execution of the calling program and that's what we want!
 
 For that reason, we will focus on **dynamic linking** in this article.
 
