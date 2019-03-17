@@ -13,7 +13,7 @@ categories:
 
 ![Carrier box]({{ "/assets/2019-03-16/carrier-box.png" | absolute_url }} "Carrier Box")
 
-Carrier was a very interesting box where a web command injection gave access to a BGP router. After some BGP Hijacking magic, it was possible to retrieve the FTP credentials of a rich Nigerian Prince, which allowed us to read the flag stored on this FTP server...
+Carrier was a very interesting box where a **web command injection** gave access to a **BGP router**. After some **BGP Hijacking** magic, it was possible to retrieve the FTP credentials of a rich Nigerian Prince, which allowed us to read the flag stored on this FTP server...
  <!--excerpt-->
 
 ## Table of Contents
