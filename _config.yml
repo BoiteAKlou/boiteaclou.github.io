@@ -42,8 +42,6 @@ permalink: /:title.html
 disqus:
   shortname: boiteaklou-github-io
 
-google_analytics: UA-120371981-1
-
 twitter_username: BoiteAKlou
 
 # Build settings
