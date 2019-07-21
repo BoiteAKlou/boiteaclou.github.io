@@ -1,6 +1,6 @@
 ---
 layout: post
-title:  "cyBRICS CTF Writeups"
+title:  "CyBRICS CTF Writeups"
 date:   2019-07-21 09:00:00 +0100
 comments: true
 author: BoiteAKlou
