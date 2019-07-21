@@ -1,4 +1,438 @@
-<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-04T21:13:02+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">INS’HACK CTF Writeups</title><link href="http://localhost:4000/INSHACK-CTF-Writeups.html" rel="alternate" type="text/html" title="INS'HACK CTF Writeups" /><published>2019-05-08T10:00:00+02:00</published><updated>2019-05-08T10:00:00+02:00</updated><id>http://localhost:4000/INSHACK-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/INSHACK-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/inshack-logo.png&quot; alt=&quot;INSHACK logo&quot; title=&quot;INSHACK logo&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="3.7.4">Jekyll</generator><link href="http://localhost:4000/feed.xml" rel="self" type="application/atom+xml" /><link href="http://localhost:4000/" rel="alternate" type="text/html" /><updated>2019-07-21T19:09:29+02:00</updated><id>http://localhost:4000/feed.xml</id><title type="html">BoiteAKlou’s Infosec Blog</title><subtitle>Computer security oriented blog held by a french student in IT and Networks. This blog aims at teaching the fundamentals of Cyber Security to beginners through CTF write-ups and didactic articles.</subtitle><author><name>BoiteAKlou</name></author><entry><title type="html">cyBRICS CTF Writeups</title><link href="http://localhost:4000/cyBRICS-CTF-Writeups.html" rel="alternate" type="text/html" title="cyBRICS CTF Writeups" /><published>2019-07-21T10:00:00+02:00</published><updated>2019-07-21T10:00:00+02:00</updated><id>http://localhost:4000/cyBRICS-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/cyBRICS-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/ctf.png&quot; alt=&quot;cyBRICS logo&quot; title=&quot;cyBRICS logo&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Final rank:&lt;/strong&gt; 112/775 with 7 challenges solved
+&lt;!--excerpt--&gt;&lt;/p&gt;
+
+&lt;h2 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h2&gt;
+
+&lt;ul id=&quot;markdown-toc&quot;&gt;
+  &lt;li&gt;&lt;a href=&quot;#web-warmup&quot; id=&quot;markdown-toc-web-warmup&quot;&gt;[Web] Warmup&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement&quot; id=&quot;markdown-toc-statement&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution&quot; id=&quot;markdown-toc-resolution&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#web-bitkoff-bank&quot; id=&quot;markdown-toc-web-bitkoff-bank&quot;&gt;[Web] Bitkoff Bank&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-1&quot; id=&quot;markdown-toc-statement-1&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-1&quot; id=&quot;markdown-toc-resolution-1&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#web-caesaref&quot; id=&quot;markdown-toc-web-caesaref&quot;&gt;[Web] Caesaref&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-2&quot; id=&quot;markdown-toc-statement-2&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-2&quot; id=&quot;markdown-toc-resolution-2&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#network-sender&quot; id=&quot;markdown-toc-network-sender&quot;&gt;[Network] Sender&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-3&quot; id=&quot;markdown-toc-statement-3&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-3&quot; id=&quot;markdown-toc-resolution-3&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#network-paranoid&quot; id=&quot;markdown-toc-network-paranoid&quot;&gt;[Network] Paranoid&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-4&quot; id=&quot;markdown-toc-statement-4&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-4&quot; id=&quot;markdown-toc-resolution-4&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#misc-proctf&quot; id=&quot;markdown-toc-misc-proctf&quot;&gt;[Misc] ProCTF&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-5&quot; id=&quot;markdown-toc-statement-5&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-5&quot; id=&quot;markdown-toc-resolution-5&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;#stegano-honey-help&quot; id=&quot;markdown-toc-stegano-honey-help&quot;&gt;[Stegano] Honey, Help!&lt;/a&gt;    &lt;ul&gt;
+      &lt;li&gt;&lt;a href=&quot;#statement-6&quot; id=&quot;markdown-toc-statement-6&quot;&gt;Statement&lt;/a&gt;&lt;/li&gt;
+      &lt;li&gt;&lt;a href=&quot;#resolution-6&quot; id=&quot;markdown-toc-resolution-6&quot;&gt;Resolution&lt;/a&gt;&lt;/li&gt;
+    &lt;/ul&gt;
+  &lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;web-warmup&quot;&gt;[Web] Warmup&lt;/h2&gt;
+&lt;h3 id=&quot;statement&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Warmup (Web, Baby, 10 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: George Zaytsev (groke)&lt;/p&gt;
+
+  &lt;p&gt;E_TOO_EASY&lt;/p&gt;
+
+  &lt;p&gt;Just get the &lt;a href=&quot;http://45.32.148.106/&quot;&gt;flag&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;resolution&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;When browsing to the link in the sentence, we were instantly redirected to &lt;strong&gt;/final.html&lt;/strong&gt;, which displays a very long text but no flag.&lt;/p&gt;
+
+&lt;p&gt;Using Burpsuite, we could intercept the redirection and grab the flag lcoated in &lt;strong&gt;/index.html&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/warmup-flag.png&quot; alt=&quot;Warmup flag&quot; title=&quot;Warmup flag&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once base64-decoded, we could read the following flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;cybrics{4b646c7985fec6189dadf8822955b034}&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;web-bitkoff-bank&quot;&gt;[Web] Bitkoff Bank&lt;/h2&gt;
+&lt;h3 id=&quot;statement-1&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Bitkoff Bank (Web, Easy, 50 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: Alexander Menshchikov (n0str)&lt;/p&gt;
+
+  &lt;p&gt;Need more money! Need the flag!&lt;/p&gt;
+
+  &lt;p&gt;http://45.77.201.191/index.php&lt;/p&gt;
+
+  &lt;p&gt;Mirror: http://95.179.148.72:8083/index.php&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;resolution-1&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;I’m pretty sure I didn’t solve this challenge the intended way because my method was pretty dumb. Judge by yourself! :wink:&lt;/p&gt;
+
+&lt;p&gt;After registering an account, you were greeted with the following php page:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/bitkoff-home.png&quot; alt=&quot;Bitkoff home&quot; title=&quot;Bitkoff home&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Everytime you clicked on “MINE BTC”, &lt;code class=&quot;highlighter-rouge&quot;&gt;0.0000000001&lt;/code&gt; was added to your BTC counter. It was, then, possible to &lt;strong&gt;convert BTC to USD&lt;/strong&gt; in order to &lt;strong&gt;buy the flag when you reached 1$&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;An auto-miner costed 0.01$ and would click for you every second… not so worth it.&lt;/p&gt;
+
+&lt;p&gt;What I did is pretty simple: I’ve &lt;strong&gt;automated the mining request&lt;/strong&gt; thanks to a python script and ran 6 instances of it in parallel until I got enough BTC to buy the flag. Absolutely nothing was optimized but I had a few other things to do so I’ve left the script run in background for approximately 2 hours and I could buy the flag!&lt;/p&gt;
+
+&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;kn&quot;&gt;import&lt;/span&gt; &lt;span class=&quot;nn&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;
+
+&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'mine'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'1'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+&lt;span class=&quot;n&quot;&gt;cook&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;{&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'name'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'boiteaklou'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'password'&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;:&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;'boiteaklou'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;}&lt;/span&gt;
+
+&lt;span class=&quot;k&quot;&gt;while&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;1&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;r&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;requests&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;post&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'http://95.179.148.72:8083/index.php'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;data&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;payload&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cookies&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;cook&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;n&quot;&gt;btc&lt;/span&gt; &lt;span class=&quot;o&quot;&gt;=&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;re&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;findall&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;'Your BTC: &amp;lt;b&amp;gt;([^&amp;lt;]*)&amp;lt;/b&amp;gt;'&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;r&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;text&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
+    &lt;span class=&quot;k&quot;&gt;print&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;BTC: &lt;/span&gt;&lt;span class=&quot;si&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;s&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;%&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;btc&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;])&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Here is the cheapest bitcoin mining farm ever:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/bitkoff-farm.png&quot; alt=&quot;Mining farm&quot; title=&quot;Mining farm&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;A minor difficulty consisted in the fact that we could not enter a value lower than 0.0001 in the change field because of some HTML client-side check. However, we could forge the request using Burpsuite and it worked like a charm.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/bitkoff-one_dollar.png&quot; alt=&quot;Bitkoff 1 dollar&quot; title=&quot;Bitkoff 1$&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;And the flag:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/bitkoff-flag.png&quot; alt=&quot;Bitkoff flag&quot; title=&quot;Bitkoff flag&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;flag: cybrics{50_57R4n93_pR3c1510n}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;web-caesaref&quot;&gt;[Web] Caesaref&lt;/h2&gt;
+&lt;h3 id=&quot;statement-2&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Caesaref (Web, Hard, 50 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: Alexander Menshchikov (n0str)&lt;/p&gt;
+
+  &lt;p&gt;There is an additional one: Fixaref&lt;/p&gt;
+
+  &lt;p&gt;This web resource is highly optimized:&lt;/p&gt;
+
+  &lt;p&gt;http://45.77.218.242/&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;resolution-2&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;After register a new account, we were greeted with the following web page where we could ask questions to the support:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/caesaref-home.png&quot; alt=&quot;Caesaref home&quot; title=&quot;Caesaref home&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;At first, I lost a lot of time trying to redirect the support guy to my website via XSS payloads like &lt;code class=&quot;highlighter-rouge&quot;&gt;&amp;lt;img src=&quot;http://mywebsite&quot; /&amp;gt;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Actually, it was not necessary. We only had to paste an HTTP link in the text box and a bot would visit it instantly.&lt;/p&gt;
+
+&lt;p&gt;Using this information, we could &lt;strong&gt;paste the link to a webhook instance&lt;/strong&gt; and surprisingly find the &lt;strong&gt;PHPSESSID cookie of the bot&lt;/strong&gt; sent with the request.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/caesaref-request.png&quot; alt=&quot;Caesaref request&quot; title=&quot;Caesaref request&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Then, we could replace our own PHPSESSID cookie by the retrieved one and refresh the page in order to access the bot account. Once connected, a new button was here to give us the flag.&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;Flag: cybrics{k4Ch3_C4N_83_vuln3R48l3}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;network-sender&quot;&gt;[Network] Sender&lt;/h2&gt;
+&lt;h3 id=&quot;statement-3&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Sender (Network, Baby, 10 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: Vlad Roskov (vos)&lt;/p&gt;
+
+  &lt;p&gt;We’ve intercepted this text off the wire of some conspirator, but we have no idea what to do with that.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/assets/2019-07-21/intercepted_text.txt&quot;&gt;intercepted_text.txt&lt;/a&gt;&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;blockquote&gt;
+
+  &lt;p&gt;Get us their secret documents&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;resolution-3&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;The given text file shows a SMTP trace from which we could extract some credentials as well as the password of an archive.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;220 ugm.cybrics.net ESMTP Postfix (Ubuntu)
+EHLO localhost
+250-ugm.cybrics.net
+250-PIPELINING
+250-SIZE 10240000
+250-VRFY
+250-ETRN
+250-AUTH PLAIN LOGIN
+250-ENHANCEDSTATUSCODES
+250-8BITMIME
+250 DSN
+AUTH LOGIN
+334 VXNlcm5hbWU6      
+ZmF3a2Vz
+334 UGFzc3dvcmQ6                        # Username
+Q29tYmluNHQxb25YWFk=                    # Password
+235 2.7.0 Authentication successful
+MAIL FROM: &amp;lt;fawkes@ugm.cybrics.net&amp;gt;
+250 2.1.0 Ok
+RCPT TO: &amp;lt;area51@af.mil&amp;gt;
+250 2.1.5 Ok
+DATA
+354 End data with &amp;lt;CR&amp;gt;&amp;lt;LF&amp;gt;.&amp;lt;CR&amp;gt;&amp;lt;LF&amp;gt;
+From: fawkes &amp;lt;fawkes@ugm.cybrics.net&amp;gt;
+To: Area51 &amp;lt;area51@af.mil&amp;gt;
+Subject: add - archive pw
+Content-Type: text/plain; charset=&quot;iso-8859-1&quot;
+Content-Transfer-Encoding: quoted-printable
+MIME-Version: 1.0
+
+=62=74=77=2E=0A=0A=70=61=73=73=77=6F=72=64 =66=6F=72 =74=68=65 =61=72=63=
+=68=69=76=65 =77=69=74=68 =66=6C=61=67=3A =63=72=61=63=6B=30=57=65=73=74=
+=6F=6E=38=38=76=65=72=74=65=62=72=61=0A=0A=63=68=65=65=72=73=21=0A
+.
+250 2.0.0 Ok: queued as C4D593E8B6
+QUIT
+221 2.0.0 Bye
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Base64-decoded credentials: &lt;code class=&quot;highlighter-rouge&quot;&gt;fawkes / Combin4t1onXXY&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Mail content (quoted-printable decoded):&lt;/p&gt;
+
+&lt;blockquote&gt;
+  &lt;p&gt;btw.&lt;/p&gt;
+
+  &lt;p&gt;password for the archive with flag: crack0Weston88vertebra&lt;/p&gt;
+
+  &lt;p&gt;cheers!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;A NMAP scan showed us that the pop3 port (tcp 110) was open so we could connect to it and authentify ourselves using the retrieved credentials.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;telnet ugm.cybrics.net 110
+Trying 136.244.67.129...
+Connected to ugm.cybrics.net.
+Escape character is &lt;span class=&quot;s1&quot;&gt;'^]'&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
++OK Dovecot ready.
+USER fawkes
++OK
+PASS Combin4t1onXXY
++OK Logged &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+LIST
++OK 1 messages:
+1 138808
+&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
++OK 138808 octets
+Return-Path: &amp;lt;fawkes@ugm.cybrics.net&amp;gt;
+X-Original-To: fawkes@ugm.cybrics.net
+Delivered-To: fawkes@ugm.cybrics.net
+Received: by sender &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Postfix, from userid 1000&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+        id B83843EBFF&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; Thu, 18 Jul 2019 16:41:23 +0000 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;UTC&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+Date: Thu, 18 Jul 2019 16:41:23 +0000
+From: fawkes &amp;lt;fawkes@ugm.cybrics.net&amp;gt;
+To: Area51 &amp;lt;area51@af.mil&amp;gt;, fawkes &amp;lt;fawkes@ugm.cybrics.net&amp;gt;
+Subject: interesting archive
+Message-ID: &amp;lt;20190718164123.GA9631@ugm.cybrics.net&amp;gt;
+MIME-Version: 1.0
+Content-Type: multipart/mixed&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;boundary&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;J2SCkAp4GZ/dPZZf&quot;&lt;/span&gt;
+Content-Disposition: inline
+User-Agent: Mutt/1.5.24 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;2015-08-30&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+
+&lt;span class=&quot;nt&quot;&gt;--J2SCkAp4GZ&lt;/span&gt;/dPZZf
+Content-Type: text/plain&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;charset&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;us-ascii
+Content-Disposition: inline
+
+take a look. dont share. secret.
+
+&lt;span class=&quot;nt&quot;&gt;--J2SCkAp4GZ&lt;/span&gt;/dPZZf
+Content-Type: application/zip
+Content-Disposition: attachment&lt;span class=&quot;p&quot;&gt;;&lt;/span&gt; &lt;span class=&quot;nv&quot;&gt;filename&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;&lt;span class=&quot;s2&quot;&gt;&quot;secret_flag.zip&quot;&lt;/span&gt;
+Content-Transfer-Encoding: base64
+
+UEsDBBQACQBjAMua8k6A+vIXUogBAA+iAQAPAAsAc2VjcmV0X2ZsYWcucGRmAZkHAAEAQUUD
+CAC1GtwFWQRy7mwXUpknBhOJ3hpnDv1ei1Kf+knOhoW61yeyPdnML4vSrff+GUxQYCGKz6SB
+&lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;...]
+AAAAAHNlY3JldF9mbGFnLnBkZgoAIAAAAAAAAQAYAGA6RPuEPdUBoKjPA4U91QGgqM8DhT3V           
+&lt;span class=&quot;nv&quot;&gt;AQGZBwABAEFFAwgAUEsFBgAAAAABAAEAbAAAAJqIAQAAAA&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;
+
+&lt;span class=&quot;nt&quot;&gt;--J2SCkAp4GZ&lt;/span&gt;/dPZZf--
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Then, we could extract the content of the retrieved archive using the previously found password: &lt;code class=&quot;highlighter-rouge&quot;&gt;7z e -pcrack0Weston88vertebra archive.zip&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;And we could finally read the flag inside the extracted PDF: &lt;code class=&quot;highlighter-rouge&quot;&gt;cybrics{Y0uV3_G0T_m41L}&lt;/code&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;network-paranoid&quot;&gt;[Network] Paranoid&lt;/h2&gt;
+&lt;h3 id=&quot;statement-4&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Paranoid (Network, Easy, 113 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: Vlad Roskov (vos)&lt;/p&gt;
+
+  &lt;p&gt;Added at 14:40 UTC: to save some guessing, flag is the current password. Flag format is still cybrics{…}, so you’ll know when you find it.&lt;/p&gt;
+
+  &lt;p&gt;My neighbors are always very careful about their security. For example they’ve just bought a new home Wi-Fi router, and instead of just leaving it open, they instantly are setting passwords!&lt;/p&gt;
+
+  &lt;p&gt;Don’t they trust me? I feel offended.&lt;/p&gt;
+
+  &lt;p&gt;&lt;a href=&quot;http://localhost:4000/assets/2019-07-21/paranoid.zip&quot;&gt;paranoid.zip&lt;/a&gt;&lt;/p&gt;
+
+  &lt;p&gt;Can you give me their current router admin pw?&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;resolution-4&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;The zip archive contained a pcap that I opened in Wireshark. Since the capture was quite big, I used &lt;strong&gt;Statistics &amp;gt; Protocol Hierarchy&lt;/strong&gt; in order to get the big picture.&lt;/p&gt;
+
+&lt;p&gt;The packet capture was composed of &lt;strong&gt;802.11 traffic&lt;/strong&gt; and thanks to the protocol hierarchy, I could spot some &lt;strong&gt;HTTP requests&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;As the statement was mentioning a password change, I decided to examine &lt;strong&gt;HTTP POST requests&lt;/strong&gt; only thanks to the wireshark filter: &lt;code class=&quot;highlighter-rouge&quot;&gt;http.request.method == &quot;POST&quot;&lt;/code&gt;.&lt;/p&gt;
+
+&lt;p&gt;Inside the payload of HTTP POST request n°19173, we could find &lt;code class=&quot;highlighter-rouge&quot;&gt;WLAN_AP_WEP_KEY1=Xi1nvy5KGSgI2&amp;amp;&lt;/code&gt;. Then, I added this wep key to &lt;strong&gt;wireshark decryption keys&lt;/strong&gt; and it allowed us to find more HTTP requests.&lt;/p&gt;
+
+&lt;p&gt;Still filtering HTTP POST requests, I found a new password change request with this payload: &lt;code class=&quot;highlighter-rouge&quot;&gt;WLAN_AP_WPA_PSK=2_RGR_xO-uiJFiAxdA33-PsdanuK&amp;amp;&lt;/code&gt; that I immediately set as &lt;strong&gt;WPA decryption key&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Once again, we had access to more decrypted HTTP traffic inside which the flag was located.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/paranoid-flag.png&quot; alt=&quot;Paranoid flag&quot; title=&quot;Paranoid flag&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;cybrics{n0_w4Y_7o_h1d3_fR0m_Y0_n316hb0R}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;misc-proctf&quot;&gt;[Misc] ProCTF&lt;/h2&gt;
+&lt;h3 id=&quot;statement-5&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;ProCTF (CTB, Baby, 10 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: Vlad Roskov (vos)&lt;/p&gt;
+
+  &lt;p&gt;We Provide you a Login for your scientific researches. Don’t try to find the flag.&lt;/p&gt;
+
+  &lt;p&gt;ssh pro@95.179.148.72
+Password: iamthepr0&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;h3 id=&quot;resolution-5&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;After connecting to the machine via SSH, we were trapped inside &lt;strong&gt;a SWI-Prolog interactive interpreter&lt;/strong&gt;. We could verify this assumption by pressing TAB twice, which would display the list of available functions.&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;ssh pro@95.179.148.72
+pro@95.179.148.72&lt;span class=&quot;se&quot;&gt;\'&lt;/span&gt;s password:
+Welcome to Ubuntu 19.04 &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;GNU/Linux 5.0.0-15-generic x86_64&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
+
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Documentation:  https://help.ubuntu.com
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Management:     https://landscape.canonical.com
+ &lt;span class=&quot;k&quot;&gt;*&lt;/span&gt; Support:        https://ubuntu.com/advantage
+
+  System information as of Sat Jul 20 12:28:39 UTC 2019
+
+  System load:                    4.15
+  Usage of /:                     2.4% of 220.08GB
+  Memory usage:                   10%
+  Swap usage:                     0%
+  Processes:                      508
+  Users logged &lt;span class=&quot;k&quot;&gt;in&lt;/span&gt;:                3
+  IP address &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;enp1s0:          95.179.148.72
+  IP address &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;docker0:         172.17.0.1
+  IP address &lt;span class=&quot;k&quot;&gt;for &lt;/span&gt;br-62bc0c6d2f97: 172.19.0.1
+
+
+84 updates can be installed immediately.
+48 of these updates are security updates.
+
+
+WARNING: Your kernel does not support swap limit capabilities or the cgroup is not mounted. Memory limited without swap.
+?-
+abort                           built_in_procedure              current_output                  erf
+abs                             busy                            cut                             erfc
+access                          byte                            cut_call                        error
+access_level                    c_stack                         cut_exit                        &lt;span class=&quot;nb&quot;&gt;eval
+&lt;/span&gt;acos                            call                            cut_parent                      evaluable
+acosh                           call_continuation               cycle                           evaluation_error
+active                          callable                        cycles                          event_hook
+acyclic_term                    canceled                        cyclic_term                     exception
+add_import                      case_insensitive                date                            exclusive
+address                         case_preserving                 db_reference                    execute
+... skipped 54 rows
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;After some googling, I found an easy way to get a shell and to display the flag:&lt;/p&gt;
+
+&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;?- shell&lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s1&quot;&gt;'sh'&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
+&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt;
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd&lt;/span&gt; /home
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls
+&lt;/span&gt;user
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cd &lt;/span&gt;user
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls
+&lt;/span&gt;flag.txt
+&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;cat &lt;/span&gt;flag.txt
+cybrics&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;feeling_like_a_PRO?_that_sounds_LOGical_to_me!____g3t_it?_G37_1T?!?!_ok_N3v3Rm1nd...&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Flag: &lt;code class=&quot;highlighter-rouge&quot;&gt;cybrics{feeling_like_a_PRO?_that_sounds_LOGical_to_me!____g3t_it?_G37_1T?!?!_ok_N3v3Rm1nd...}&lt;/code&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;stegano-honey-help&quot;&gt;[Stegano] Honey, Help!&lt;/h2&gt;
+&lt;h3 id=&quot;statement-6&quot;&gt;Statement&lt;/h3&gt;
+&lt;blockquote&gt;
+  &lt;p&gt;Honey, Help! (rebyC, Baby, 10 pts)&lt;/p&gt;
+
+  &lt;p&gt;Author: Vlad Roskov (vos)&lt;/p&gt;
+
+  &lt;p&gt;Added at 10:50 UTC: there was a typo in the flag. Please re-submit.&lt;/p&gt;
+
+  &lt;p&gt;HONEY HELP!!!&lt;/p&gt;
+
+  &lt;p&gt;I was working in my Kali MATE, pressed something, AND EVERYTHING DISAPPEARED!&lt;/p&gt;
+&lt;/blockquote&gt;
+
+&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-07-21/honey_help.png&quot; alt=&quot;honeyHELP&quot; title=&quot;honey help&quot; /&gt;&lt;/p&gt;
+
+&lt;h3 id=&quot;resolution-6&quot;&gt;Resolution&lt;/h3&gt;
+
+&lt;p&gt;This challenge was very easy but a bit painful for my eyes because I solved it late in the night.&lt;/p&gt;
+
+&lt;p&gt;The idea is to &lt;strong&gt;compare the clear and the encoded output&lt;/strong&gt; in order to &lt;strong&gt;establish a match for each character&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;Using this technique and a tiny bit of guessing (because it’s stega), I could build the following matching table and reconstruct the flag.&lt;/p&gt;
+
+&lt;div class=&quot;highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;240C : c
+&amp;lt; : y
+2409 : b
+23BC : r
+240B : i
+23BD : s
+Pi : {
+2424 : h
+half-T : l
+23BB : p
+Cross : n
+low T : w
+|- : t
+Pound : }
+grey square : a
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;&lt;code class=&quot;highlighter-rouge&quot;&gt;cybrics{h0ly_cr4p_1s_this_al13ni$h_0r_w4t?}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;The CTF was pretty fun, thanks CyBRICS for the event!&lt;/p&gt;
+
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">Final rank: 112/775 with 7 challenges solved</summary></entry><entry><title type="html">INS’HACK CTF Writeups</title><link href="http://localhost:4000/INSHACK-CTF-Writeups.html" rel="alternate" type="text/html" title="INS'HACK CTF Writeups" /><published>2019-05-08T10:00:00+02:00</published><updated>2019-05-08T10:00:00+02:00</updated><id>http://localhost:4000/INSHACK-CTF-Writeups</id><content type="html" xml:base="http://localhost:4000/INSHACK-CTF-Writeups.html">&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2019-05-08/inshack-logo.png&quot; alt=&quot;INSHACK logo&quot; title=&quot;INSHACK logo&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
 
 &lt;!--excerpt--&gt;
 
@@ -3578,184 +4012,4 @@ Simple! We have to extract the LSBs from each pixel and then assemble the result
   &lt;li&gt;&lt;a href=&quot;http://localhost:4000/assets/2018-08-12/unhide_message.py&quot;&gt;unhide_message.py&lt;/a&gt;&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its simplicity and its ability to be undetectable to the naked eye. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.</summary></entry><entry><title type="html">Basic Steganography: Vous n’avez pas les bases - NDH16</title><link href="http://localhost:4000/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html" rel="alternate" type="text/html" title="Basic Steganography: Vous n'avez pas les bases - NDH16" /><published>2018-07-05T23:30:00+02:00</published><updated>2018-07-05T23:30:00+02:00</updated><id>http://localhost:4000/Basic-Steganography-Vous-navez-pas-les-bases-NDH16</id><content type="html" xml:base="http://localhost:4000/Basic-Steganography-Vous-navez-pas-les-bases-NDH16.html">&lt;p&gt;A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.&lt;/p&gt;
-
-&lt;p&gt;&lt;!--excerpt--&gt;&lt;/p&gt;
-
-&lt;h1 class=&quot;no_toc&quot; id=&quot;table-of-contents&quot;&gt;Table of Contents&lt;/h1&gt;
-
-&lt;ul id=&quot;markdown-toc&quot;&gt;
-  &lt;li&gt;&lt;a href=&quot;#challenge-description&quot; id=&quot;markdown-toc-challenge-description&quot;&gt;Challenge description&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#never-gonna-give-you-up&quot; id=&quot;markdown-toc-never-gonna-give-you-up&quot;&gt;Never gonna give you up&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;#never-gonna-let-you-down&quot; id=&quot;markdown-toc-never-gonna-let-you-down&quot;&gt;Never gonna let you down&lt;/a&gt;&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;h2 id=&quot;challenge-description&quot;&gt;Challenge description&lt;/h2&gt;
-
-&lt;p&gt;The PNG file &lt;a href=&quot;http://localhost:4000/assets/2018-07-05/OREILLES_SALES.png&quot;&gt;OREILLES_SALES.png&lt;/a&gt; (named after the famous french rapper “Orelsan”) is provided without more instructions.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-05/OREILLES_SALES.png&quot; alt=&quot;PNG preview&quot; title=&quot;PNG file preview&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
-
-&lt;h2 id=&quot;never-gonna-give-you-up&quot;&gt;Never gonna give you up&lt;/h2&gt;
-
-&lt;p&gt;Since we’re never too careful when it comes to steganography, I verified that the provided file was indeed a PNG.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;file OREILLES_SALES.png
-OREILLES_SALES.png: PNG image data, 680 x 520, 8-bit/color RGBA, non-interlaced
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Even though this check isn’t infallible, we’ll suppose it tells the truth.&lt;/p&gt;
-
-&lt;p&gt;Why don’t we start by checking metadata ? &lt;em&gt;*grabs exiftool*&lt;/em&gt;&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;exiftool OREILLES_SALES.png
-ExifTool Version Number         : 11.03
-File Name                       : OREILLES_SALES.png
-Directory                       : &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-File Size                       : 396 kB
-File Modification Date/Time     : 2018:07:01 00:11:07+02:00
-File Access Date/Time           : 2018:07:05 22:34:23+02:00
-File Inode Change Date/Time     : 2018:07:01 00:11:24+02:00
-File Permissions                : rw-r--r--
-File Type                       : PNG
-File Type Extension             : png
-MIME Type                       : image/png
-Image Width                     : 680
-Image Height                    : 520
-Bit Depth                       : 8
-Color Type                      : RGB with Alpha
-Compression                     : Deflate/Inflate
-Filter                          : Adaptive
-Interlace                       : Noninterlaced
-Exif Byte Order                 : Little-endian &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Intel, II&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-User Comment                    : aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ&lt;span class=&quot;o&quot;&gt;==&lt;/span&gt;
-Thumbnail Offset                : 154
-Thumbnail Length                : 5176
-Gamma                           : 2.2222
-White Point X                   : 0.3127
-White Point Y                   : 0.329
-Red X                           : 0.64
-Red Y                           : 0.33
-Green X                         : 0.3
-Green Y                         : 0.6
-Blue X                          : 0.15
-Blue Y                          : 0.06
-Background Color                : 255 255 255
-Modify Date                     : 2017:09:22 11:41:16
-Datecreate                      : 2017-09-22T13:41:16+02:00
-Datemodify                      : 2017-09-22T13:41:16+02:00
-Signature                       : f0140da3c2e1bf77c4183d771f341d8f3a8e3afc4c7c3b1b65917e8678b16b3e
-Software                        : Adobe ImageReady
-Warning                         : &lt;span class=&quot;o&quot;&gt;[&lt;/span&gt;minor] Trailer data after PNG IEND chunk
-Image Size                      : 680x520
-Megapixels                      : 0.354
-Thumbnail Image                 : &lt;span class=&quot;o&quot;&gt;(&lt;/span&gt;Binary data 5176 bytes, use &lt;span class=&quot;nt&quot;&gt;-b&lt;/span&gt; option to extract&lt;span class=&quot;o&quot;&gt;)&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;The &lt;strong&gt;User Comment&lt;/strong&gt; caught my attention, it was at this moment that I severely underestimated this challenge…&lt;/p&gt;
-
-&lt;p&gt;Decoding this base64-encoded comment gives us the following URL:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;aHR0cHM6Ly93d3cueW91dHViZS5jb20vd2F0Y2g/dj1kUXc0dzlXZ1hjUQ==&quot;&lt;/span&gt; | base64 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;
-https://www.youtube.com/watch?v&lt;span class=&quot;o&quot;&gt;=&lt;/span&gt;dQw4w9WgXcQ
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;I let you visit this link… Don’t worry, nothing dangerous. :sob:&lt;/p&gt;
-
-&lt;h2 id=&quot;never-gonna-let-you-down&quot;&gt;Never gonna let you down&lt;/h2&gt;
-
-&lt;p&gt;After this bitter failure, I decided to change my approach and to start looking for any dissimulated file inside the picture. To complete this task, I recommend the “&lt;strong&gt;Foremost&lt;/strong&gt;” tool, which is one of the best in its category.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;foremost OREILLES_SALES.png
-Processing: OREILLES_SALES.png
-|&lt;span class=&quot;k&quot;&gt;*&lt;/span&gt;|
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-&lt;p&gt;The result of the extraction is stored in the “output” folder by default. Here, it gives two PNG files:&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;ls &lt;/span&gt;output/png/
-00000000.png  00000370.png
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;&lt;strong&gt;00000000.png&lt;/strong&gt; is the original picture provided with the challenge, but &lt;a href=&quot;http://localhost:4000/assets/2018-07-05/00000370.png&quot;&gt;00000370.png&lt;/a&gt; is way more interesting:&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;http://localhost:4000/assets/2018-07-05/00000370.png&quot; alt=&quot;00000370.png&quot; title=&quot;00000370.png preview&quot; width=&quot;40%&quot; /&gt;&lt;/p&gt;
-
-&lt;p&gt;We will call this file “basiq.png” for more readability.&lt;/p&gt;
-
-&lt;p&gt;Driven by my desire for revenge, I’ve had a look at metadata in this new file.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;exiftool basiq.png
-ExifTool Version Number         : 11.03
-File Name                       : basiq.png
-Directory                       : &lt;span class=&quot;nb&quot;&gt;.&lt;/span&gt;
-File Size                       : 210 kB
-File Modification Date/Time     : 2018:07:01 00:16:42+02:00
-File Access Date/Time           : 2018:07:05 23:12:37+02:00
-File Inode Change Date/Time     : 2018:07:01 00:18:01+02:00
-File Permissions                : rw-r--r--
-File Type                       : PNG
-File Type Extension             : png
-MIME Type                       : image/png
-Image Width                     : 680
-Image Height                    : 510
-Bit Depth                       : 8
-Color Type                      : RGB with Alpha
-Compression                     : Deflate/Inflate
-Filter                          : Adaptive
-Interlace                       : Noninterlaced
-Special Instructions            : 4D4A57564533324E4B524E474D5A4A544F5256553436544850424844455354494A555A4653364B5A474A4D5445544B584C453255344D5356474E475855514C5A4A555A4555334B5049524354435753584A4A5755365632474E5247573252544B4A56564655323232495247584F574C4E4A553245325243534E42484732534A524A5A4346534D433249354C47595453454E4D32453656324F4E4A4E4649554C324A564C565336434F4E4A4558515753584B4532553652434B4E564E4549554C594C4A57554B4E434E495241584F54544E4A553245365632534E4A4D5855524A544C4A4B464B36535A4B5249584F5432454C4A554655334B4B4E4A4D564F534C324C455A455532535049354954475454324A555A553256434B4E524846495A5A534A555A54434F493D
-Gamma                           : 2.2222
-White Point X                   : 0.31269
-White Point Y                   : 0.32899
-Red X                           : 0.63999
-Red Y                           : 0.33001
-Green X                         : 0.3
-Green Y                         : 0.6
-Blue X                          : 0.15
-Blue Y                          : 0.05999
-Background Color                : 255 255 255
-Pixels Per Unit X               : 15748
-Pixels Per Unit Y               : 15748
-Pixel Units                     : meters
-Modify Date                     : 2017:09:22 12:01:42
-Datecreate                      : 2017-09-22T14:01:42+02:00
-Datemodify                      : 2017-09-22T14:01:42+02:00
-Signature                       : 5e6790047fb3e3c8a74d63cdf6e91766d0ba9f513f8d5ea2020e51514bc3ee05
-Image Size                      : 680x510
-Megapixels                      : 0.347
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;And once again, a special field caught my attention. Guess which one…&lt;/p&gt;
-
-&lt;p&gt;Well, let’s give it a second chance, knowing that the Rick Roll threat was hanging over me.&lt;/p&gt;
-
-&lt;p&gt;The message surely is encoded, but how ? We will figure this out by trying all of the potential encoding:&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Base64 gave nothing relevant.&lt;/li&gt;
-  &lt;li&gt;Can’t be Base32 because of invalid characters such as “0” and “1”.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;Base16&lt;/strong&gt;? The most likely possibility. Python will help us verify it.&lt;/li&gt;
-&lt;/ul&gt;
-
-&lt;div class=&quot;language-python highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;&lt;span class=&quot;n&quot;&gt;boiteaklou&lt;/span&gt;&lt;span class=&quot;nd&quot;&gt;@kali&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;~&lt;/span&gt;&lt;span class=&quot;err&quot;&gt;$&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;python&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Python&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;2.7&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;14&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;+&lt;/span&gt; &lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;default&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;Apr&lt;/span&gt;  &lt;span class=&quot;mi&quot;&gt;2&lt;/span&gt; &lt;span class=&quot;mi&quot;&gt;2018&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;mo&quot;&gt;04&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;16&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;:&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;25&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;p&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;GCC&lt;/span&gt; &lt;span class=&quot;mf&quot;&gt;7.3&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;mi&quot;&gt;0&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;]&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;on&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;linux2&lt;/span&gt;
-&lt;span class=&quot;n&quot;&gt;Type&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;help&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;copyright&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;credits&quot;&lt;/span&gt; &lt;span class=&quot;ow&quot;&gt;or&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;license&quot;&lt;/span&gt; &lt;span class=&quot;k&quot;&gt;for&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;more&lt;/span&gt; &lt;span class=&quot;n&quot;&gt;information&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;
-&lt;span class=&quot;o&quot;&gt;&amp;gt;&amp;gt;&amp;gt;&lt;/span&gt; &lt;span class=&quot;s&quot;&gt;&quot;4D4A5756[...]4F493D&quot;&lt;/span&gt;&lt;span class=&quot;o&quot;&gt;.&lt;/span&gt;&lt;span class=&quot;n&quot;&gt;decode&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;(&lt;/span&gt;&lt;span class=&quot;s&quot;&gt;&quot;hex&quot;&lt;/span&gt;&lt;span class=&quot;p&quot;&gt;)&lt;/span&gt;
-&lt;span class=&quot;s&quot;&gt;'MJWVE32NKRNGMZJTORVU46THPBHDESTIJUZFS6KZGJMTETKXLE2U4MSVGNGXUQLZJUZEU3KPIRCTCWSXJJWU6V2GNRGW2RTKJVVFU222IRGXOWLNJU2E2RCSNBHG2SJRJZCFSMC2I5LGYTSENM2E6V2ONJNFIUL2JVLVS6CONJEXQWSXKE2U6RCKNVNEIULYLJWUKNCNIRAXOTTNJU2E6V2SNJMXURJTLJKFK6SZKRIXOT2ELJUFU3KKNJMVOSL2LEZEU2SPI5ITGTT2JUZU2VCKNRHFIZZSJUZTCOI='&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Great! We have another base-encoded message! I’ll skip the determination process for this one, we’re dealing with &lt;strong&gt;base32&lt;/strong&gt;.&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;MJWVE32NKR[...]ZSJUZTCOI=&quot;&lt;/span&gt; | base32 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;
-bmRoMTZfe3tkNzgxN2JhM2YyY2Y2MWY5N2U3MzAyM2JmODE1ZWJmOWFlMmFjMjZkZDMwYmM4MDRhNmI1NDY0ZGVlNDk4OWNjZTQzMWYxNjIxZWQ5ODJmZDQxZmE4MDAwNmM4OWRjYzE3ZTUzYTQwODZhZmJjYWIzY2JjOGQ3NzM3MTJlNTg2M319
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;One more! Let me guess, &lt;strong&gt;base64&lt;/strong&gt; this time?&lt;/p&gt;
-
-&lt;div class=&quot;language-bash highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;boiteaklou@kali:~&lt;span class=&quot;nv&quot;&gt;$ &lt;/span&gt;&lt;span class=&quot;nb&quot;&gt;echo&lt;/span&gt; &lt;span class=&quot;s2&quot;&gt;&quot;bmRoMTZf[...]NTg2M319&quot;&lt;/span&gt; | base64 &lt;span class=&quot;nt&quot;&gt;-d&lt;/span&gt;
-ndh16_&lt;span class=&quot;o&quot;&gt;{&lt;/span&gt;d7817ba3f2cf61f97e73023bf815ebf9ae2ac26dd30bc804a6b5464dee4989cce431f1621ed982fd41fa80006c89dcc17e53a4086afbcab3cbc8d773712e5863&lt;span class=&quot;o&quot;&gt;}&lt;/span&gt;
-&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
-
-&lt;p&gt;Alright, this was the final step! Congratz’ :triangular_flag_on_post:&lt;/p&gt;
-
-&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">A steganographic challenge showing the essential tools for PNG analysis and manipulating encoding bases.</summary></entry></feed>
+&lt;p id=&quot;signature&quot;&gt;BoiteAKlou :hammer:&lt;/p&gt;</content><author><name>BoiteAKlou</name></author><summary type="html">This article details a common steganography method known as the Least Significant Bit. This technique is very efficient because of its simplicity and its ability to be undetectable to the naked eye. After reading this, you’ll be able to hide a message inside a picture using this technique, but also to detect any dissimulated message.</summary></entry></feed>
